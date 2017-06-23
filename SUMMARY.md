@@ -2,7 +2,7 @@
 
 * [前言](README.md)
 * [后端开发](backend/README.md)
-    - [Django开发](front/django/README.md)
+    - [Django开发](backend/django/README.md)
 * [前端开发](front/README.md)
     - [React.js](front/react/README.md)
 * [DevOps Tools](tools/README.md)
