@@ -29,3 +29,19 @@ _book/
 book.pdf
 book.epub
 book.mobi
+
+
+# self gitignore content
+.DS_modules
+.DS_Store
+
+*.css.map
+.sass-cache
+.idea/**
+
+*.pyc
+.python-version
+
+migrations
+__pycache__
+
