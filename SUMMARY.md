@@ -3,6 +3,8 @@
 * [前言](README.md)
 * [后端开发](backend/README.md)
     - [Django](backend/django/README.md)
+    - [第三方包](backend/pip/README.md)
+        - [rest framewrok](backend/pip/rest_framework/README.md)
 * [前端开发](front/README.md)
     - [React.js](front/react/README.md)
 * [DevOps Tools](tools/README.md)
