@@ -1,9 +1,9 @@
-## 1. Rest FrameWork Pagination
+# Rest FrameWork Pagination
 
 > 当我们获取列表页的时候，一般不需要返回全部的数据，而是一次返回10条。  
 > 这个时候就需要用到分页器\(Pagination\).
 
-## 2. 简单使用（LimitOffsetPagination）
+## 1. 简单使用（LimitOffsetPagination）
 
 > 我们查询项目的ID、Name一次查询10条数据。  
 > 第一页：SELECT id, name FROM tproject\_project LIMIT 10;  
@@ -12,7 +12,7 @@
 
 在Django Rest FrameWork中，有个默认的类：`rest_framework.pagination.LimitOffsetPagination`
 
-### 2-1 settings.py
+### 1-1 settings.py
 
 在设置文件中，设置`REST_FRAMEWORK`中`DEFAULT_PAGINATION_CLASS`和`PAGE_SIZE`.
 
@@ -28,7 +28,7 @@ REST_FRAMEWORK = {
 }
 ```
 
-### 2-2 views
+### 1-2 views
 
 ```python
 from rest_framework import generics
@@ -44,7 +44,7 @@ class GroupList(generics.ListAPIView):
     serializer_class = GroupSerializer
 ```
 
-### 2-3 使用
+### 1-3 使用
 
 用Postman GET访问：`http://127.0.0.1:8080/api/1.0/asset/group/list`
 
@@ -90,9 +90,9 @@ class GroupList(generics.ListAPIView):
 }
 ```
 
-## 3. 自定义编写pagination
+## 2. 自定义编写pagination
 
-### 3-1 继承pagination.PageNumberPagination
+### 2-1 继承pagination.PageNumberPagination
 
 ```python
 from rest_framework.pagination import PageNumberPagination
@@ -102,7 +102,7 @@ class SelfPagination(PageNumberPagination):
     """
     Rest FrameWork 自定义分页器类
     在generics.ListAPIView中可以设置:pagination_class = SelfPagination
-    或者在settings.py中指定REST_FRAMEWORK.DEFAULT_PAGINATION_CLASS = 'utils.pagations.SelfPagination'
+    或者在settings.py中指定REST_FRAMEWORK.DEFAULT_PAGINATION_CLASS = 'utils.paginations.SelfPagination'
     另外也可以设置为：'rest_framework.pagination.LimitOffsetPagination'这个类
     加了这个ListView返回的json数据有：count、next、previous、results字段
     """
@@ -111,23 +111,21 @@ class SelfPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
 ```
 
-### 3-2 settings.py
+### 2-2 settings.py
 
 修改settings.py中`REST_FRAMEWORK.DEFAULT_PAGINATION_CLASS`为自定义的PageNumberPagination子类。
 
 ```python
-
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'utils.pagination.SelfPagination',
 }
 ```
 
-### 3-3 使用
+### 2-3 使用
 
 还是原来的链接，这次结果会有小差异：
 
 ```json
-
 {
     "count": 35,
     "next": "http://127.0.0.1:8080/api/1.0/asset/group/list?page=2",
