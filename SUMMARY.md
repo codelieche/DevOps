@@ -6,6 +6,7 @@
     - [第三方包](backend/pip/README.md)
         - [rest framewrok](backend/pip/rest_framework/README.md)
             - [简单使用](backend/pip/rest_framework/simple.md)
+            - [分页](backend/pip/rest_framework/pagination.md)
 * [前端开发](front/README.md)
     - [React.js](front/react/README.md)
 * [DevOps Tools](tools/README.md)
