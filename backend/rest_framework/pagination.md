@@ -1,9 +1,9 @@
-# Rest FrameWork Pagination
+### Rest FrameWork Pagination
 
 > 当我们获取列表页的时候，一般不需要返回全部的数据，而是一次返回10条。  
 > 这个时候就需要用到分页器\(Pagination\).
 
-## 1. 简单使用（LimitOffsetPagination）
+### 1. 简单使用（LimitOffsetPagination）
 
 > 我们查询项目的ID、Name一次查询10条数据。  
 > 第一页：SELECT id, name FROM tproject\_project LIMIT 10;  
@@ -12,7 +12,7 @@
 
 在Django Rest FrameWork中，有个默认的类：`rest_framework.pagination.LimitOffsetPagination`
 
-### 1-1 settings.py
+#### 1-1 settings.py
 
 在设置文件中，设置`REST_FRAMEWORK`中`DEFAULT_PAGINATION_CLASS`和`PAGE_SIZE`.
 
@@ -28,7 +28,7 @@ REST_FRAMEWORK = {
 }
 ```
 
-### 1-2 views
+#### 1-2 views
 
 ```python
 from rest_framework import generics
@@ -44,7 +44,7 @@ class GroupList(generics.ListAPIView):
     serializer_class = GroupSerializer
 ```
 
-### 1-3 使用
+#### 1-3 使用
 
 用Postman GET访问：`http://127.0.0.1:8080/api/1.0/asset/group/list`
 
@@ -90,9 +90,9 @@ class GroupList(generics.ListAPIView):
 }
 ```
 
-## 2. 自定义编写pagination
+### 2. 自定义编写pagination
 
-### 2-1 继承pagination.PageNumberPagination
+#### 2-1 继承pagination.PageNumberPagination
 
 ```python
 from rest_framework.pagination import PageNumberPagination
@@ -111,7 +111,7 @@ class SelfPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
 ```
 
-### 2-2 settings.py
+#### 2-2 settings.py
 
 修改settings.py中`REST_FRAMEWORK.DEFAULT_PAGINATION_CLASS`为自定义的PageNumberPagination子类。
 
@@ -121,7 +121,7 @@ REST_FRAMEWORK = {
 }
 ```
 
-### 2-3 使用
+#### 2-3 使用
 
 还是原来的链接，这次结果会有小差异：
 
@@ -133,5 +133,43 @@ REST_FRAMEWORK = {
 }
 ```
 
+### 3. 不使用分页，返回全部数据
+> 当设置了DEFAULT_PAGINATION_CLASS, 所有的generics.ListAPIView默认都会分页，  
+而有时候，我们不想分页，而是想获取全部的对象列表。
 
+#### 3.1 获取全部的Group
 
+```python
+
+class GroupList(generics.ListAPIView):
+    """
+    Group 列表 api
+    """
+    queryset = Group.objects.all().filter(parent=None)
+    serializer_class = GroupSerializer
+    # 由于settings.py中设置了DEFAULT_PAGINATION_CLASS
+    # 而如果不想分页，可以在这里设置pagination_class为None
+    pagination_class = None
+```    
+
+这样当我们再次访问list页面，就会返回全部的数据。
+
+```json
+
+[
+    {
+        "id": 1,
+        "name": "AliYun",
+        "parent": null,
+        "description": "阿里云服务器",
+        "subs": []
+    },
+    {
+        "id": 48,
+        "name": "华南城",
+        "parent": null,
+        "description": "这个是描述内容",
+        "subs": []
+    }
+]
+```

@@ -1,6 +1,6 @@
-## 使用自定义User
+### 使用自定义User
 
-### 拓展django的AbstractUser
+#### 拓展django的AbstractUser
 文件位置：`apps/account/models.py`,想要拓展什么字段，添加即可。
 
 ```python
@@ -36,7 +36,7 @@ class User(AbstractUser):
 ```
 
 
-### 修改settings.py
+#### 修改settings.py
 > 配置用户模型：注册用户系统使用哪个用户模型。  
 不需要加入中间的models：account.models.User，直接使用`account.User`即可。
 
@@ -44,7 +44,7 @@ class User(AbstractUser):
 AUTH_USER_MODEL = 'account.User'
 ```
 
-## 自定义验证类
+### 自定义验证类
 > 需要继承`django.contrib.auth.backends.ModelBackend`.  
 文件位置：`apps/account/auth.py`
 
@@ -75,7 +75,7 @@ class CustomBackend(ModelBackend):
             return None
 ```
 
-### 设置自定义auth认证
+#### 设置自定义auth认证
 > 编写了`CustomBackend`我们还需要在`settings.py`中设置`AUTHENTICATION_BACKENDS`。
 
 ```
