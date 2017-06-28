@@ -166,9 +166,9 @@ class GroupList(generics.ListAPIView):
     },
     {
         "id": 48,
-        "name": "华南城",
+        "name": "AWS",
         "parent": null,
-        "description": "这个是描述内容",
+        "description": "这个是AWS描述内容",
         "subs": []
     }
 ]
