@@ -13,6 +13,7 @@
 * [apps](apps/README.md)
   * [account模块](apps/account/README.md)
     - [自定义用户和自定义校验](apps/account/user.md)
+    - [account api文档](apps/account/api.md)
   * [asset模块](apps/asset/README.md)
     - [资产Model](apps/asset/asset_model.md)
     - [资产api](apps/asset/asset_api.md)
