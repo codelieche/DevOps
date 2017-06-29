@@ -10,6 +10,7 @@
     * [权限控制](backend/rest_framework/permission.md)
 * [前端开发](front/README.md)
   * [React.js](front/react/README.md)
+  * [Ant Design](front/design/README.md)
 * [app 模块](apps/README.md)
   * [account模块](apps/account/README.md)
     - [自定义用户和自定义校验](apps/account/user.md)
