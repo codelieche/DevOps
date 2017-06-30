@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    "theme-comscore", "prism", "-highlight", "github", "splitter", "toggle-chapters"
+  ],
+  "pluginsConfig": {
+    "prism": {
+      "css": ["prismjs/themes/prism-solarizedlight.css"]
+    },
+    "github": {
+      "url": "https://github.com/codelieche/DevOps"
+	}
+  }
+}
