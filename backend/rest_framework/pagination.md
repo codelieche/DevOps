@@ -133,6 +133,22 @@ REST_FRAMEWORK = {
 }
 ```
 
+#### 2-4 出现UnorderedObjectListWarning
+
+```
+UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list:[......]
+  paginator = self.django_paginator_class(queryset, page_size)
+```
+**原因**：传入的queryset没有order_by
+
+**解决方式**: 给自定义的PageNumberPagination子类添加方法，或者给queryset排序下。
+
+```python
+    def paginate_queryset(self, queryset, request, view=None):
+        self.django_paginator_class._check_object_list_is_ordered = lambda x: None
+        return super().paginate_queryset(queryset, request, view=view)
+```
+
 ### 3. 不使用分页，返回全部数据
 > 当设置了DEFAULT_PAGINATION_CLASS, 所有的generics.ListAPIView默认都会分页，  
 而有时候，我们不想分页，而是想获取全部的对象列表。
