@@ -8,6 +8,7 @@
     * [简单使用](backend/rest_framework/simple.md)
     * [分页](backend/rest_framework/pagination.md)
     * [权限控制](backend/rest_framework/permission.md)
+    * [generics](backend/rest_framework/generics.md)
 * [前端开发](front/README.md)
   * [React.js](front/react/README.md)
   * [Ant Design](front/design/README.md)
