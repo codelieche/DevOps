@@ -29,7 +29,7 @@
 ###### 1-2. asset/group/create
 - url: `http://127.0.0.1:8080/api/1.0/asset/group/create/`
 - 方法：`POST`【需要管理员权限】
-- 参数说明：
+- 请求参数：
 
 | 名称 | 类型 | 必须 | 示例值 | 描述 |
 | --- | --- | --- | --- | --- |
@@ -64,7 +64,6 @@ http GET http://127.0.0.1:8080/api/1.0/asset/group/3/
 HTTP/1.0 200 OK
 Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
 .....
-
 {
     "children": [],
     "description": "华南区·深圳",
@@ -85,7 +84,6 @@ Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
 HTTP/1.0 200 OK
 Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
 .....
-
 {
     "children": [],
     "description": "华南区·深圳",
@@ -110,3 +108,127 @@ Server: WSGIServer/0.2 CPython/3.5.3
 Vary: Accept, Cookie
 X-Frame-Options: SAMEORIGIN
 ```
+
+#### 2. Category
+
+##### 2-1. category/list
+- url: `/api/1.0/asset/category/list`
+- 方法: `GET`
+- 结果:
+
+```json
+[
+    {
+        "id": 1,
+        "name": "host",
+        "name_verbose": "主机",
+        "parent": null,
+        "children": [
+            {
+                "id": 2,
+                "name": "physical",
+                "name_verbose": "物理主机",
+                "parent": 1,
+                "children": []
+            }]
+    },
+    {
+        "id": 3,
+        "name": "other",
+        "name_verbose": "其它资产",
+        "parent": null,
+        "children": []
+    }
+]       
+```
+
+##### 2-2. category create
+- url: `/api/1.0/asset/category/list`
+- 方法: `POST`【需要权限】
+- 请求参数：
+
+| 名称 | 类型 | 必须 | 示例值 | 描述 |
+| --- | --- | --- | --- | --- |
+| name | String | 是 | host、domain | 分类名称 |
+| name_verbose | String | 是 | 主机、域名 | 更容易理解的名称 |
+
+- 示例：
+
+```json
+http -a admin:123456 POST :8080/api/1.0/asset/category/create name='domain' name_verbose="域名"
+HTTP/1.0 201 Created
+Allow: POST, OPTIONS
+.....
+{
+    "children": [],
+    "id": 4,
+    "name": "domain",
+    "name_verbose": "域名",
+    "parent": null
+}
+```
+
+##### 2-3. 查看category
+- url: `/api/1.0/asset/category/4`
+- 方法: `GET`
+- 示例:
+
+```json
+✗ http GET :8080/api/1.0/asset/category/4
+HTTP/1.0 200 OK
+Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+.....
+{
+    "children": [],
+    "id": 4,
+    "name": "domain",
+    "name_verbose": "域名",
+    "parent": null
+}
+```
+
+##### 2-4. 修改category
+- url: `/api/1.0/asset/category/4`
+- 方法: `PUT`【需要权限】
+- 请求参数:【同category create】
+- 示例:
+
+```json
+✗ http -a admin:123456 PUT :8080/api/1.0/asset/category/4 name='domain' name_verbose="域名说明"
+HTTP/1.0 200 OK
+Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+.....
+{
+    "children": [],
+    "id": 4,
+    "name": "domain",
+    "name_verbose": "域名说明",
+    "parent": null
+}
+```
+
+##### 2-5. 删除category
+- url: `/api/1.0/asset/category/4`
+- 方法: `DELETE`【需要权限】
+- 示例:
+
+```json
+✗ http -a admin:123456 DELETE :8080/api/1.0/asset/category/4
+HTTP/1.0 204 No Content
+Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+Content-Length: 0
+Date: Sun, 02 Jul 2017 08:07:11 GMT
+Server: WSGIServer/0.2 CPython/3.5.3
+Vary: Accept, Cookie
+X-Frame-Options: SAMEORIGIN
+```
+
+如果输入的用户名不正确，或者登陆的用户没权限，会返回：
+
+```json
+{
+    "detail": "Authentication credentials were not provided."
+}
+```
+
+
