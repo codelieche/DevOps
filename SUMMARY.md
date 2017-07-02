@@ -21,6 +21,7 @@
   * [account](api/account/README.md)
     - [用户登陆登出api](api/account/user.md)
   * [asset](api/asset/README.md)
+    - [asset API List](api/asset/asset_list.md)
 * [DevOps Tools](tools/README.md)
   * [kubernetes](tools/kubernetes/README.md)
   * [Docker](tools/docker/README.md)
