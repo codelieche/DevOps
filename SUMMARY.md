@@ -31,6 +31,7 @@
   * [ELK](tools/elk/README.md)
   * [ansible](tools/ansible/README.md)
     * [简单使用](tools/ansible/start.md)
+    * [synchronize](tools/ansible/synchronize.md)
   * [fabric](tools/fabric/README.md)
   * [paramiko](tools/paramiko/README.md)
   * [Version Control](tools/versioncontrol/README.md)
