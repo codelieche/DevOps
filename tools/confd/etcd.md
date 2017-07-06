@@ -64,15 +64,15 @@ COMMANDS:
      help, h         Shows a list of commands or help for one command
 ```
 
-#### etcdctl数据相关操作数据
-##### set
+### etcdctl数据库相关操作数据
+#### set
 设置某个键的值：`etcdctl set /study/key1 "Hello world"`
 支持的选项：
 1. `--ttl '0'`: 设置该键值的超时时间(秒)，不配置(默认0)则永不超时
 2. `--swap-with-value value`: 若该键现在的值为value，则进行设置操作
 3. `--swap-with-index '0'`: 若该键现在的索引值是指定的索引，则进行设置操作
      
-##### get
+#### get
 获取指定键的值，`etcdctl get /study/key1`
 支持的选项：
 1. `--sort`: 对结果进行排序
@@ -89,7 +89,7 @@ Hello World
 Error:  100: Key not found (/study/key2) [9]
 ```
 
-##### update
+#### update
 当键存在的时候，更新值(不存在的时候会报错)，`etcdctl update /study/key1 "new value"`
 支持的选项：`--t1 '0'`: 设置超时时间
 
@@ -102,7 +102,7 @@ Error:  100: Key not found (/study/key2) [10]
 new value
 ```
 
-##### rm
+#### rm
 删除某个键值(键不存在的时候会报错)
 支持的选项：
 1. `--dir`: 如果键是个空目录或者键值对则删除
@@ -110,7 +110,7 @@ new value
 3. `--with-value`: 检查现有的值是否匹配
 4. `--with-index '0'`: 检查现有的 index 是否匹配
 
-##### mk
+#### mk
 如果给定的键不存在，则创建一个新的键值。`etcdctl mk /study/key2 'value2'`
 如果建存在，则会报错：`Error:  105: Key already exists (/study/key2) [11]`
 支持选项：`--ttl '0'`
@@ -124,19 +124,19 @@ value3
 Error:  100: Key not found (/study/key3) [15]
 ```
 
-##### mkdir
+#### mkdir
 如果给定的键目录不存在，则创建一个新的键目录：支持选项`--ttl '0'`
 
-##### setdir
+#### setdir
 创建一个键目录，无论存在语法，支持`--ttl '0'`选项
 
-##### updatedir
+#### updatedir
 更新一个已经存在的目录，支持`--ttl '0'`选项
 
-##### rmdir
+#### rmdir
 删除一个空目录，或者键值对。若目录不为空则会报错。
 
-##### ls
+#### ls
 列出目录（默认是跟目录）下的键或者子目录，默认不显示子目录内容。
 支持选项：
 1. `--sort`: 将输出结果排序
@@ -153,4 +153,42 @@ Error:  100: Key not found (/study/key3) [15]
 /study/key2
 /study/codelieche
 ```
+
+### etcdctl非数据库相关操作
+#### backup
+备份etcd数据，选项：
+1. `--data-dir`: etcd的数据目录
+2. `--backup-dir`: 备份到指定路径
+
+#### watch
+检测一个键值的变化，一旦键值发生更新，就会输出最新的值并退出。
+在一个终端执行：`etcdctl watch /study/key1` 另外一个终端set值。
+支持选项：
+1. `--forever`: 一直检测，知道用用户按`CTRL+C`退出
+2. `--after-index '0'`: 在指定index之前一直检测
+3. `--recursive`: 返回所有的键值和子键值
+
+#### exec-watch
+检测一个键值的变化，一旦键值发生更新，就执行给定命令，支持选项：
+1. `--after-index '0'`: 在指定index之前一直监测
+2. `--recursive`: 返回所有的键值和子键值
+
+#### member
+通过list、add、remove命令列出、添加、删除etcd实例到etcd集群中。
+查看member：
+```
+➜  ~ etcdctl member list
+8e9e05c52164694d: name=default peerURLs=http://localhost:2380 clientURLs=http://localhost:2379 isLeader=true
+```
+选项：
+1. `--debug`: 输出curl命令，显示执行命令的时候发起的请求
+2. `--no-sync`: 发出请求之前不同步集群信息
+3. `--output, -o 'simple'`: 输出内容的格式 (simple为原始信息，json 为进行json格式解码，易读性好一些)
+4. `--peers, -C`: 指定集群中的同伴信息，用逗号隔开
+5. `--cert-file HTTPS`: 下客户端使用的 SSL 证书文件
+6. `--key-file HTTPS`: 下客户端使用的 SSL 密钥文件
+7. `--ca-file`: 服务端使用 HTTPS 时，使用 CA 文件进行验证
+8. `--help, -h`: 显示帮助命令信息
+9. `--version, -v`: 打印版本信息
+
 
