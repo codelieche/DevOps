@@ -33,6 +33,8 @@
     * [简单使用](tools/ansible/start.md)
     * [synchronize](tools/ansible/synchronize.md)
     * [Ad-Hoc](tools/ansible/adhoc.md)
+  * [etcd+confd](tools/confd/README.md)
+    * [etcd基本使用](tools/confd/etcd.md)
   * [fabric](tools/fabric/README.md)
   * [paramiko](tools/paramiko/README.md)
   * [Version Control](tools/versioncontrol/README.md)
