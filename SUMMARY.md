@@ -36,6 +36,7 @@
   * [etcd+confd](tools/confd/README.md)
     * [etcd基本使用](tools/confd/etcd.md)
     * [confd基本使用](tools/confd/confd.md)
+    * [confd模版编写](tools/kubernetes/templates.md)
   * [fabric](tools/fabric/README.md)
   * [paramiko](tools/paramiko/README.md)
   * [Version Control](tools/versioncontrol/README.md)
