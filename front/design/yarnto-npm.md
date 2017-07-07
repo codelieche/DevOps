@@ -81,5 +81,46 @@ $ yarn add babel-plugin-import --dev
 ```
 > 注意，由于 create-react-app eject 之后的配置中没有 .babelrc 文件，所以需要把配置放到 webpack.config.js 或 package.json 的 babel 属性中。
 
+#### 添加sass-loader
 
+```
+$ yarn add sass-loader node-sass --dev
+```
+
+修改配置：
+
+```
+--- a/config/webpack.config.dev.js
++++ b/config/webpack.config.dev.js
+@@ -139,6 +139,7 @@ module.exports = {
+           /\.html$/,
+           /\.(js|jsx)$/,
+           /\.css$/,
++          /\.scss$/, // 添加sass-loader添加的配置
+           /\.json$/,
+           /\.bmp$/,
+           /\.gif$/,
+@@ -217,6 +218,17 @@ module.exports = {
+       },
+       // ** STOP ** Are you adding a new loader?
+       // Remember to add the new extension(s) to the "file" loader exclusion list.
++      // sass-loader追加配置
++      {
++          test: /\.scss$/,
++          use: [{
++              loader: "style-loader" // creates style nodes from JS strings
++          }, {
++              loader: "css-loader" // translates CSS into CommonJS
++          }, {
++              loader: "sass-loader" // compiles Sass to CSS
++          }]
++      },// sass-loader配置完毕
+     ],
+   },
+   plugins: [
+```
+
+### 参考文档
+- [use with create-react-app](https://ant.design/docs/react/use-with-create-react-app-cn)
+- [sass-load](https://www.npmjs.com/package/sass-loader)
 
