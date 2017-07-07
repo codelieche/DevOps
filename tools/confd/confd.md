@@ -82,3 +82,9 @@ value3
 
   使用getvs取值：value3
 ```  
+
+每隔60秒刷新一次：
+
+```
+confd -interval 60 -backend etcd -node http://192.168.9.101:4001 -node http://192.168.9.102:4001
+```
