@@ -15,7 +15,7 @@
 - `mode`: (String)该文件的许可模式
 - `uid`: (INT)应该拥有该文件的UID
 - `reload_cmd`: （String）重新加载配置的命令
-- `check_cmd`: （String）检查配置的命令。使用{{.src}}引用渲染源模版
+- `check_cmd`: （String）检查配置的命令。使用`{{.src}}`引用渲染源模版
 - `prefix`: （String）键的前缀
 
 #### 示例
