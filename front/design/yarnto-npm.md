@@ -119,6 +119,9 @@ $ yarn add sass-loader node-sass --dev
    },
    plugins: [
 ```
+#### 注意事项
+- 开发环境配置文件：`webpack.config.dev.js`
+- 打包生产环境配置文件：`webpack.config.prod.js`，也需要修改相应的配置
 
 ### 参考文档
 - [use with create-react-app](https://ant.design/docs/react/use-with-create-react-app-cn)
