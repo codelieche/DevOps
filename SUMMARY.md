@@ -4,6 +4,7 @@
 * [后端开发](backend/README.md)
   * [Django](backend/django/README.md)
     * [给views添加mixin](backend/django/views/mixin.md)
+    * [Django取消CSRF和CORS](backend/django/middleware/disabled_csrf_and_cors.md)
     * [500服务器错误发送邮件](backend/django/logging/500_send_email.md)
   * [rest framewrok](backend/pip/rest_framework/README.md)
     * [简单使用](backend/rest_framework/simple.md)
