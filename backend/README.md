@@ -9,7 +9,9 @@
 ### requirements.txt
 
 ```
+ansible==2.3.1.0
 Django==1.11.2
+django-cors-headers==2.1.0
 django-filter==1.0.4
 djangorestframework==3.6.3
 kubernetes==2.0.0
