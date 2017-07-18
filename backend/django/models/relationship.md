@@ -20,7 +20,7 @@ group = models.ForeignKey(to=Group, null=True, blank=True, verbose_name="分组"
 
 ###### on_delete可以设置的值
 - `CASCADE`: 【默认值】级联删除，就是删除外键，引用了这个外键的对象也删除了
-- `PROTET`: 抛出ProtectedError以阻止因运用对象的删除
+- `PROTET`: 抛出`django.db.models.deletion.ProtectedError`以阻止因运用对象的删除
 - `SET_NULL`: 把`ForeignKey`设置为`null`, 首先得设置`null = True`才行
 - `SET_DEFAULT`: 把外键设置为默认值，此时必须设置这个外键的default参数
 - `SET`: 设置外键为传递给`SET()`的值，如果是一个可调用对象，则为调用后的结果
