@@ -18,6 +18,7 @@
     - [React-Router Link传递数据](front/react/router/link.md)
   * [Ant Design](front/design/README.md)
     * [设置antd按需加载](front/design/yarnto-npm.md)
+    * [表单数据校验](front/design/async-validator.md)
 * [app 模块](apps/README.md)
   * [account模块](apps/account/README.md)
     * [自定义用户和自定义校验](apps/account/user.md)
