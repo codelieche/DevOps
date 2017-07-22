@@ -1,4 +1,5 @@
 ## 表单数据校验
+
 > Ant Design的Form组件中的数据校验应用到了[async-validator](https://github.com/yiminghe/async-validator)
 
 ### Ant Design Form简单使用
@@ -54,10 +55,12 @@ export default Login;
 ```
 
 #### 重点操作
-- 首先编写好Login,然后再用`Form.create())Login)`重新封装了下
-- render中重点用到了： `getFieldDecorator`来对规则的处理
+
+* 首先编写好Login,然后再用`Form.create())Login)`重新封装了下
+* render中重点用到了： `getFieldDecorator`来对规则的处理
 
 #### getFieldDecorator
+
 > 在render中先使用这个：
 
 ```js
@@ -75,33 +78,38 @@ const { getFieldDecorator } = this.props.form;
     )}
 </Form.Item>
 ```
+
 > 其中可以设置`valuePropName`、`initialValue`、`trigger`、`rules`等，重点就是设置rules。
 
 ### 字段规则
 
 #### Type
-- `string`: 【默认】
-- `number`: 数字
-- `boolean`:
-- `method`: 内容必须是个function
-- `regexp`: 内容需要是一个正则的对象
-- `integer`:
-- `float`:
-- `array`:
-- `enum`: 枚举类型，结合`enum: ['a', 'b', 'c']`
-- `date`:
-- `url`:
-- `hex`:
-- `email`:
-> 其中常用的是`string`,`number`,`email`,`date`,`url`,`enum`.
+
+* `string`: 【默认】
+* `number`: 数字
+* `boolean`:
+* `method`: 内容必须是个function
+* `regexp`: 内容需要是一个正则的对象
+* `integer`:
+* `float`:
+* `array`:
+* `enum`: 枚举类型，结合`enum: ['a', 'b', 'c']`
+* `date`:
+* `url`:
+* `hex`:
+* `email`:
+  > 其中常用的是`string`,`number`,`email`,`date`,`url`,`enum`.
 
 #### Required
+
 表单中这个字段是否必须填写
 
 #### Message
+
 提示信息
 
 #### Pattern
+
 填写正则判断，比如设置用户名是abc开头的
 
 ```js
@@ -109,16 +117,18 @@ rules: [{required: true, message: 'Please input group name!', pattern: /^abc.*?$
 ```
 
 #### Length
-- `len`: 指定长度，太长或者少了都会通不过验证
-- `min`: 最低长度
-- `max`: 最大长度
-> 比如：password字段，长度为8-12。
+
+* `len`: 指定长度，太长或者少了都会通不过验证
+* `min`: 最低长度
+* `max`: 最大长度
+  > 比如：password字段，长度为8-12。
 
 ```js
 rules: [{required: true, message: 'Please input password!', min: 8, max: 12}],
 ```
 
 #### Enumerable
+
 > 有时候这个字段我们要限定内容，比如：设置type字段为`host`,`domain`,`other`.其它的值不通过。
 
 ```js
@@ -131,10 +141,11 @@ getFieldDecorator('type', {
             <Select.Option value="domain">域名</Select.Option>
             <Select.Option value="other">其它</Select.Option>
         </Select>
-)} 
+)}
 ```
 
 #### 编写多个规则
+
 > 在getFieldDecorator中的rules是个数组，不同规则可以设置不同的提示消息。
 
 ```js
@@ -148,3 +159,6 @@ getFieldDecorator('type', {
     <Input placeholder="name" />
 )}
 ```
+
+
+
