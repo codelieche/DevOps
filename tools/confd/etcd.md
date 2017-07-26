@@ -191,4 +191,28 @@ Error:  100: Key not found (/study/key3) [15]
 8. `--help, -h`: 显示帮助命令信息
 9. `--version, -v`: 打印版本信息
 
+### etcd.server
+> 为了方便运行etcd可以自己写个shell脚本。  
+文件位置：`/usr/local/bin/etcd.server`
+
+```shell
+#!/bin/sh
+# 运行etcd
+echo $1
+# echo $PATH
+if[$1==""]
+    etcd --data-dir=/data/etcd/default.etcd
+  elif[$1 == "default"]
+    etcd --data-dir=/data/etcd/default.etcd
+  elif[$1 == "study"]
+    etcd --data-dir=/data/etcd/study.etcd
+  elif[$1 == "devops"]
+    etcd --data-dir=/data/etcd/devops.etcd
+  else
+   echo "参数暂时只支持default,空、devops、study"
+fi
+```
+注意对文件加执行权限：`sudo chmod +x /usr/local/bin/etcd.server`，同时注意`/data/etcd`目录的写权限.
+
+
 
