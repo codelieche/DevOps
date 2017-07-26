@@ -174,6 +174,13 @@ Error:  100: Key not found (/study/key3) [15]
             └── 0000000000000000-0000000000000000.wal
 ```
 
+#### 使用备份数据启动etcd
+
+备份数据目录：`/data/etcd/backup/default.bak`
+
+```
+etcd --data-dir=/data/etcd/backup/default.bak --force-new-cluster
+```
 
 #### watch
 检测一个键值的变化，一旦键值发生更新，就会输出最新的值并退出。
@@ -213,17 +220,30 @@ Error:  100: Key not found (/study/key3) [15]
 ```shell
 #!/bin/sh
 # 运行etcd
-# echo $1 #第一个参数$1
-if[$1==""]
+# echo $1 # 第一个参数
+
+# 如果没传$1 那么$1为default
+if [ $1 ]
+then
+  echo "使用$1数据库"
+else
+  $1="default"
+fi
+
+if [ $1 == "default" ]
+  then
     etcd --data-dir=/data/etcd/default.etcd
-  elif[$1 == "default"]
-    etcd --data-dir=/data/etcd/default.etcd
-  elif[$1 == "study"]
-    etcd --data-dir=/data/etcd/study.etcd
-  elif[$1 == "devops"]
-    etcd --data-dir=/data/etcd/devops.etcd
-  else
-   echo "参数暂时只支持default,空、devops、study"
+elif [ $1 == "study" ]
+then
+  etcd --data-dir=/data/etcd/study.etcd
+elif [ $1 == "project" ]
+then
+  etcd --data-dir=/data/etcd/project.etcd
+elif [ $1 == "devops" ]
+then
+  etcd --data-dir=/data/etcd/devops.etcd
+else
+  echo "参数暂时只支持：空、default、study、project、devops"
 fi
 ```
 注意对文件加执行权限：`sudo chmod +x /usr/local/bin/etcd.server`，同时注意`/data/etcd`目录的写权限.
