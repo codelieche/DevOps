@@ -160,6 +160,21 @@ Error:  100: Key not found (/study/key3) [15]
 1. `--data-dir`: etcd的数据目录
 2. `--backup-dir`: 备份到指定路径
 
+> 把/data/etcd/default.etcd的数据备份到/data/etcd/backup/default.bak.
+
+```bash
+➜  etcdctl backup --data-dir=/data/etcd/default.etcd --backup-dir=/data/etcd/backup/default.bak
+
+➜  backup tree
+.
+└── default.bak
+    └── member
+        ├── snap
+        └── wal
+            └── 0000000000000000-0000000000000000.wal
+```
+
+
 #### watch
 检测一个键值的变化，一旦键值发生更新，就会输出最新的值并退出。
 在一个终端执行：`etcdctl watch /study/key1` 另外一个终端set值。
@@ -198,8 +213,7 @@ Error:  100: Key not found (/study/key3) [15]
 ```shell
 #!/bin/sh
 # 运行etcd
-echo $1
-# echo $PATH
+# echo $1 #第一个参数$1
 if[$1==""]
     etcd --data-dir=/data/etcd/default.etcd
   elif[$1 == "default"]
