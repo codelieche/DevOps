@@ -40,6 +40,13 @@ print(k1.key, k1.value)
 
 value = client("/study/001").value
 ```
+递归获取值：
+
+```python
+items = client.read("/study", recursive=True, sorted=True)
+for item in items.children:
+    print(item.key, item.value)
+```
 
 #### 删除key
 
@@ -49,3 +56,6 @@ client.delete('/study/003')
 client.delete("/study", dir=True)
 client.delete("/study", recursive=True)
 ```
+
+### 参考文档
+- [python-etcd Docs](http://python-etcd.readthedocs.io/)

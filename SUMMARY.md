@@ -37,6 +37,7 @@
   * [jenkins](tools/jenkins/README.md)
   * [zabbix](tools/zabbix/README.md)
   * [ELK](tools/elk/README.md)
+    * [elasticsearch环境准备](tools/elk/elasticsearch/env.md)
   * [ansible](tools/ansible/README.md)
     * [简单使用](tools/ansible/start.md)
     * [synchronize](tools/ansible/synchronize.md)
