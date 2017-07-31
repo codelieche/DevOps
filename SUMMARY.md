@@ -42,6 +42,7 @@
     * [简单使用](tools/ansible/start.md)
     * [synchronize](tools/ansible/synchronize.md)
     * [Ad-Hoc](tools/ansible/adhoc.md)
+    * [Ansible获取服务器信息](tools/ansible/setup.md)
   * [etcd+confd](tools/confd/README.md)
     * [etcd基本使用](tools/confd/etcd.md)
     * [confd基本使用](tools/confd/confd.md)
