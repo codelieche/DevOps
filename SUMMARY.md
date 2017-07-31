@@ -50,5 +50,6 @@
   * [fabric](tools/fabric/README.md)
   * [paramiko](tools/paramiko/README.md)
   * [Version Control](tools/versioncontrol/README.md)
+    * [安装gitlab](tools/versioncontrol/gitlab/install.md)
 * [Operating System](os/README.md)
 
