@@ -15,6 +15,7 @@ class IndexView(View):
 ```
 
 ### 方式二：让子类继承一个类
+
 > 注意事项： mixin类需要继承object，否则报错
 
 ```python
@@ -75,3 +76,6 @@ class LoginView(CsrfExemptMixin, View):
         else:
             return render(request, 'account/login.html', {'info': "用户名或者密码错误"})
 ```
+
+
+
