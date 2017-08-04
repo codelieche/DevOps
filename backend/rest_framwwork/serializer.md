@@ -141,3 +141,31 @@ class DocumentSerializer(serializers.ModelSerializer):
 传递`format`参数`format="%Y-%m-%d %H:%M:%S"`，时间就是：`2017-08-04 10:55:50`了。
 
 
+### 数据校验及获取request过来的数据
+> 比如我们上传Document,上传的user，我想设置为`request.user`，同时，还想如果`filename`为空，机会设置成`request`传过来的`file`的名字。
+
+```python
+class DocumentCreateSerializer(serializers.ModelSerializer):
+    """
+    上传文档 ModelSerializer
+    """
+    file = serializers.FileField(max_length=None, use_url=True)
+
+    class Meta:
+        model = Document
+        fields = ('id', 'user', 'filename', 'file')
+
+    def validate(self, attrs):
+        # 数据验证前，设置当前user为Document的用户
+        request = self.context['request']
+        user = request.user
+        attrs['user'] = user
+        if 'filename' not in attrs:
+            attrs['filename'] = request.data.get('file')
+        return attrs
+```
+
+**注意：**其中重点就是`self.context['request']`可以获取到`request`。  
+另外如果想校验某个字段，可以编写`validate_fieldname`函数来处理。  
+如果传递的数据有误，可以抛出`serializers.ValidationError`错误：`raise serializers.ValidationError("字段不合法")`。
+
