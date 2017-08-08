@@ -24,6 +24,7 @@
 * [app 模块](apps/README.md)
   * [account模块](apps/account/README.md)
     * [自定义用户和自定义校验](apps/account/user.md)
+    * [django单点登录](apps/account/django_ldap.md)
   * [asset模块](apps/asset/README.md)
     * [资产Model](apps/asset/asset_model.md)
 * [api文档](api/README.md)
