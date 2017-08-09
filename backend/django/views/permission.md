@@ -81,3 +81,78 @@ permission = Permission.objects.create(name="能查看文章",
 > permission总是与model对应的，如果一个对象不是model的实力，那么我们无法为它创建或分配权限。
 
 
+### 用户权限(User Permission)
+
+> User对象的`user_permission`属性管理用户的权限。  
+在数据库中，相关信息保存在`user_user_permissions`的表中。 
+
+ - `add`: 添加权限
+ - `remove`: 移除权限
+ - `clear`: 清空权限 
+
+```python
+from django.contrib.auth.models import Permission
+from account.models import User
+
+u = User.objects.get(username="codelieche")
+print(u.user_permission.all())  # <QuerySet []>
+
+# 获取几个权限
+p = Permission.objects.filter(codename__contains="user")
+
+# 设置用户u的权限
+u.user_permissions = p
+# 再次查看权限
+print(u.user_permissions.all())
+# <QuerySet [<Permission: account | 用户信息 | Can add 用户信息>, <Permission: account | 用户信息 | Can change 用户信息>, <Permission: account | 用户信息 | Can delete 用户信息>]>
+
+u.user_permissions.count()  # 3
+
+# 添加单个权限
+p1 = Permission.objects.get(pk=1)
+# <Permission: admin | log entry | Can add log entry>
+
+u.user_permissions.add(p1)
+u.user_permissions.count()  # 4
+
+# 清空权限
+u.user_permissions.clear()
+u.user_permissions.count()  # 0
+```
+
+检查用户是否有某个权限可以使用`has_perm`方法。
+
+```python
+p1 = Permission.objects.get(pk=1)
+# <Permission: admin | log entry | Can add log entry>
+p1.codename   # 'add_logentry'
+p1.content_type  # <ContentType: log entry>
+p1.content_type.app_label  # 'admin'
+
+# 先添加权限
+u.user_permissions.add(p1)
+
+# 检查用户是否拥有admin的add_logentry权限
+u.has_perm("admin.add_logentry")  # True
+
+u.user_permissions.all()
+# <QuerySet [<Permission: admin | log entry | Can add log entry>]>
+
+# 移除权限后，再判断是否有这个权限
+u.user_permissions.remove(p1)
+u.has_perm("admin.add_logentry")  # False
+```
+
+> 注意：在测试单个用户权限的时候，这个用户要不是超级管理员，否则即使在`user_permissions`中没这个权限，用`has_perm`验证，超级用户是具有所有权限的。
+
+
+### 分组权限(Group Permission)
+> 分组权限和用户权限管理是一致的，分组具有的权限，分组中的用户都具有了这些权限。  
+group对象使用permissions属性来做权限管理。
+
+```python
+group.permissions = [permission_1, permission_2]
+group.permissions.add(p1, p2)
+group.permissions.remove(p1)
+group.permissions.clear()
+```
