@@ -34,7 +34,9 @@ object permission可以使用第三方app[django-guardian](https://github.com/dj
 - `delete model`: 删除对象权限
 > 比如：文章Post模型定义好后，会自动创建三个permission：add_post、change_post和delete_post。
 
-这些权限都是用django的permission对象存储的，在对应的数据表`auth_permission`中。  
+这些权限都是用django的permission对象存储的，在对应的数据表`auth_permission`中。 
+
+#### 在model的Meta中定义权限 
 我们可以自定义权限，在Meta中定义：
 
 ```python
@@ -52,6 +54,27 @@ class Post(models.Model):
             ("view_post", "能查看文章"),
             ("can_note_post", "能回复文章")
         )
+```
+
+#### 通过创建Permission对象，添加权限
+> 每个permission都是django.contrib.auth.models.Permission类型的实例。  
+Permission有三个字段:
+- `name`: 权限的描述
+- `codename`: 权限名，如: add_post,delete_post,在代码逻辑中检查权限时要用到
+- `content_type`: permission属于哪个model的
+
+```python
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
+
+from article.models import Post
+
+# 获取到Post的contenttype
+contenttype = ContentType.objects.get_for_model(Post)
+# 添加view_post的权限
+permission = Permission.objects.create(name="能查看文章",
+                                       codename="view_post",
+                                       content_type=contenttype)
 ```
 
 **注意:**  
