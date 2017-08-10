@@ -156,3 +156,52 @@ group.permissions.add(p1, p2)
 group.permissions.remove(p1)
 group.permissions.clear()
 ```
+
+- `user.get_all_permissions()`: 获取用户的所有权限
+- `user.get_group_permissions()`: 获取用户所属group的权限
+
+
+### permission_required装饰器
+> 当某个视图函数需要某个权限才能访问，我们可以使用permission_required装饰器来处理。  
+当然也可以在函数体内，直接判断用户是否有这个权限: request.user.has_perm('app.codename').
+
+#### 在视图方法中使用
+
+```python
+from django.contrib.auth.decorators import permission_required
+
+@permission_required(['article.add_image'], raise_exception=True)
+def upload_image(request):
+    pass
+```
+
+#### 在视图类中使用
+> 如果在类中时间，我们可以封装mixin，也可以直接在类上使用装饰器(结合`method_decorator`使用)。
+
+```python
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.decorators import permission_required
+from django.utils.decorators import method_decorator
+
+from article.models import Upload
+from article.serializers.article import UploadSerializer
+
+@method_decorator(permission_required('article.add_upload', raise_exception=True), name="create")
+class UploadCreate(generics.CreateAPIView):
+    """
+    Upload Create
+    POST: 上传图片
+    """
+    queryset = Upload.objects.all()
+    serializer_class = UploadSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def create(self, request, *args, **kwargs):
+        return super(UploadCreate, self).create(request, *args, **kwargs)
+```
+
+> 这个是article的app中有个 Upload的model，编写rest_framework的视图时候，添加权限控制。
+
+
+
