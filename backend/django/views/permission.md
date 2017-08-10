@@ -1,42 +1,48 @@
 ## Django权限控制
+
 > Django用User、Group和Permission完成权限机制。  
-将属于Model的某个权限(permission)赋予user或group。
+> 将属于Model的某个权限\(permission\)赋予user或group。
 
-### 权限控制示例(博客)
+### 权限控制示例\(博客\)
 
-比如：有个博客系统，文章模型（Post），用户(User)、分组(Group: 管理员、编辑、作者、读者)。
-- `Model`: Post；
-- `User`：u1、u2、u3；
-- `Group`：admin, editor, author, reader
+比如：有个博客系统，文章模型（Post），用户\(User\)、分组\(Group: 管理员、编辑、作者、读者\)。
 
-> 如果用户u1对模型(Post)有可写的权限，那么u1能修改Post的所有实例(objects).  
-分组(group)的权限也是一样，如果分组editor拥有Post的可写权限，那么属于分组editor的所有用户，都能修改Post的所有实例。
+* `Model`: Post；
+* `User`：u1、u2、u3；
+* `Group`：admin, editor, author, reader
+
+> 如果用户u1对模型\(Post\)有可写的权限，那么u1能修改Post的所有实例\(objects\).  
+> 分组\(group\)的权限也是一样，如果分组editor拥有Post的可写权限，那么属于分组editor的所有用户，都能修改Post的所有实例。
 
 **备注**：  
 这种权限机制，能解决一些简单的应用场景，但是大部分的应用场景，需要更细分的权限机制。  
-比如：博客系统，管理员、编辑、作者、读者四个分组。  
-- 管理员和编辑拥有查看、修改和删除所有文章的权限(可以用Django的全局权限控制)。 
-- 而作者也需要拥有修改、删除自己文章的权限，但是不能删除和修改别人的(需要对象权限`Object permission`)
-- 读者只有阅读权限(这个好控制)。
+比如：博客系统，管理员、编辑、作者、读者四个分组。
+
+* 管理员和编辑拥有查看、修改和删除所有文章的权限\(可以用Django的全局权限控制\)。 
+* 而作者也需要拥有修改、删除自己文章的权限，但是不能删除和修改别人的\(需要对象权限`Object permission`\)
+* 读者只有阅读权限\(这个好控制\)。
 
 而在面对上面的场景，如果用户不是管理员和编辑，我们可以通过判断`request.user`与文章的`user`是否相同，是就可以编辑删除文章，不是的话就没权限。  
-这样做虽然也ok，但是最好是引入更细的权限控制机制：对象权限(`object permission`)  
+这样做虽然也ok，但是最好是引入更细的权限控制机制：对象权限\(`object permission`\)  
 object permission可以使用第三方app[django-guardian](https://github.com/django-guardian/django-guardian)。
 
 > 比如有三篇文章p1,p2,p3，如果把p1的可写权限赋予了用户u1，那么u1可以修改p1对象，而对p2、p3无法修改。  
-对group也是如此，如果把p2的可写权限赋予了分组g1，那么g1中的所有用户都拥有了修改p2的权限了，但是无法修改p1、p3.  
-结合Django自带的权限机制和object permission，博客系统中坐着的权限控制就很好处理了（系统全局上不允许author分组编辑文字，但是对属于作者的文章，赋予编辑权限即可）
+> 对group也是如此，如果把p2的可写权限赋予了分组g1，那么g1中的所有用户都拥有了修改p2的权限了，但是无法修改p1、p3.  
+> 结合Django自带的权限机制和object permission，博客系统中坐着的权限控制就很好处理了（系统全局上不允许author分组编辑文字，但是对属于作者的文章，赋予编辑权限即可）
 
 ### Django的权限项
+
 当我们编写model的时候，Django默认会创建三个权限：
-- `add model`: 添加对象权限
-- `change model`: 修改对象权限
-- `delete model`: 删除对象权限
-> 比如：文章Post模型定义好后，会自动创建三个permission：add_post、change_post和delete_post。
 
-这些权限都是用django的permission对象存储的，在对应的数据表`auth_permission`中。 
+* `add model`: 添加对象权限
+* `change model`: 修改对象权限
+* `delete model`: 删除对象权限
+  > 比如：文章Post模型定义好后，会自动创建三个permission：add\_post、change\_post和delete\_post。
 
-#### 在model的Meta中定义权限 
+这些权限都是用django的permission对象存储的，在对应的数据表`auth_permission`中。
+
+#### 在model的Meta中定义权限
+
 我们可以自定义权限，在Meta中定义：
 
 ```python
@@ -46,7 +52,7 @@ class Post(models.Model):
     title = models.CharField(max_length=128, verbose_name="标题")
     slug = models.SlugField(max_length=100, verbose_name="网址")
     body = models.TextField(verbose_name="内容")
-    
+
     class Meta:
         verbose_name = "文章"
         verbose_name_plural = verbose_name
@@ -57,11 +63,13 @@ class Post(models.Model):
 ```
 
 #### 通过创建Permission对象，添加权限
+
 > 每个permission都是django.contrib.auth.models.Permission类型的实例。  
-Permission有三个字段:
-- `name`: 权限的描述
-- `codename`: 权限名，如: add_post,delete_post,在代码逻辑中检查权限时要用到
-- `content_type`: permission属于哪个model的
+> Permission有三个字段:
+>
+> * `name`: 权限的描述
+> * `codename`: 权限名，如: add\_post,delete\_post,在代码逻辑中检查权限时要用到
+> * `content_type`: permission属于哪个model的
 
 ```python
 from django.contrib.auth.models import Permission
@@ -77,18 +85,18 @@ permission = Permission.objects.create(name="能查看文章",
                                        content_type=contenttype)
 ```
 
-**注意:**  
+**注意:**
+
 > permission总是与model对应的，如果一个对象不是model的实力，那么我们无法为它创建或分配权限。
 
-
-### 用户权限(User Permission)
+### 用户权限\(User Permission\)
 
 > User对象的`user_permission`属性管理用户的权限。  
-在数据库中，相关信息保存在`user_user_permissions`的表中。 
+> 在数据库中，相关信息保存在`user_user_permissions`的表中。
 
- - `add`: 添加权限
- - `remove`: 移除权限
- - `clear`: 清空权限 
+* `add`: 添加权限
+* `remove`: 移除权限
+* `clear`: 清空权限 
 
 ```python
 from django.contrib.auth.models import Permission
@@ -145,10 +153,10 @@ u.has_perm("admin.add_logentry")  # False
 
 > 注意：在测试单个用户权限的时候，这个用户要不是超级管理员，否则即使在`user_permissions`中没这个权限，用`has_perm`验证，超级用户是具有所有权限的。
 
+### 分组权限\(Group Permission\)
 
-### 分组权限(Group Permission)
 > 分组权限和用户权限管理是一致的，分组具有的权限，分组中的用户都具有了这些权限。  
-group对象使用permissions属性来做权限管理。
+> group对象使用permissions属性来做权限管理。
 
 ```python
 group.permissions = [permission_1, permission_2]
@@ -157,12 +165,13 @@ group.permissions.remove(p1)
 group.permissions.clear()
 ```
 
-- `user.get_all_permissions()`: 获取用户的所有权限
-- `user.get_group_permissions()`: 获取用户所属group的权限
+* `user.get_all_permissions()`: 获取用户的所有权限
+* `user.get_group_permissions()`: 获取用户所属group的权限
 
-### has_perm
+### has\_perm
+
 > 判断用户是否有某个权限，可是使用`has_perm`.  
-比如：删除帖子的权限控制。
+> 比如：删除帖子的权限控制。
 
 ```python
 from django.views.generic import View
@@ -173,7 +182,7 @@ class PostDetail(View):
     def get(self, request, pk):
         # ......
         pass
-    
+
     def delete(self, request, pk):
         # 权限判断
         user = request.user
@@ -183,9 +192,10 @@ class PostDetail(View):
         # ......
 ```
 
-### permission_required装饰器
-> 当某个视图函数需要某个权限才能访问，我们可以使用permission_required装饰器来处理。  
-当然也可以在函数体内，直接判断用户是否有这个权限: request.user.has_perm('app.codename').
+### permission\_required装饰器
+
+> 当某个视图函数需要某个权限才能访问，我们可以使用permission\_required装饰器来处理。  
+> 当然也可以在函数体内，直接判断用户是否有这个权限: request.user.has\_perm\('app.codename'\).
 
 #### 在视图方法中使用
 
@@ -198,7 +208,8 @@ def upload_image(request):
 ```
 
 #### 在视图类中使用
-> 如果在类中时间，我们可以封装mixin，也可以直接在类上使用装饰器(结合`method_decorator`使用)。
+
+> 如果在类中时间，我们可以封装mixin，也可以直接在类上使用装饰器\(结合`method_decorator`使用\)。
 
 ```python
 from rest_framework import generics
@@ -223,14 +234,65 @@ class UploadCreate(generics.CreateAPIView):
         return super(UploadCreate, self).create(request, *args, **kwargs)
 ```
 
-> 这个是article的app中有个 Upload的model，编写rest_framework的视图时候，添加权限控制。
+> 这个是article的app中有个 Upload的model，编写rest\_framework的视图时候，添加权限控制。
 
-如果请求用户没有add_upload的权限，那么api会返回：
+如果请求用户没有add\_upload的权限，那么api会返回：
 
 ```json
 {
     "detail": "Permission denied."
 }
+```
+
+### Object Permission
+
+> 关于对象权限，最简单的方式就是给对象价格user的外键，如果当前用户和这个对象的user相等，就可以操作此对象。  
+> 但是这种方式，还是有局限性的，关于Object Permission可以使用Django的第三方插件库[django-guardian](https://github.com/django-guardian/django-guardian).
+
+```python
+from guardian.shortcuts import assign_perm, get_perms
+from guardian.core import ObjectPermissionChecker
+from guardian.decorators import permission_required
+```
+
+#### 1. 添加对象权限
+
+使用assign\_perm\(\)方法，给当前用户设置post的删除权限。
+
+```python
+assign_perm('article.delete_post', request.user, post)
+```
+
+assign\_perm方法也可以给组设置权限。
+
+#### 2. 检查对象权限
+
+> get\_perms\(\)用法与user.has\_perm\(\)类似,只是get\_perms是检查当前用户对这个对象的权限 user.has\_perm检查的是对象对应的类的全局相关权限。
+
+```python
+from django.core.exceptions import PermissionDenied
+
+
+if 'article.delete_post' in get_perms(request.user, post):
+    # 删除操作
+    pass
+else:
+    # 没有这个权限，抛出异常
+    raise PermissionDenied
+```
+
+> 也可以使用ObjectPermissionChecker对象来检查权限。
+
+```
+from guardian.core import ObjectPermissionChecker
+def delete_post(request, pk):
+    post = Post.objects.get(pk=pk)
+    checker = ObjectPermissionChecker(request.user)
+    if checker.has_perm('article.delete_post', post):
+        post.delete()
+        # ...
+    else:
+        raise Permission_required
 ```
 
 
