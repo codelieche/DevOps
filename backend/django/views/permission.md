@@ -160,6 +160,28 @@ group.permissions.clear()
 - `user.get_all_permissions()`: 获取用户的所有权限
 - `user.get_group_permissions()`: 获取用户所属group的权限
 
+### has_perm
+> 判断用户是否有某个权限，可是使用`has_perm`.  
+比如：删除帖子的权限控制。
+
+```python
+from django.views.generic import View
+from django.core.exceptions import PermissionDenied
+
+class PostDetail(View):
+    """文章详情页: GET: 查看文章信息、DELETE：删除文章"""
+    def get(self, request, pk):
+        # ......
+        pass
+    
+    def delete(self, request, pk):
+        # 权限判断
+        user = request.user
+        if not user.has_perm('article.delete_post'):
+            raise PermissionDenied
+        # 进行删除相关操作
+        # ......
+```
 
 ### permission_required装饰器
 > 当某个视图函数需要某个权限才能访问，我们可以使用permission_required装饰器来处理。  
@@ -202,6 +224,14 @@ class UploadCreate(generics.CreateAPIView):
 ```
 
 > 这个是article的app中有个 Upload的model，编写rest_framework的视图时候，添加权限控制。
+
+如果请求用户没有add_upload的权限，那么api会返回：
+
+```json
+{
+    "detail": "Permission denied."
+}
+```
 
 
 
