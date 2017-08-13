@@ -8,6 +8,8 @@
     2. 如果条件找到了多个值，抛出`MultipleObjectsReturned`异常
 
 ### Django ORM常用的函数
+- `create()`: 创建对象，eg: `p = Project.objects.create(name="shop123")`
+- `all()`: 获取所有的对象, eg: `Project.objects.all()`
 - `filter()`: 返回复合指定条件的QuerySet
 - `get()`: 获取指定复合条件的唯一元素，复合条件的元素大于1或者没有都会抛出异常
 - `exclude()`: 返回不符合指定条件的QuerySet
@@ -19,6 +21,7 @@
     
 - `exists()`: 用来检查是否存在某条件的记录，通常用在`filter()`后面
 - `update()`: 用来快速更新【某些】数据记录中的字段内容
+- `save()`: 保存对象，eg: `p.name = "djangoshop"; p.save()`
 - `delete()`: 杀出指定的记录
 - `aggregate()`: 可以用来计算数据项的聚合函数
 - `iexact`: 不区分大小写的条件设置
