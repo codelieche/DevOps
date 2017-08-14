@@ -7,6 +7,7 @@
     * [Django Fields](backend/django/models/fields.md)
     * [Django 数据库迁移](backend/django/models/migrate.md)
     * [Django 数据库查询](backend/django/models/filter.md)
+    * [Django 模版过滤器](backend/templates/filter.md)
     * [给views添加mixin](backend/django/views/mixin.md)
     * [Django权限控制](backend/django/views/permission.md)
     * [Django取消CSRF和CORS中间件](backend/django/middleware/disabled_csrf_and_cors.md)
