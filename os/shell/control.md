@@ -11,7 +11,6 @@ shell中控制相关的关键字有：`if`,`exit`,`for`,`while`,`until`,`case`,`
 #### 第一种：if ... fi
 
 ```shell
-
 # 条件为真执行：条件为假不做任何事情
 if condition ; then
     commands
@@ -21,7 +20,6 @@ if
 #### 第二种：if ... else ... fi
 
 ```shell
-
 # 条件为真执行cmd01；条件为假执行cmd02
 if condition ; then
     cmd01
@@ -33,7 +31,6 @@ fi
 #### 第三种：if ... elif ... else ... fi
 
 ```shell
-
 # 条件1位真时执行cmd01；条件2为真的时候执行cmd02；其它情况执行cmd03
 if condition01 ; then
     cmd01
@@ -47,7 +44,6 @@ fi
 示例：
 
 ```shell
-
 #! /bin/sh
 if test -z "$1" ; then
     echo "请选择您喜欢的操作系统：windows/linux/macOS"
@@ -83,7 +79,6 @@ esac
 示例：
 
 ```shell
-
 #! /bin/sh
 # 输入windows/linux/macos
 
@@ -111,7 +106,6 @@ shell的循环有两种：一是while(until)；另外一个是for循环。
 > 先来个示例：
 
 ```shell
-
 #! /bin/sh
 echo $1
 if [[ -n $1 && $1 -ge 1 ]] ; then
@@ -146,7 +140,6 @@ done
 我们先用`seq`生成个序列：`seq 5`(与`seq 1 5`等价)。
 
 ```shell
-
 for i in $( seq 1 5 ); do
     echo "i is: $i"
 done
@@ -180,7 +173,6 @@ done
 **示例：**
 
 ```shell
-
 #! /bin/sh
 num=1
 
@@ -191,4 +183,17 @@ do
 	num=$[$num + 1]
 done
 echo "程序运行完毕"
+```
+
+**运行示例：**
+
+```
+➜  shell ./untilldemo.sh
+num is 1
+num is 2
+num is 3
+num is 4
+num is 5
+程序运行完毕
+当前主shell的进程是: 88408
 ```
