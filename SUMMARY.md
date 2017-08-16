@@ -60,6 +60,7 @@
   * [Version Control](tools/versioncontrol/README.md)
     * [安装gitlab](tools/versioncontrol/gitlab/install.md)
 * [Operating System](os/README.md)
+  * [shell编程之--$](os/shell/dollar.md)
   * [shell编程之--test表达式](os/shell/test_expression.md)
   * [shell编程之--流程控制](os/shell/control.md)
 
