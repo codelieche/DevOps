@@ -59,6 +59,7 @@
   * [paramiko](tools/paramiko/README.md)
   * [Version Control](tools/versioncontrol/README.md)
     * [安装gitlab](tools/versioncontrol/gitlab/install.md)
+    * [python-gitlab基本使用](tools/versioncontrol/gitlab/python-gitlab.md)
 * [Operating System](os/README.md)
   * [shell编程之--$](os/shell/dollar.md)
   * [shell编程之--test表达式](os/shell/test_expression.md)
