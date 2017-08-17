@@ -1,6 +1,11 @@
 ## python-gitlab基本使用
 
 ### 基本使用
+**注意：**演示示例需要先实例化`Gitlab`对象gl.
+
+```
+gl = gitlab.Gitlab(url='http://gitlab.codelieche.com', private_token='PRIVATE_TOKEN', api_version=4)
+```
 
 #### 获取所有项目
 
@@ -63,6 +68,25 @@ def create_new_branch(project_id, new_branch_name, source_branch_ref):
     print(branch.name, branch.project_id)
 ```
 
+#### 删除分支
+
+**方式一：**
+
+```python
+# 获取到branch
+branch = gl.project_branches.get(project_id=project_id, id=branch)
+print(branch.name, branch.project_id)
+branch.delete() # 不存在了会抛出404错误
+```
+
+**方式二：**
+
+```python
+project_id = 1
+branch = 'feature01'
+p = gl.projects.get(project_id=project_id)
+p.branches.delete(branch)
+```
 
 
 ### 参考文档
