@@ -1,6 +1,6 @@
 ## Ant.Design之--头部与侧边栏
 
-这篇文章是接着上一篇[Ant.Design之--布局](./layout.html)，对Header和Sider区域做一些修改。
+这篇文章是接着上一篇[Ant.Design之--布局](./layout.md)，对Header和Sider区域做一些修改。
 
 ### 效果图
 
@@ -68,7 +68,7 @@
 * 给`Layout.Header`添加样式`header`
 * 把`Header`组件放到`Layout.Header`中。
 
-  ```git
+```git
   diff --git a/src/components/Home.js b/src/components/Home.js
   --- a/src/components/Home.js
   +++ b/src/components/Home.js
@@ -89,7 +89,7 @@
   +                <Layout.Header className="header">
   +                    <Header />
                </Layout.Header>
-  ```
+```
 
 ### Sider
 
@@ -289,4 +289,4 @@ const {Content, Sider} = Layout;
  }
 ```
 
-下一篇就是：编写侧边栏的导航栏。
+下一篇就是：编写侧边栏的导航菜单。

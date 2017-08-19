@@ -26,6 +26,7 @@
     * [设置antd按需加载](front/design/yarnto-npm.md)
     * [Ant.Design之--布局](front/design/layout.md)
     * [Ant.Design之--头部与侧边栏](front/design/header_sider.md)
+    * [Ant.Design之--导航菜单](front/design/nav_menu.md)
     * [固定侧边栏和头部布局](front/design/fix_sidebar_header.md)
     * [表单数据校验](front/design/async-validator.md)
 * [app 模块](apps/README.md)
