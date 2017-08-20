@@ -359,7 +359,7 @@ index 6a32a51..26457b6 100644
                      </Sider>
                      <Layout style={{maxHeight: "100vh", overflow: "auto"}}>
                          <Content className="container">
-``` 
+```
 
 ### 根据数据渲染Nav
 
@@ -398,5 +398,108 @@ var navData = [
 export default navData;
 ```
 
+#### 渲染导航菜单
+1. 先动态生成最外层的className
+2. 根据双方收起/展开渲染不同的导航元素(收起的时候，标题改成提示框)
 
 
+**1. 先引入navData,和Tooltip**
+
+```js
+import {
+    Icon,
+    Tooltip
+} from 'antd';
+
+import navData from './nav-data';
+```
+
+**2. 重写render函数**
+
+```js
+render() {
+    // 先申明导航菜单元素，最外层的导航菜单class
+    var navElements, navLeftClass;
+    if(this.state.collapsed){
+        // 当侧边栏收起的时候
+        navLeftClass = "menu-left menu-small";
+        // 根据navData渲染导航菜单元素
+        navElements = navData.map((item, index) => {
+            // 先生成二级menu元素
+            var navMenuItems = item.subs.map((v, i) => {
+                return (
+                    <Tooltip title={v.title} placement="right" key={i}>
+                        <li className="nav-menu-item">
+                            <a href={v.slug}>
+                                <Icon type={v.icon} />
+                            </a>
+                        </li>
+                    </Tooltip>
+                );
+            });
+            // 再生成一级菜单元素
+            var subMenuClass = "sub-menu";
+            if(this.state.openSubMenuIndex === item.key){
+                subMenuClass = "sub-menu active";
+            }
+            // 返回一级菜单元素(内嵌二级菜单元素)
+            return (
+                <div className={subMenuClass} key={index}>
+                    <Tooltip title={item.title} placement="right" overlayStyle={{opacity:1}}>
+                        <div className="sub-menu-title" onClick={() => {this.subMenuOnClick(item.key)}}>
+                            <Icon type={item.icon} />
+                        </div>
+                    </Tooltip>
+                    {/*二级菜单列表  */}
+                    <ul className="nav-menu">
+                        {navMenuItems}
+                    </ul>
+                </div>
+            );
+
+        });
+    }else{
+        // 当侧边栏是展开的时候，不用Tooltip，而使用title了
+        navLeftClass = "menu-left";
+        navElements = navData.map((item, index) => {
+            // 生成二级子菜单
+            var navMenuItems = item.subs.map((v, i) => {
+                return (
+                    <li className="nav-menu-item" key={i}>
+                        <a href={v.slug}>
+                            <Icon type={v.icon} />
+                            <span className="title">{v.title}</span>
+                        </a>
+                    </li>
+                );
+            });
+
+            // 再生成一级菜单
+            var subMenuClass = "sub-menu";
+            if(this.state.openSubMenuIndex === item.key){
+                // 当展开的菜单key  与当前菜单的key相同，加上active的class
+                subMenuClass = "sub-menu active";
+            }
+
+            return (
+                <div className={subMenuClass} key={index}>
+                    <div className="sub-menu-title" onClick={() => this.subMenuOnClick(item.key)}>
+                        <Icon type={item.icon} />
+                        <span className="title">{item.title}</span>
+                    </div>
+                    {/*二级菜单  */}
+                    <ul className="nav-menu">
+                        {navMenuItems}
+                    </ul>
+                </div>
+            );
+        });
+    }
+
+    return (
+        <div className={navLeftClass}>
+            {navElements}
+        </div>
+    );
+}
+```
