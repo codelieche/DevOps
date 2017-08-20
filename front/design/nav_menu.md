@@ -19,10 +19,10 @@
 #### 1. 编写简单nav
 
 * `menu-left`: Nav的最外层class
-* `sub-menu`: 每一块菜单元素class【里面有一级菜单+二级菜单】
-  1. `sub-menu-title`: 一级菜单标题元素class
-  2. `nav-menu-item`: 二级菜单元素的class
-  3. `nav-menu-title`: 二级菜单标题【包含有icon和span】
+* `top-menu`: 每一块菜单元素class【里面有一级菜单+二级菜单】
+  1. `top-menu-title`: 一级菜单标题元素class
+  2. `sub-menu-item`: 二级菜单元素的class
+  3. `sub-menu-title`: 二级菜单标题【包含有icon和span】
   4. `title`: 一级二级菜单的标题class
 
 ```js
@@ -36,20 +36,20 @@ export default class Nav extends React.Component {
     render() {
         return (
             <div className="menu-left">
-                <div className="sub-menu" key="asset">
-                    <div className="sub-menu-title">
+                <div className="top-menu" key="asset">
+                    <div className="top-menu-title">
                         <Icon type="bank" />
                         <span className="title">一级导航1</span>
                     </div>
-                    <ul className="nav-menu">
-                        <li className="nav-menu-item" key={1}>
-                            <a className="nav-menu-title">
+                    <ul className="nav-menu-list">
+                        <li className="sub-menu-item" key={1}>
+                            <a className="sub-menu-title">
                                 <Icon type="right" />
                                 <span className="title">二级导航1</span>
                             </a>
                         </li>
-                        <li className="nav-menu-item" key={2}>
-                            <a className="nav-menu-title">
+                        <li className="sub-menu-item" key={2}>
+                            <a className="sub-menu-title">
                                 <Icon type="right" />
                                 <span className="title">二级导航2</span>
                             </a>
@@ -57,26 +57,26 @@ export default class Nav extends React.Component {
                     </ul>
                 </div>
 
-                <div className="sub-menu active" key="user">
-                    <div className="sub-menu-title">
+                <div className="top-menu active" key="user">
+                    <div className="top-menu-title">
                         <Icon type="bank" />
                         <span className="title">一级导航2</span>
                     </div>
-                    <ul className="nav-menu">
-                        <li className="nav-menu-item" key={1}>
-                            <a className="nav-menu-title">
+                    <ul className="nav-menu-list">
+                        <li className="sub-menu-item" key={1}>
+                            <a className="sub-menu-title">
                                 <Icon type="right" />
                                 <span className="title">二级导航3</span>
                             </a>
                         </li>
-                        <li className="nav-menu-item" key={2}>
-                            <a className="nav-menu-title active">
+                        <li className="sub-menu-item" key={2}>
+                            <a className="sub-menu-title active">
                                 <Icon type="right" />
                                 <span className="title">二级导航4</span>
                             </a>
                         </li>
-                        <li className="nav-menu-item" key={3}>
-                            <a className="nav-menu-title">
+                        <li className="sub-menu-item" key={3}>
+                            <a className="sub-menu-title">
                                 <Icon type="right" />
                                 <span className="title">二级导航5</span>
                             </a>
@@ -106,53 +106,53 @@ export default class Nav extends React.Component {
     line-height: 40px;
 }
 
-.menu-left .tilte{
+.menu-left .title{
     /*导航菜单 标题样式  */
     padding-left: 7px;
     font-size: 13px;
 }
 
-.menu-left .sub-menu {
+.menu-left .top-menu {
     /*左边导航 子Menu样式  */
     display: block;
     width: 100%;
 }
 
-.menu-left .sub-menu-title {
+.menu-left .top-menu-title {
     /*一级标题样式  */
     height: 40px;
     padding-left: 22px;
     position: relative;
 }
 
-.menu-left .sub-menu-title .tilte {
+.menu-left .top-menu-title .tilte {
     /*一级标题标题样式  */
     line-height: 40px;
 }
 
-.menu-left .sub-menu-title:hover {
+.menu-left .top-menu-title:hover {
     /*一级导航 鼠标移动上去时候的样式  */
     background-color: #00c1de;
 }
 
-.menu-left .nav-menu{
-    /*一级导航中的ul.nav-menu  */
+.menu-left .sub-menu-list{
+    /*一级导航中的ul.sub-menu-list  */
     /*ul 中的li放的就是二级菜单  */
     /*二级菜单，默认不展开  */
     display: none;
     width: 100%;
 }
-.menu-left .sub-menu.active  .nav-menu{
+.menu-left .top-menu.active  .sub-menu-list{
     /*当一级菜单有active的时候 二级菜单展开  */
     display: block;
 }
 
-.menu-left .sub-menu .nav-menu .nav-menu-item {
+.menu-left .top-menu .sub-menu-list .sub-menu-item {
     /*设置二级菜单样式  */
     height: 40px;
 }
 
-.menu-left .sub-menu .nav-menu .nav-menu-item a {
+.menu-left .top-menu .sub-menu-list .sub-menu-item a {
     /*二级菜单a连接的样式  */
     padding-left: 44px;
     display: block;
@@ -161,18 +161,18 @@ export default class Nav extends React.Component {
     background-color: #424858;
     text-decoration: none;
 }
-.menu-left .sub-menu .nav-menu .nav-menu-item a:hover{
+.menu-left .top-menu .sub-menu-list .sub-menu-item a:hover{
     /*设置二级菜单a链接鼠标移上去时候的样式  */
     background-color: #4A5064;
 }
-.menu-left .sub-menu .nav-menu .nav-menu-item a.active{
+.menu-left .top-menu .sub-menu-list .sub-menu-item a.active{
     /*设置二级菜单a链接 有active时候的样式  */
     background-color: #00c1de;
 }
 
-.menu-left .sub-menu .nav-menu .nav-menu-item i{
+.menu-left .top-menu .sub-menu-list .sub-menu-item i{
     /*二级菜单 标题中 icon样式  */
-    font-size: 13px;
+    font-size: 14px;
 }
 
 /* 设置sider缩小的时候最小宽度 */
@@ -181,6 +181,7 @@ export default class Nav extends React.Component {
     /* 导航side缩放后放大，宽度变成185px了，或者取消设置.side的overflow:auto */
     overflow: hidden;
 }
+
 
 /*侧边栏是可以缩小的  */
 /*当侧边栏缩小的时候  导航菜单样式也需要做适当调整  */
@@ -192,22 +193,23 @@ export default class Nav extends React.Component {
     display: none;
 }
 
-.menu-left.menu-small .sub-menu{
+.menu-left.menu-small .top-menu.active .sub-menu-list {
+    /*当一级菜单是active的时候二级菜单才显示  */
     display: block;
 }
-.menu-left.menu-small .nav-menu .nav-menu-item a{
+.menu-left.menu-small .sub-menu-list .sub-menu-item a{
     /*a链接开始是与左边距离44px，现在减少一半  */
-    padding-left: 22px;
+     padding-left: 22px;
 }
 
 
 /*设置一级标题右侧的小尖角符号  */
-.menu-left .sub-menu.active .sub-menu-title .title::after{
+.menu-left .top-menu.active .top-menu-title .title::after{
     /*当一级标题是active的时候，让右侧的尖角符号转动180度  */
     transform: rotate(180deg) scale(0.75);
 }
 
-.menu-left .sub-menu .sub-menu-title .title::after{
+.menu-left .top-menu .top-menu-title .title::after{
     /* title 后面的尖角符号 */
     line-height: 40px;
     font-family: "anticon" !important;
@@ -239,7 +241,7 @@ export default class Nav extends React.Component {
 #### 3. 给Nav添加动态事件
 
 1. 当侧边栏收起来的时候，我们给`menu-left`加个`menu-small`的class
-2. 当一级菜单`sub-menu-title`点击的时候，我们让它的二级菜单`nav-menu`展开，也就是给`sub-menu`加上`active`属性。
+2. 当一级菜单`top-menu-title`点击的时候，我们让它的二级菜单`nav-menu-list`展开，也就是给`top-menu`加上`active`属性。
 
 ##### 3-1：侧边栏收起的时候加上menu-small
 
@@ -284,8 +286,8 @@ componentWillReceiveProps(nextProps){
 
 ##### 3-2：给一级菜单动态添加active
 1. 给Nav组件传递个`defaultOpenKey`
-2. 在constructor中设置状态值`openSubMenuIndex`
-3. 给一级菜单的标题添加`subMenuOnClick`事件
+2. 在constructor中设置状态值`openTopMenuKey`
+3. 给一级菜单的标题添加`topMenuOnClick`事件
 4. 动态设置`sub-menu`的`active`样式
 
 ```git
@@ -298,40 +300,40 @@ index 41a7cc9..47fdf8a 100644
          this.state = {
              collapsed: this.props.collapsed ? this.props.collapsed : false,
 +            // 默认打开的一级菜单key
-+            openSubMenuIndex: this.props.defaultOpenKey ? this.props.defaultOpenKey : null,
++            openTopMenuKey: this.props.defaultOpenKey ? this.props.defaultOpenKey : null,
          }
-+        this.subMenuOnClick = this.subMenuOnClick.bind(this);
++        this.topMenuOnClick = this.topMenuOnClick.bind(this);
      }
 
      componentWillReceiveProps(nextProps){
          if(this.props.collapsed !== nextProps.collapsed){
              this.setState({
                  collapsed: nextProps.collapsed,
-+                openSubMenuIndex: nextProps.defaultOpenKey
++                openTopMenuKey: nextProps.defaultOpenKey
 +            });
 +        }
 +    }
 +
-+    subMenuOnClick(key) {
++    topMenuOnClick(key) {
 +        // 设置当前展开的subMenu
 +        // console.log(key);
-+        if(this.state.openSubMenuIndex === key){
++        if(this.state.openTopMenuKey === key){
 +            this.setState({
-+                openSubMenuIndex: null,
++                openTopMenuKey: null,
 +            });
 +        }else{
 +            this.setState({
-+                openSubMenuIndex: key,
++                openTopMenuKey: key,
              });
          }
      }
      render() {
          return (
              <div className={this.state.collapsed ? "menu-left menu-small" : "menu-left"}>
--                <div className="sub-menu" key="asset">
--                    <div className="sub-menu-title">
-+                <div className={this.state.openSubMenuIndex === "asset" ? "sub-menu active" : "sub-menu"}  key="asset">
-+                    <div className="sub-menu-title" onClick={() => this.subMenuOnClick("asset")}>
+-                <div className="top-menu" key="asset">
+-                    <div className="top-menu-title">
++                <div className={this.state.openTopMenuKey === "asset" ? "top-menu active" : "top-menu"}  key="asset">
++                    <div className="top-menu-title" onClick={() => this.topMenuOnClick("asset")}>
                          <Icon type="bank" />
                          <span className="title">一级导航1</span>
                      </div>
@@ -339,10 +341,10 @@ index 41a7cc9..47fdf8a 100644
                      </ul>
                  </div>
 
--                <div className="sub-menu active" key="user">
--                    <div className="sub-menu-title">
-+                <div className={this.state.openSubMenuIndex === "user" ? "sub-menu active" : "sub-menu"} key="user">
-+                    <div className="sub-menu-title" onClick={() => this.subMenuOnClick("user")}>
+-                <div className="top-menu active" key="user">
+-                    <div className="top-menu-title">
++                <div className={this.state.openTopMenuKey === "user" ? "top-menu active" : "top-menu"} key="user">
++                    <div className="top-menu-title" onClick={() => this.topMenuOnClick("user")}>
                          <Icon type="bank" />
                          <span className="title">一级导航2</span>
                      </div>
@@ -419,17 +421,17 @@ import navData from './nav-data';
 ```js
 render() {
     // 先申明导航菜单元素，最外层的导航菜单class
-    var navElements, navLeftClass;
+    var topMenuElements, navLeftClass;
     if(this.state.collapsed){
         // 当侧边栏收起的时候
         navLeftClass = "menu-left menu-small";
         // 根据navData渲染导航菜单元素
-        navElements = navData.map((item, index) => {
+        topMenuElements = navData.map((item, index) => {
             // 先生成二级menu元素
-            var navMenuItems = item.subs.map((v, i) => {
+            var subMenuItems = item.subs.map((v, i) => {
                 return (
                     <Tooltip title={v.title} placement="right" key={i}>
-                        <li className="nav-menu-item">
+                        <li className="sub-menu-item">
                             <a href={v.slug}>
                                 <Icon type={v.icon} />
                             </a>
@@ -438,21 +440,21 @@ render() {
                 );
             });
             // 再生成一级菜单元素
-            var subMenuClass = "sub-menu";
-            if(this.state.openSubMenuIndex === item.key){
-                subMenuClass = "sub-menu active";
+            var topMenuClass = "top-menu";
+            if(this.state.openTopMenuKey === item.key){
+                topMenuClass = "top-menu active";
             }
             // 返回一级菜单元素(内嵌二级菜单元素)
             return (
-                <div className={subMenuClass} key={index}>
+                <div className={topMenuClass} key={index}>
                     <Tooltip title={item.title} placement="right" overlayStyle={{opacity:1}}>
-                        <div className="sub-menu-title" onClick={() => {this.subMenuOnClick(item.key)}}>
+                        <div className="top-menu-title" onClick={() => {this.topMenuOnClick(item.key)}}>
                             <Icon type={item.icon} />
                         </div>
                     </Tooltip>
                     {/*二级菜单列表  */}
-                    <ul className="nav-menu">
-                        {navMenuItems}
+                    <ul className="nav-menu-list">
+                        {subMenuItems}
                     </ul>
                 </div>
             );
@@ -461,11 +463,11 @@ render() {
     }else{
         // 当侧边栏是展开的时候，不用Tooltip，而使用title了
         navLeftClass = "menu-left";
-        navElements = navData.map((item, index) => {
+        topMenuElements = navData.map((item, index) => {
             // 生成二级子菜单
-            var navMenuItems = item.subs.map((v, i) => {
+            var subMenuItems = item.subs.map((v, i) => {
                 return (
-                    <li className="nav-menu-item" key={i}>
+                    <li className="sub-menu-item" key={i}>
                         <a href={v.slug}>
                             <Icon type={v.icon} />
                             <span className="title">{v.title}</span>
@@ -475,21 +477,21 @@ render() {
             });
 
             // 再生成一级菜单
-            var subMenuClass = "sub-menu";
-            if(this.state.openSubMenuIndex === item.key){
+            var topMenuClass = "top-menu";
+            if(this.state.openTopMenuKey === item.key){
                 // 当展开的菜单key  与当前菜单的key相同，加上active的class
-                subMenuClass = "sub-menu active";
+                topMenuClass = "top-menu active";
             }
 
             return (
-                <div className={subMenuClass} key={index}>
-                    <div className="sub-menu-title" onClick={() => this.subMenuOnClick(item.key)}>
+                <div className={topMenuClass} key={index}>
+                    <div className="top-menu-title" onClick={() => this.topMenuOnClick(item.key)}>
                         <Icon type={item.icon} />
                         <span className="title">{item.title}</span>
                     </div>
                     {/*二级菜单  */}
-                    <ul className="nav-menu">
-                        {navMenuItems}
+                    <ul className="nav-menu-list">
+                        {subMenuItems}
                     </ul>
                 </div>
             );
@@ -498,7 +500,7 @@ render() {
 
     return (
         <div className={navLeftClass}>
-            {navElements}
+            {topMenuElements}
         </div>
     );
 }
