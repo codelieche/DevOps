@@ -282,6 +282,85 @@ componentWillReceiveProps(nextProps){
 }
 ```
 
+##### 3-2：给一级菜单动态添加active
+1. 给Nav组件传递个`defaultOpenKey`
+2. 在constructor中设置状态值`openSubMenuIndex`
+3. 给一级菜单的标题添加`subMenuOnClick`事件
+4. 动态设置`sub-menu`的`active`样式
+
+```git
+diff --git a/src/components/Base/Nav.js b/src/components/Base/Nav.js
+index 41a7cc9..47fdf8a 100644
+--- a/src/components/Base/Nav.js
++++ b/src/components/Base/Nav.js
+@@ -12,21 +12,39 @@ export default class Nav extends React.Component {
+         super(props);
+         this.state = {
+             collapsed: this.props.collapsed ? this.props.collapsed : false,
++            // 默认打开的一级菜单key
++            openSubMenuIndex: this.props.defaultOpenKey ? this.props.defaultOpenKey : null,
+         }
++        this.subMenuOnClick = this.subMenuOnClick.bind(this);
+     }
+
+     componentWillReceiveProps(nextProps){
+         if(this.props.collapsed !== nextProps.collapsed){
+             this.setState({
+                 collapsed: nextProps.collapsed,
++                openSubMenuIndex: nextProps.defaultOpenKey
++            });
++        }
++    }
++
++    subMenuOnClick(key) {
++        // 设置当前展开的subMenu
++        // console.log(key);
++        if(this.state.openSubMenuIndex === key){
++            this.setState({
++                openSubMenuIndex: null,
++            });
++        }else{
++            this.setState({
++                openSubMenuIndex: key,
+             });
+         }
+     }
+     render() {
+         return (
+             <div className={this.state.collapsed ? "menu-left menu-small" : "menu-left"}>
+-                <div className="sub-menu" key="asset">
+-                    <div className="sub-menu-title">
++                <div className={this.state.openSubMenuIndex === "asset" ? "sub-menu active" : "sub-menu"}  key="asset">
++                    <div className="sub-menu-title" onClick={() => this.subMenuOnClick("asset")}>
+                         <Icon type="bank" />
+                         <span className="title">一级导航1</span>
+                     </div>
+@@ -46,8 +64,8 @@ export default class Nav extends React.Component {
+                     </ul>
+                 </div>
+
+-                <div className="sub-menu active" key="user">
+-                    <div className="sub-menu-title">
++                <div className={this.state.openSubMenuIndex === "user" ? "sub-menu active" : "sub-menu"} key="user">
++                    <div className="sub-menu-title" onClick={() => this.subMenuOnClick("user")}>
+                         <Icon type="bank" />
+                         <span className="title">一级导航2</span>
+                     </div>
+diff --git a/src/components/Home.js b/src/components/Home.js
+index 6a32a51..26457b6 100644
+--- a/src/components/Home.js
++++ b/src/components/Home.js
+@@ -56,7 +56,7 @@ const {Content, Sider} = Layout;
+                         <div onClick={this.toggle.bind(this)} className="sider-toggle">
+                             <Icon type={this.state.collapsed ? "menu-unfold" : "menu-fold"} />
+                         </div>
+-                        <Nav collapsed={this.state.collapsed} />
++                        <Nav collapsed={this.state.collapsed} defaultOpenKey="user" />
+                     </Sider>
+                     <Layout style={{maxHeight: "100vh", overflow: "auto"}}>
+                         <Content className="container">
+``` 
+
 ### 根据数据渲染Nav
 
 #### nav-data.js
