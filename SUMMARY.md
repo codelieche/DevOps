@@ -29,6 +29,7 @@
     * [Ant.Design之--导航菜单](front/design/nav_menu.md)
     * [固定侧边栏和头部布局](front/design/fix_sidebar_header.md)
     * [表单数据校验](front/design/async-validator.md)
+    * [穿梭框的使用](front/design/transfer.md)
 * [app 模块](apps/README.md)
   * [account模块](apps/account/README.md)
     * [自定义用户和自定义校验](apps/account/user.md)
