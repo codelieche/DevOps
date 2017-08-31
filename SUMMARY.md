@@ -19,6 +19,8 @@
     * [权限控制](backend/rest_framework/permission.md)
     * [数据序列化](backend/rest_framework/serializer.md)
     * [generics](backend/rest_framework/generics.md)
+  * [工作审批流](backend/workflow/README.md)
+    * [基础Model设计](backend/workflow/base.md)
 * [前端开发](front/README.md)
   * [React.js](front/react/README.md)
     - [React-Router Link传递数据](front/react/router/link.md)
