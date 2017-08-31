@@ -96,3 +96,119 @@ class Step(models.Model):
             ('can_approve', '能审批Step'),
         )
 ```
+
+#### Job
+
+```python
+@python_2_unicode_compatible
+class Job(models.Model):
+    """
+    审批工作
+    每个Job由一个或者多个Step组成
+    """
+    slug = models.SlugField(max_length=20, verbose_name="网址", unique=True)
+    name = models.CharField(max_length=100, verbose_name="工作")
+    steps = models.ManyToManyField(to=Step, verbose_name="步骤", blank=True)
+    # 是否是有序的
+    ordered = models.BooleanField(verbose_name="是否有序", default=False, blank=True)
+    can_change = models.BooleanField(verbose_name="能修改", default=False, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(Job, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        pass
+
+    @classmethod
+    def get_or_create(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+
+    class Meta:
+        abstract = True
+        verbose_name = "工作"
+        verbose_name_plural = verbose_name
+```
+
+#### JobFlow
+
+```python
+@python_2_unicode_compatible
+class JobFlow(models.Model):
+    """
+    工作流
+    当用户发起了Job流程，就创建这个实例，然后由系统去分发Approve对象
+    注意： 不仅仅可以添加Job中的所有step的approve对象，也可以自定义的去添加approve对象
+    """
+    FLOW_STATUS_CHOICES = (
+        ('start', "开始"),
+        ('todo', "待审"),
+        ('cancel', "取消"),
+        ("doing", "执行中"),
+        ('refuse', "拒绝"),
+        ('end', "结束"),
+        ('done', "完成")
+    )
+    # job = models.ForeignKey(to=Job, verbose_name="工作")
+    user = models.ForeignKey(to="account.User", verbose_name="发起者", blank=True)
+    status = models.CharField(max_length=10, verbose_name="状态", choices=FLOW_STATUS_CHOICES,
+                              default="start", blank=True)
+    description = models.CharField(max_length=256, verbose_name="描述", blank=True)
+    time_start = models.DateTimeField(auto_now_add=True, verbose_name="开始时间", blank=True)
+    time_end = models.DateTimeField(verbose_name="结束时间", blank=True, null=True)
+
+    def __str__(self):
+        return "JobFlow:{}".format(self.pk)
+
+    @property
+    def is_agree(self):
+        """判断当前工作流是否全部通过"""
+        # 第1步：先获取到所有的approve
+        approve_list = self.approves.all()
+        # 需要判断下当前的approve_list长度是否为0，如果为0，应该算异常还是提示错误【todo】
+
+        # 第2步：判断所有的aprove对象，如果全部是通过，那么就是同意状态了
+        for approve in approve_list:
+            if not approve.is_aggree:
+                return False
+        # 所有的approve都是通过，那么当前工作流也是通过了
+        return True
+
+    class Meta:
+        abstract = True
+        verbose_name = "工作流"
+        verbose_name_plural = verbose_name
+```
+
+
+#### FlowLog
+
+```python
+@python_2_unicode_compatible
+class FlowLog(models.Model):
+    """
+    工作流日志
+    """
+    type_CHOICES = (
+        ('error', '错误'),
+        ('success', '成功'),
+        ('info', '信息')
+    )
+    time = models.DateTimeField(auto_now_add=True, verbose_name="添加时间", blank=True)
+    # jobflow = models.ForeignKey(to=JobFlow, verbose_name="工作流")
+    content = models.CharField(max_length=256, verbose_name="日志内容")
+    type = models.CharField(max_length=10, verbose_name='日志类型', default='info', blank=True)
+
+    def __str__(self):
+        return "FlowLog:{}".format(self.pk)
+
+    class Meta:
+        abstract = True
+        verbose_name = "工作流日志"
+        verbose_name_plural = verbose_name
+```
+
