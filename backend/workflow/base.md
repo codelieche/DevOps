@@ -234,11 +234,20 @@ class Approve(models.Model):
         :param user: User对象
         :return: True / False
         """
+        # 用户能否审批，首先判断当前对象还能审批吗
+        if self.status in ('agree', 'change', 'refuse'):
+            return False
+        # 如果这个审批，已经指定用户了，那么其它用户就不能审批
+        if self.user and self.user != user:
+            return False
+
+        # 只有当user在可以审批的用户里面，才可以返回True
         if self.users.filter(username=user.username).exists():
             return True
         else:
             # 如果当前用户不在users中，就判断user是否是超级用户
             if user.is_superuser and settings.SUPERUSER_CAN_APPROVE_ALL:
+                # 如果设置了超级用户可以审批，就返回True
                 return True
             else:
                 return False
