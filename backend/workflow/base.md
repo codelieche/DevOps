@@ -184,6 +184,89 @@ class JobFlow(models.Model):
         verbose_name_plural = verbose_name
 ```
 
+#### Approve
+
+```python
+@python_2_unicode_compatible
+class Approve(models.Model):
+    """
+    审批
+    Approve对象主要是来自Job的每个Step对象
+    但是有时候需要自定义的approve
+    """
+    APPROVE_STATUS_CHOICES = (
+        ('todo', "待审"),
+        ('lock', "锁住"),
+        ('change', '返回修改'),
+        ('refuse', "拒绝"),
+        ('agree', "同意")
+    )
+    TYPE_CHOICES = (
+        ('ready', '准备'),
+        ('process', '过程'),
+        ('done', '完成')
+    )
+    # jobflow = models.ForeignKey(to=JobFlow, verbose_name="工作流")
+    # 步骤，不保存成外键，而是使用step的name字段【在生成approve的时候，需要校验一下，users是否合法】
+    step = models.CharField(max_length=50, verbose_name="步骤")
+    users = models.ManyToManyField(to="account.User", verbose_name="可操作的用户",
+                                   related_name="can_approve_users")
+    # 当可操作的用户中的任何一个，点击了，那么就只能这个用户操作了
+    # 这个时候需要设置user的值，这个用户也可以解锁操作，重新设置为todo，即解锁了
+    user = models.ForeignKey(to="account.User", verbose_name="操作者", blank=True, null=True)
+    # 审批的时候需要填写内容
+    content = models.CharField(max_length=100, verbose_name="审批内容", blank=True, null=True)
+    # 只有当job的can_change是True，才可以设置为change的状态【是当前这个审批步骤修改，前面通过的不再重新审批】
+    status = models.CharField(max_length=10, verbose_name="状态", choices=APPROVE_STATUS_CHOICES,
+                              default="todo", blank=True)
+    # 因为step不用外键了，所以order在approve中也需要保存一下
+    order = models.IntegerField(verbose_name='顺序', default=1, blank=True)
+    # step中有type字段，这个字段也需要保存到Approve中
+    type = models.CharField(max_length=10, verbose_name='类型', default='process',
+                            choices=TYPE_CHOICES, blank=True)
+    # 当status完成(refuse/agree)后把能审批的users多对多数据删掉，没必要保存了
+    time_start = models.DateTimeField(verbose_name="开始时间", blank=True, auto_now_add=True)
+    time_end = models.DateTimeField(verbose_name="结束时间", blank=True, null=True)
+
+    def can_approve(self, user):
+        """
+        判断用户是否能审批此对象
+        :param user: User对象
+        :return: True / False
+        """
+        if self.users.filter(username=user.username).exists():
+            return True
+        else:
+            # 如果当前用户不在users中，就判断user是否是超级用户
+            if user.is_superuser and settings.SUPERUSER_CAN_APPROVE_ALL:
+                return True
+            else:
+                return False
+
+    # 如果当前用户不在
+
+    def __str__(self):
+        return "Approve:{}".format(self.pk)
+
+    def save(self, *args, **kwargs):
+        # 保存的时候，如果job的can_change才可以设置状态为change
+        if self.status == 'change' and not self.jobfow.job.can_change:
+            raise ValueError("不能设置为status的状态")
+        return super(Approve, self).save(*args, **kwargs)
+
+    @property
+    def is_aggree(self):
+        """判断当前审批对象，是否已经同意"""
+        if self.status == 'agree':
+            return True
+        else:
+            return False
+
+    class Meta:
+        abstract = True
+        verbose_name = "审批"
+        verbose_name_plural = verbose_name
+```
 
 #### FlowLog
 
