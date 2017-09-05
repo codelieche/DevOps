@@ -21,6 +21,7 @@
     * [generics](backend/rest_framework/generics.md)
   * [工作审批流](backend/workflow/README.md)
     * [基础Model设计](backend/workflow/base.md)
+    * [git工作流--Model](backend/workflow/gitflow/model.md)
 * [前端开发](front/README.md)
   * [React.js](front/react/README.md)
     - [React-Router Link传递数据](front/react/router/link.md)
