@@ -2,8 +2,21 @@
 > 首先我们要编写个单例的类`GitJob`，继承`wrokflow.Job`.  
 然后是编写`GitFlow`、`GitFlowApprove`、`GitFlowLog`.
 
+文件位置：`apps/workflow/models/gitflow.py`
+
+
 
 ### GitJob
+先要引入依赖包：
+
+```python
+from django.db import models
+from django.utils.timezone import datetime
+
+from workflow.models.base import Job, JobFlow, Approve, FlowLog
+```
+
+每个相关的类其实都继承了base.py中的一个类。
 
 ```python
 class GitJob(Job):
@@ -16,7 +29,6 @@ class GitJob(Job):
         verbose_name = "Git Job(代码提交)"
         verbose_name_plural = verbose_name
 ```
-
 
 ### GitFLow
 
