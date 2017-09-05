@@ -5,8 +5,8 @@
 文件位置：`apps/workflow/models/gitflow.py`
 
 
+### 设计Model
 
-### GitJob
 先要引入依赖包：
 
 ```python
@@ -17,6 +17,8 @@ from workflow.models.base import Job, JobFlow, Approve, FlowLog
 ```
 
 每个相关的类其实都继承了base.py中的一个类。
+
+#### GitJob
 
 ```python
 class GitJob(Job):
@@ -30,7 +32,7 @@ class GitJob(Job):
         verbose_name_plural = verbose_name
 ```
 
-### GitFLow
+#### GitFLow
 
 ```python
 class GitFlow(JobFlow):
@@ -53,7 +55,7 @@ class GitFlow(JobFlow):
         verbose_name_plural = verbose_name
 ```
 
-### GitFlowApprove
+#### GitFlowApprove
 
 ```python
 class GitFlowApprove(Approve):
@@ -79,7 +81,7 @@ class GitFlowApprove(Approve):
         verbose_name_plural = verbose_name
 ```
 
-### GitFlowLog
+#### GitFlowLog
 
 ```python
 class GitFlowLog(FlowLog):
@@ -93,4 +95,3 @@ class GitFlowLog(FlowLog):
         verbose_name = "Git Flow Log"
         verbose_name_plural = verbose_name
 ```
-
