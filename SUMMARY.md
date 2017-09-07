@@ -51,6 +51,8 @@
 * [DevOps Tools](tools/README.md)
   * [kubernetes](tools/kubernetes/README.md)
   * [Docker](tools/docker/README.md)
+  * [Gitlab](tools/gitlab/README.md)
+    * [Gitlab基本api](tools/gitlab/base.md)
   * [jenkins](tools/jenkins/README.md)
   * [zabbix](tools/zabbix/README.md)
   * [ELK](tools/elk/README.md)
