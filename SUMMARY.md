@@ -54,6 +54,7 @@
   * [Gitlab](tools/gitlab/README.md)
     * [Gitlab基本api](tools/gitlab/base.md)
     * [Gitlab分组相关api](tools/gitlab/group.md)
+    * [Gitlab项目相关api](tools/gitlab/project.md)
   * [jenkins](tools/jenkins/README.md)
   * [zabbix](tools/zabbix/README.md)
   * [ELK](tools/elk/README.md)
