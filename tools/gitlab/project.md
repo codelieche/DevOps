@@ -7,6 +7,13 @@
 
 ### 方法说明
 - `__init__`: 初始化，需要传递group的path和项目的name，如果是新项目需要创建(设置`need_create`设置为`True`)
+- `get_project_id`: 根据group和项目的name获取到相应项目的id，如果失败后面的方法都不能使用
+- `detail`: 获取项目的详情
+- `create_file`: 添加新的文件到指定分支中
+- `create_branch`: 创建新的分支
+- `set_default_branch`: 设置默认分支，不设置默认是`master`
+- `protect`: 保护分支
+
 
 ### Code
 
