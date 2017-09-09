@@ -57,6 +57,7 @@
     * [Gitlab项目相关api](tools/gitlab/project.md)
   * [jenkins](tools/jenkins/README.md)
   * [zabbix](tools/zabbix/README.md)
+    * [获取基本历史记录](tools/zabbix/base.md)
   * [ELK](tools/elk/README.md)
     * [elasticsearch环境准备](tools/elk/elasticsearch/env.md)
   * [ansible](tools/ansible/README.md)
