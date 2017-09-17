@@ -24,7 +24,8 @@
     * [git工作流--Model](backend/workflow/gitflow/model.md)
     * [git工作流--序列化Model](backend/workflow/gitflow/serializers.md)
     * [git工作流--api](backend/workflow/gitflow/api.md)
-    * [项目工作流--Model](backend/projectflow/model.md)
+    * [项目工作流--Model](backend/flow/project/model.md)
+    * [项目工作流--序列化Model](backend/flow/project/serializers.md)
 
 * [前端开发](front/README.md)
   * [React.js](front/react/README.md)
