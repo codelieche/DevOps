@@ -50,6 +50,34 @@ elasticsearch.bat
 }
 ```
 
+### EleasticSearch集群配置
+
+#### master
+配置：
+
+```yml
+cluster.name: esdata
+node.name: master
+
+network.host: 127.0.0.1
+```
+
+#### slave
+- 集群名要和主节点的名相同
+- 由于是本地测试，所以http.port要不同，默认的9200被主节点占用了
+
+配置：
+
+```yml
+cluster.name: esdata
+node.name: slave1
+
+network.host: 127.0.0.1
+http.port: 9201
+
+discovery.zen.ping.unicast.hosts: ["127.0.0.1"]
+```
+
 ## elasticsearch-head
 
 ### 安装
