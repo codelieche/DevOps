@@ -58,3 +58,21 @@ if [ -n $1 ]; then
  fi
 ```
 
+
+### reload.sh脚本
+
+```shell
+#!/bin/bash
+DJANGODIR=/data/www/devops.codelieche.com
+
+# 重启celery
+cd $DJANGODIR
+./celery.server restart
+
+cd ${DJANGODIR}/source
+cp  -rf ./static/js/* ../static/js/
+cp  -rf ./static/css/* ../static/css/
+exec ../virtualenv/bin/python manage.py collectstatic --noinput --settings=devops.settings-dev
+```
+
+
