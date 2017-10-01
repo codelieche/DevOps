@@ -54,6 +54,7 @@
   * [asset](api/asset/README.md)
     * [asset API List](api/asset/asset_list.md)
     * [asset API Detail](api/asset/asset_detail.md)
+  * [cloud](api/cloud/README.md)
   * [flow工作流](api/flow/README.md)
     * [基础模块api](api/flow/base.md)
 * [DevOps Tools](tools/README.md)
