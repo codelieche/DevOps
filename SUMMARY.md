@@ -57,6 +57,7 @@
   * [cloud](api/cloud/README.md)
   * [flow工作流](api/flow/README.md)
     * [基础模块api](api/flow/base.md)
+  * [monitor](api/monitor/README.md)
 * [DevOps Tools](tools/README.md)
   * [kubernetes](tools/kubernetes/README.md)
   * [Docker](tools/docker/README.md)
