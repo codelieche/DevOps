@@ -71,6 +71,7 @@
     * [Gitlab基本api](tools/gitlab/base.md)
     * [Gitlab分组相关api](tools/gitlab/group.md)
     * [Gitlab项目相关api](tools/gitlab/project.md)
+    * [git 基本使用](tools/gitlab/git.md)
   * [jenkins](tools/jenkins/README.md)
   * [zabbix](tools/zabbix/README.md)
     * [获取基本历史记录](tools/zabbix/base.md)
