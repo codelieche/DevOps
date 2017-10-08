@@ -235,6 +235,21 @@ class ProjectApi(object):
             return result
         else:
             return []
+            
+    def get_merge_request(self, merge_request_id):
+        """获取合并请求信息"""
+        # 在接受合并请求前，先检查下是否能合并
+        # merge_status值为can_be_merged，才可以合并
+        # 比如(无需合并/分支不存在)的时候，其值就是unchecked
+        # web_url字段是合并请求的详情页地址
+        url = '{}/projects/{}/merge_requests/{}'.format(self.api_url_base, self.project_id,
+                                                        merge_request_id)
+        response = requests.get(url, headers=self.headers)
+        if response.ok:
+            return response.json()
+        else:
+            print(response.json())
+            return False
 
     def mergerequest_delete(self, merge_request_id):
         url = '{}/projects/{}/merge_requests/{}'.format(self.api_url_base, self.project_id,
