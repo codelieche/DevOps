@@ -12,7 +12,8 @@
 2. 设置每一个类中的变量，即数据表中的每一个字段
 3. 使用`python manage.py makemigrations app`创建数据库和Django间的中间文件
 4. 使用`python manage.py migrate`同步更新数据库的内容
-5. 在程序中使用Python的方法操作所定义的数据类，等于是在操作数据库中的数据表。
+5. 使用`python manage.py sqlmigrate app 0002`查看0002这次变更的sql语句
+6. 在程序中使用Python的方法操作所定义的数据类，等于是在操作数据库中的数据表。
 
 > 两大命令：  
 > 1. python manage.py makemigrations \[appname\]  
