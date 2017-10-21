@@ -21,6 +21,7 @@
     * [权限控制](backend/rest_framework/permission.md)
     * [数据序列化](backend/rest_framework/serializer.md)
     * [generics](backend/rest_framework/generics.md)
+    * [api自动文档](backend/rest_framework/autodocs.md)
   * [工作审批流](backend/flow/README.md)
     * [基础Model设计](backend/flow/base/model.md)
     * [git工作流--Model](backend/flow/gitflow/model.md)
