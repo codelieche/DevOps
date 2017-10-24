@@ -1,4 +1,4 @@
-## rest\_framework简单使用
+## Django Rest framework简单使用
 
 > 我们创建一个资产分组Group，然后为Group创建REST full API。
 >
