@@ -15,6 +15,7 @@
     * [500服务器错误发送邮件](backend/django/logging/500_send_email.md)
     * [项目部署--nginx+supervisor+gunicorn](backend/django/deployment/base.md)
     * [项目部署--reload](backend/django/deployment/reload.md)
+    * [Django Model Logging](backend/django/models/logging.md)
   * [rest framewrok](backend/drf/README.md)
     * [简单使用](backend/drf/simple.md)
     * [分页](backend/drf/pagination.md)
