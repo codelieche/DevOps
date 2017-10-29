@@ -1,4 +1,4 @@
-## Django Model Logging
+## Django Admin Model LogEntry
 > Django Admin中管理员对对象修改，都会有条记录(数据库django_admin_log中)。  
 有时候我们编写了api，当用户对数据修改或者删除，我们也想记录些日志。
 
