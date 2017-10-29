@@ -17,7 +17,7 @@
 - `urls.py`: 配置了路由，可以用`include('modellog.urls', namespace='modellog')`
 
 ### LogsEntry
-
+文件位置：`apps/modellog/models.py`
 
 ```python
 import json
@@ -137,5 +137,68 @@ class LogsEntry(models.Model):
                 return message
         else:
             return message
+```
+
+### LogsEntrySerializer
+文件位置：`apps/modellog/serializers.py`
+
+```python
+from rest_framework import serializers
+
+from .models import LogsEntry
+
+
+class LogsEntrySerializer(serializers.ModelSerializer):
+    """模块日志 序列化模型"""
+    user = serializers.CharField(source='user.username', read_only=True)
+    action = serializers.CharField(source='get_action_flag_display', read_only=True)
+    message = serializers.SerializerMethodField()
+
+    def get_message(self, obj):
+        return obj.get_message()
+
+    class Meta:
+        model = LogsEntry
+        fields = ('id', 'user', 'action_flag', 'action', 'object_id', 'time_added', 'message')
+```
+
+#### ObjectLogsListAPIView
+文件位置：`apps/modellog/views.py`
+
+```python
+from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.models import ContentType
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+
+from .models import LogsEntry
+from .serializers import LogsEntrySerializer
+
+class ObjectLogsListApiView(generics.ListAPIView):
+    """
+    获取model某个对象的历史记录列表
+    """
+    serializer_class = LogsEntrySerializer
+    # 权限控制
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        # 第1步：先获取到app和model的字符串，pk
+        app = self.kwargs['app']
+        model = self.kwargs['model']
+        pk = self.kwargs['pk']
+
+        # 第2步：获取到Model的content_type
+        content_type = get_object_or_404(ContentType, app_label=app, model=model)
+
+        # 第3步：获取数据
+        objects_list = LogsEntry.objects.filter(content_type=content_type,
+                                                object_id=pk).order_by('-time_added')
+
+        # 第4步：返回数据
+        return objects_list
+
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 ```
     
