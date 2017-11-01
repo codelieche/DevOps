@@ -162,7 +162,7 @@ class LogsEntrySerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'action_flag', 'action', 'object_id', 'time_added', 'message')
 ```
 
-#### ObjectLogsListAPIView
+### ObjectLogsListAPIView
 文件位置：`apps/modellog/views.py`
 
 ```python
@@ -201,4 +201,22 @@ class ObjectLogsListApiView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 ```
-    
+
+### urls.py
+文件位置：`apps/modellog/urls.py`
+
+```python
+from django.conf.urls import url
+from .views import ModelLogsEntryListAPIView, ObjectLogsListDetailApiView, LogsEntryDetailApiView
+
+urlpatterns = [
+    # 日志详情
+    url(r'^(?P<pk>\d+)/?$', LogsEntryDetailApiView.as_view(), name='detail'),
+    # 模块日志列表
+    url(r'^(?P<app>\w+)/(?P<model>\w+)/list/?$',
+        ModelLogsEntryListAPIView.as_view(), name="model_logs_list"),
+    # 模块中某个对象的日志列表
+    url(r'^(?P<app>\w+)/(?P<model>\w+)/(?P<pk>\d+)/list/?$',
+        ObjectLogsListDetailApiView.as_view(), name='object_logs_list'),
+]
+```
