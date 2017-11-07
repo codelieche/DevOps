@@ -20,6 +20,7 @@
   * [rest framewrok](backend/drf/README.md)
     * [简单使用](backend/drf/simple.md)
     * [分页](backend/drf/pagination.md)
+    * [过滤和搜索](backend/drf/filtering.md)
     * [权限控制](backend/drf/permission.md)
     * [数据序列化](backend/drf/serializer.md)
     * [generics](backend/drf/generics.md)
