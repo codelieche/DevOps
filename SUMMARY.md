@@ -25,6 +25,7 @@
     * [数据序列化](backend/drf/serializer.md)
     * [generics](backend/drf/generics.md)
     * [api自动文档](backend/drf/autodocs.md)
+    * [用户认证](backend/drf/auth.md)
   * [工作审批流](backend/flow/README.md)
     * [基础Model设计](backend/flow/base/model.md)
     * [git工作流--Model](backend/flow/gitflow/model.md)
