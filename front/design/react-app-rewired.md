@@ -115,6 +115,32 @@ module.exports = function override(config, env) {
   };
 ``` 
 
+**package.js**
+
+```js
+{
+  "name": "opsfront",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.0.17"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.6.3",
+    "react-app-rewire-less": "^2.1.0",
+    "react-app-rewired": "^1.3.8"
+  }
+}
+```
+
 配置到这里，就可以使用`yarn run start`来运行项目了。
 
 
