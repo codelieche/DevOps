@@ -42,6 +42,7 @@
   * [React.js](front/react/README.md)
     - [React-Router Link传递数据](front/react/router/link.md)
   * [Ant Design](front/design/README.md)
+    * [设置antd按需加载--react-app-rewired](front/design/react-app-rewired.md)
     * [设置antd按需加载--eject](front/design/yarnto-npm.md)
     * [Ant.Design之--布局](front/design/layout.md)
     * [Ant.Design之--头部与侧边栏](front/design/header_sider.md)
