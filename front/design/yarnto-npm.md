@@ -1,4 +1,5 @@
 ## 设置Ant Design按需加载
+> `create-react-app`创建项目后，使用`yarn run eject`将配置暴露出来，这种方式复杂些，同时不可逆的。
 
 ### 创建项目
 
@@ -6,6 +7,7 @@
 
 ```
 $ npm install -g create-react-app yarn
+$ brew install yarn【macOS推荐方式】
 ```
 创建项目：
 
