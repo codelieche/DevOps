@@ -16,7 +16,7 @@ p.get('q')
 ### 写个自定义的URLSearchParams
 > 由于在一些老的浏览器中，不支持URLSearchParams功能，所以需要自己写一个。
 
-**UrlParam.js**
+#### UrlParam.js
 
 ```js
 /**
@@ -86,6 +86,29 @@ if(window.URLSearchParams){
 }
 
 export default URLSearchParamsClass;
+```
+
+
+#### 使用
+> 在编写react代码需要处理url的组件中，先引入URLSearchParams.
+
+```js
+import URLSearchParams from '../Utils/UrlParam';
+
+//  .....
+
+// 获取next的url
+// 首先获取search参数：?next=/
+const params = new URLSearchParams(this.props.location.search);
+// 获取next的值
+let next = params.get('next');
+// 如果next为null或者next为/user/login那么就跳转到首页
+if(!next || next === "/user/login"){next = "/"}
+// 跳转去首页
+console.log('即将跳转', next);
+// this.props.history.push(next);
+var url = window.location.origin + next;
+window.location.href = url;                       
 ```
 
 ### 参考文档
