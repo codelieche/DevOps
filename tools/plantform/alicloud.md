@@ -3,6 +3,7 @@
 ### 参考文档
 - [api.aliyun.com](https://api.aliyun.com/)
 - [阿里云文档中心](https://www.alibabacloud.com/help/zh)
+- [阿里云开发指南--API文档](https://help.aliyun.com/document_detail/29739.html)
 - [阿里云开发者工具包(SDK)](https://develop.aliyun.com/tools/sdk?#/python)
 - [阿里云Python SDK文档](https://www.alibabacloud.com/help/zh/doc-detail/53090.htm)
 - [Python SDK 列表](https://www.alibabacloud.com/help/zh/doc-detail/62188.htm)
@@ -125,6 +126,49 @@ def get_region_ecs_instance_info(access_key_id, access_key_secret, region_id):
 
     # 第4步：返回实例列表
     return instance_list
+```
+
+### 示例：获取账号中的域名列表
+> 获取域名列表
+
+```python
+import os
+import sys
+import json
+
+from aliyunsdkcore.client import AcsClient
+from aliyunsdkdomain.request.v20160511 import QueryDomainListRequest
+
+aliyun_key_id = os.environ.get('ALIYUN_KEY_ID', '')
+aliyun_key_secret = os.environ.get('ALIYUN_KEY_SECRET', '')
+
+if not aliyun_key_id or not aliyun_key_secret:
+    print("Access Key的id或者secret为空，程序退出")
+    sys.exit(0)
+    
+def get_domian_list():
+    # 第1步：创建Access Key的连接
+    client = AcsClient(aliyun_key_id, aliyun_key_secret)
+
+    # 第2步：构造请求
+    request = QueryDomainListRequest.QueryDomainListRequest()
+    request.set_PageSize(1000)
+    request.set_accept_format('json')
+    request.set_PageNum(1)
+
+    # 第3步：发起请求，获取到二进制数据
+    response_bytes = client.do_action_with_exception(request)
+    response = json.loads(str(response_bytes, encoding='utf-8'))
+
+    # 第4步：提取域名列表
+    domian_list = response['Data']['Domain']
+    print(domian_list)
+
+    for domain in domian_list:
+        print(domain['DomainName'].ljust(20), '\t:', domain['RegDate'] ,'====>', domain['DeadDate'])
+
+    # 第5步：返回域名数据
+    return domian_list
 ```
 
 
