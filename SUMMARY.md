@@ -38,6 +38,7 @@
     * [Celery的基本使用](backend/async/celery_base.md)
   * [其它](backend/other/README.md)
     * [sentry基本使用](backend/other/sentry.md)
+    * [HTTP 报文](backend/other/http—packet.md)
 
 * [前端开发](front/README.md)
   * [React.js](front/react/README.md)
