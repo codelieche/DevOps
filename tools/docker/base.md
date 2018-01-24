@@ -1,6 +1,8 @@
 ## Docker 基本使用
 > Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。
 
+**Docker不是虚拟机，容器就是进程。**
+
 ### 镜像相关操作
 - 查看下载的镜像: `docker images`
 - 查找镜像: `docker search ubuntu`
@@ -74,6 +76,7 @@ Docker生成容器的时候可以用 `-v`来挂载一个本地目录到容器中
 - `docker rmi`: 删除image
 - `docker cp`: 在host和container之间拷贝文件
 - `docker commit`: 保存改动未新的image
+- `docker diff`: 查看容器文件的改动，docker diff redis4
 
 ### Docker Help
 
