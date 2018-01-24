@@ -53,7 +53,29 @@ Docker两个重要的概念是镜像(`Image`)和容器(`Container`)。
 这个数据卷: 表现为容器的空间，实际保存在容器之外的。有点类似于磁盘的挂载，让某个目录挂载到容器中的某个目录。  
 Docker生成容器的时候可以用 `-v`来挂载一个本地目录到容器中。
 
+### 术语
+- `host`: 宿主机
+- `image`: 镜像
+- `container`: 容器
+- `registry`: 仓库
+- `daemon`: 守护进程
+- `client`: 客户端
+
 ## Docker命令
+
+### 常用命令
+
+- `docker pull`: 获取image
+- `docker build`: 创建image
+- `docker images`: 列出image
+- `docker run`: 运行container
+- `docker ps`: 列出container
+- `docker rm`: 删除container
+- `docker rmi`: 删除image
+- `docker cp`: 在host和container之间拷贝文件
+- `docker commit`: 保存改动未新的image
+
+### Docker Help
 
   命令 | 说明
  ------------ | ------------
@@ -98,3 +120,5 @@ Docker生成容器的时候可以用 `-v`来挂载一个本地目录到容器中
  update  |   Update configuration of one or more containers
  version  |  Show the Docker version information
  wait  |     Block until one or more containers stop, then print their exit codes
+ 
+
