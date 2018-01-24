@@ -131,5 +131,15 @@ Last-Modified | 资源的最后修改日期时间
 另外首部字段还有`Cookie`、`Set-Cookie`、`Content-Disposition`等在其它RFC中定义的首部字段
 
 
+**Set-Cookie字段的属性**
+
+属性 | 说明
+--- | ---
+NAME=VALUE | 赋予Cookie的名称和其值（必须项）
+expires=DATE | Cookie的有效期（若不明确指定则默认为浏览器关闭前为止）
+path=PATH | 将服务器上的文件目录作为Cookie的适用对象（默认：文档所在的文件目录）
+domain=域名 | 作为Cookie适用对象的域名（默认：创建cookie的服务器的域名）
+Secure | 仅在HTTPS安全通信时才会发送Cookie
+HttpOnly | 加以限制，使Cookie不能被JavaScript脚本访问
 
 

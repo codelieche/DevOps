@@ -102,12 +102,63 @@ CMD ["nginx", "-g", "daemon off;"]
 当指定了`ENTRYPOINT`后，`CMD`的含义就发生了改变，不在是直接的运行其命令，而是将`CMD`的内容作为参数传给`ENTRYPOINT`指令。  
 换句话说实际执行时，将变成：`<ENTRYPOINT> "<CMD>"`。
 
-比如想切换用户来执行相关操作，可以用到ENTRYPOINT.
+比如想切换用户来执行相关操作，可以用到ENTRYPOINT. 写个`docker-entrypoint.sh`处理CMD指令。
+
 
 ### ENV 设置环境变量
 2种格式：
 - `ENV <key> <value>`
 - `ENV <key1>=<value1> <key2>=<value2>...`
+
+
+### VOLUME 定义匿名卷
+格式为：
+- `VOLUME ["<路径1>", "<路径2>"]`
+- `VOLUME <路径>`
+
+> 容器运行时尽量保持容器存储层不发生写操作，对于数据库类需要保存冬天数据的应用，其数据库文件应该保持存于(`volume`)中。  
+在`Dockerfile`中，我们可以事先指定某些目录挂载为匿名卷，这样在运行时如果用户不指定挂载，其应用也可以正常运行，不会向容器存储层写入大量数据。
+
+```
+VOLUME /data
+```
+这里的`/data`目录就会在运行时自动挂载为匿名券，任何向`/data`中写入的信息都不会记录进容器存储层，从而保证了容器存储层的无状态化。  
+运行时可以覆盖这个挂载设置。
+
+```
+docker run -d -v mydata:/data redis
+```
+
+### EXPOSE 声明端口
+格式为`EXPOSE <端口1> [<端口2>...]`
+
+`EXPOSE`指令是声明运行容器提供服务端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务。
+
+```
+docker -p <宿主机端口>:<容器端口>
+```
+
+### WORKDIR 指定工作目录
+
+格式：`WORKDIR <工作目录路径>`  
+使用`WORKDIR`指令可以来指定工作目录（或者称之为当前目录），以后各层的当前目录就被改为指定的目录，如该目录不存在，`WORKDIR`会帮你建立目录。
+
+### USER 指定当前用户
+
+格式：`USER <用户名>`  
+`USER`指令和`WORKDIR`相似，都是改变环境状态并影响以后的层。  
+`WORKDIR`是改变工作目录，`USER`则是改变之后层的执行`RUN`,`CMD`以及`ENTRYPOINT`这类命令的身份。
+
+注意：事先请先确保有这个用户，没有请先创建。  
+
+```
+RUN groupadd -r devops && useradd -r -g devops devops
+USER devops
+RUN ["xxxxx"]
+```
+
+### HEALTHCHECK 监控检查
+
 
 
 ### docker build
