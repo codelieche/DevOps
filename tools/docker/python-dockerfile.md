@@ -214,3 +214,109 @@ fi
 
 exec "$@"
 ```
+
+**6. www/run.sh**
+
+```shell
+#!/bin/bash
+
+# 如果有/data/www/run.sh 就执行这一个
+
+# 获取到当前脚本的所在目录
+CURRENTDIR="$( cd "$( dirname "$0"  )" && pwd  )"
+
+# 如果有/data/www/run.sh 就执行这一个
+if [[ $CURRENTDIR = "/data/backup/www" &&  -f /data/www/run.sh ]];
+then
+   /data/www/run.sh;
+   exit 0;
+fi
+
+# 如果没有设置环境变量，$DJANGO_PROJECT 就执行python3，这样这个run.sh就会一直在运行着的
+# DJANGO_PROJECT=djangoproject
+if [ ${DJANGO_PROJECT} ];then
+    NAME=${DJANGO_PROJECT};
+elif [ -f /data/backup/www/conf/wsgi.py ];
+then
+    NAME=mysite;
+else
+   # 如果没有conf/wsgi.py文件，就执行python3
+   python3
+fi
+
+USER=devops
+WORKERS=2
+BASEDIR=/data/www
+DJANGO_WSGI_MODULE=$NAME.wsgi
+PID_PATH=/tmp/gunicorn.mysite.pid
+
+# 进入Django Dir判断是否有虚拟环境
+cd ${BASEDIR};
+if [ ! -d virtualenv ];then
+    python3 -m venv virtualenv
+fi
+
+[ ! -d ${BASEDIR}/source ] && mkdir ${BASEDIR}/source
+
+cd ${BASEDIR}/source
+
+# 判断是否有gunicorn了，如果没有就安装下
+if [ ! -f ../virtualenv/bin/gunicorn ];then
+    ../virtualenv/bin/pip install gunicorn
+fi
+
+# 测试gunicorn: gunicorn -b 0.0.0.0:8080 wsgi
+if [ -f ./${DJANGO_PROJECT}/wsgi.py ];
+then
+  exec ../virtualenv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
+    --name $NAME \
+    --user $USER \
+    --pid $PID_PATH \
+    --workers $WORKERS \
+    --bind=unix:/tmp/mysite.socket \
+    --log-level=info \
+    --access-logfile=${BASEDIR}/logs/gunicorn.access.log \
+    --error-logfile=${BASEDIR}/logs/gunicorn.error.log
+else
+  # 如果DJANGO_PROJECT的wsgi文件不存在就执行默认的
+  cd /data/backup/www/conf
+  exec /data/www/virtualenv/bin/gunicorn wsgi:application \
+    --name $NAME \
+    --user $USER \
+    --pid $PID_PATH \
+    --workers $WORKERS \
+    --bind=unix:/tmp/mysite.socket \
+    --log-level=info \
+    --access-logfile=${BASEDIR}/logs/gunicorn.access.log \
+    --error-logfile=${BASEDIR}/logs/gunicorn.error.log
+fi
+```
+
+### 创建镜像
+
+```
+docker build . -t python:v1
+```
+
+启动容器：
+
+```
+docker run -itd --name django01 -v ~/DockerData/django01:/data/www -p 8000:80 python:v1
+```
+
+用httpie来访问下：
+
+```
+➜  ~ http :8001/check_health.html
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Connection: keep-alive
+Content-Length: 6
+Content-Type: text/html
+Date: Thu, 25 Jan 2018 11:51:21 GMT
+ETag: "5a69a546-6"
+Last-Modified: Thu, 25 Jan 2018 09:37:10 GMT
+Server: nginx/1.6.2
+
+is ok
+```
