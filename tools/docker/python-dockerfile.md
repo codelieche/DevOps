@@ -61,7 +61,7 @@ COPY ./www/ /data/www/
 	# 移动conf文件和删除默认的nginx配置文件
 	# 删除nginx默认的配置和supervisor默认的配置
 
-RUN groupadd -r devops && useradd -m -r -g devops devops \
+RUN groupadd -r devops && useradd -m -s /bin/bash -r -g devops devops \
     && apt-get update && apt-get install -y \
 	apt-utils \
 	gcc \
@@ -100,10 +100,15 @@ VOLUME ["/data/www", "/home/devops"]
 # 暴露端口
 EXPOSE 80
 ENTRYPOINT ["/data/backup/www/docker-entrypoint.sh"]
+
+# 设置环境变量
+ENV LANG='C.UTF-8' PYTHONIOENCODING='UTF-8' TZ='Asia/Shanghai'
+
 # 启动nginx
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
+**注意**：Dockerfile中设置的环境变量是需要用，`docker exec -it xxx bash` 或者`kubectl exec -it xxx bash`进入容器才会有效的，如果用ssh登陆进去是会获取不到的。
 
 ### 其它文件内容
 
