@@ -82,6 +82,7 @@
     * [Docker基本使用](tools/docker/base.md)
     * [DockerFile基本使用](tools/docker/dockerfile.md)
     * [Python基础镜像](tools/docker/python-dockerfile.md)
+    * [Docker Registry](tools/docker/docker-registry.md)
   * [Gitlab](tools/gitlab/README.md)
     * [Gitlab基本api](tools/gitlab/base.md)
     * [Gitlab分组相关api](tools/gitlab/group.md)
