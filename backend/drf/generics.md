@@ -68,11 +68,15 @@ urlpatterns = [
     url(r'^host/all/?$', asset.HostListAll.as_view(), name='host_all'),
     url(r'^host/create/?$', asset.HostCreate.as_view(), name='host_create'),
     url(r'^host/(?P<pk>\d+)/?$', asset.HostDetail.as_view(), name='host_detail'),
+    # HostDetail.as_view可以传递参数:lookup_field, 上面这个默认是pk
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
 ```
 
+**注意：**
+1. `/host/12`: 是获取id是12主机
+2. `/host/vm001`: 是获取主机名字是vm001的主机，在配置路由的时候，给as_view传递个参数`lookup_field="name"`
 
 
 
