@@ -86,5 +86,26 @@ awk '/MemTotal/{total=$2}/MemFree/{free=$2}/^Cached/{cached=$2}/Buffers/{buffers
 Mem:            488          69         303           4         115         380
 Swap:          1535           0        1535
 ```
+### df
+
+**示例：**
+
+```
+[vagrant@localhost ~]$ df -h
+Filesystem                       Size  Used Avail Use% Mounted on
+/dev/mapper/VolGroup00-LogVol00   38G  1.8G   36G   5% /
+devtmpfs                         237M     0  237M   0% /dev
+tmpfs                            245M     0  245M   0% /dev/shm
+tmpfs                            245M  4.4M  240M   2% /run
+tmpfs                            245M     0  245M   0% /sys/fs/cgroup
+/dev/sda2                       1014M   85M  930M   9% /boot
+```
+
+- `Filesystem`: 磁盘设备名称
+- `Size`: 设备总容量
+- `Used`: 已用容量
+- `Avail`: 可用容量
+- `Use%`: 使用容量百分比
+- `Mounted on`: 设备挂载的系统目录文件
 
 
