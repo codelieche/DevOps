@@ -116,6 +116,7 @@
   * [shell编程之--$](os/shell/dollar.md)
   * [shell编程之--test表达式](os/shell/test_expression.md)
   * [shell编程之--流程控制](os/shell/control.md)
+  * [shell获取操作系统信息](os/shell/stystem-moitor.sh)
   * [linux三剑客之--awk](os/tools/awk.md)
   * [linux三剑客之--sed](os/tools/sed.md)
   * [linux crontab计划任务](os/tools/crontab.md)
