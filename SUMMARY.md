@@ -17,6 +17,7 @@
     * [项目部署--reload](backend/django/deployment/reload.md)
     * [Django Admin Model LogEntry](backend/django/models/LogEntry.md)
     * [自定义Model日志模块](backend/django/models/modellog.md)
+    * [备份Django App Migrations脚本](backend/django/tools/migrations_backup.md)
   * [rest framewrok](backend/drf/README.md)
     * [简单使用](backend/drf/simple.md)
     * [分页](backend/drf/pagination.md)
