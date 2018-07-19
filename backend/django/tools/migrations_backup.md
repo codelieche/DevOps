@@ -55,3 +55,32 @@ cp -rf $I $targetFile
 # backup tar -zxf ./apps.tar.gz 
 ```
 
+### migration_backup.py
+> 文件路径：`project/migration_backup.py`
+
+```shell
+cd ./source/apps
+
+# 当前备份日期
+bakdate=`date "+%Y%m%d"`;
+echo $bakdate;
+
+# 列出所有的migrations文件
+for I in `ls **/migrations/0*.py`;
+do
+    # echo $I;
+    dir=`dirname $I`;
+	# 创建备份目录
+	targetDir="../../backup/apps/${bakdate}/${dir}"
+	# 创建目录
+	if [ ! -d $targetDir ];then
+	  mkdir -p $targetDir && echo "创建目录: $targetDir"
+	fi;
+
+    targetFile="../../backup/apps/${bakdate}/${I}"
+	# echo $targetFile;
+	# 复制文件
+	cp -rf $I $targetFile  && echo "复制文件: ${targetFile} 成功！"
+done;
+```
+
