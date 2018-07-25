@@ -57,6 +57,8 @@
     * [服务器监控数据组件](front/charts/monitor.md)
   * [前端知识点](front/base/README.md)
     * [URLSearchParams](front/base/urlparams.md)
+  * [tools](front/tools/README.md)
+    * [tools](front/tools/execute-build.md)
 * [app 模块](apps/README.md)
   * [account模块](apps/account/README.md)
     * [自定义用户和自定义校验](apps/account/user.md)
