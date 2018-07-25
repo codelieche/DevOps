@@ -40,10 +40,9 @@
   * [其它](backend/other/README.md)
     * [sentry基本使用](backend/other/sentry.md)
     * [HTTP 报文](backend/other/http—packet.md)
-
 * [前端开发](front/README.md)
   * [React.js](front/react/README.md)
-    - [React-Router Link传递数据](front/react/router/link.md)
+    * [React-Router Link传递数据](front/react/router/link.md)
   * [Ant Design](front/arntd/README.md)
     * [设置antd按需加载--react-app-rewired](front/arntd/react-app-rewired.md)
     * [设置antd按需加载--eject](front/arntd/yarnto-npm.md)
@@ -57,8 +56,8 @@
     * [服务器监控数据组件](front/charts/monitor.md)
   * [前端知识点](front/base/README.md)
     * [URLSearchParams](front/base/urlparams.md)
-  * [tools](front/tools/README.md)
-    * [tools](front/tools/execute-build.md)
+  * [Tools](front/tools/README.md)
+    * [执行打包](front/tools/execute-build.md)
 * [app 模块](apps/README.md)
   * [account模块](apps/account/README.md)
     * [自定义用户和自定义校验](apps/account/user.md)
@@ -114,7 +113,6 @@
     * [python-gitlab基本使用](tools/versioncontrol/gitlab/python-gitlab.md)
   * [云平台](tools/plantform/README.md)
     * [阿里云SDK的基本使用](tools/plantform/alicloud.md)
-    
 * [Operating System](os/README.md)
   * [shell编程之--$](os/shell/dollar.md)
   * [shell编程之--test表达式](os/shell/test_expression.md)
@@ -124,5 +122,4 @@
   * [linux三剑客之--sed](os/tools/sed.md)
   * [linux crontab计划任务](os/tools/crontab.md)
   * [iptalbes基本使用](os/tools/iptables.md)
-  
 
