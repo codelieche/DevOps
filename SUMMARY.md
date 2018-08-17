@@ -81,6 +81,7 @@
 * [DevOps Tools](tools/README.md)
   * [kubernetes](tools/kubernetes/README.md)
     * [vagrant安装kubernetes之---准备机器](tools/kubernetes/vagrant-centos.md)
+    * [vagrant centos install kubernetes](tools/kubernetes/vagrant-centos-kubernetes.md)
   * [Docker](tools/docker/README.md)
     * [Docker基本使用](tools/docker/base.md)
     * [DockerFile基本使用](tools/docker/dockerfile.md)

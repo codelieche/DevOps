@@ -1,4 +1,4 @@
-## 使用Vagrant安装kubernetes
+## 使用Vagrant安装kubernetes—准备3台centos
 
 ### 参考文档
 
@@ -28,8 +28,8 @@ boxes = [
     {
 		:name => "master",
 		:eth1 => "192.168.6.91",
-		:mem => "1024",
-		:cpu => "1"
+		:mem => "2048",
+		:cpu => "2"
 	},
     {
 		:name => "node01",
