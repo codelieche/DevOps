@@ -99,6 +99,7 @@
     * [elasticsearch环境准备](tools/elk/elasticsearch/env.md)
   * [ansible](tools/ansible/README.md)
     * [简单使用](tools/ansible/start.md)
+    * [基本配置ansible.cfg](tools/ansible/config.md)
     * [synchronize](tools/ansible/synchronize.md)
     * [Ad-Hoc](tools/ansible/adhoc.md)
     * [Ansible获取服务器信息](tools/ansible/setup.md)
