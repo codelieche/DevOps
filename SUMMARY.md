@@ -102,6 +102,7 @@
     * [基本配置ansible.cfg](tools/ansible/config.md)
     * [synchronize](tools/ansible/synchronize.md)
     * [Ad-Hoc](tools/ansible/adhoc.md)
+    * [ansible命令参数](tools/ansible/options.md)
     * [Ansible获取服务器信息](tools/ansible/setup.md)
   * [salt基本使用](tools/salt/base.md)
   * [etcd+confd](tools/confd/README.md)
