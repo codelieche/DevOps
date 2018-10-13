@@ -37,6 +37,8 @@
     * [项目工作流--序列化Model](backend/flow/project/serializers.md)
   * [异步任务Celery](backend/async/README.md)
     * [Celery的基本使用](backend/async/celery_base.md)
+  * [django channels](backend/django/channels/README.md)
+    * [channels的基本使用](backend/django/channels/simple.md)
   * [其它](backend/other/README.md)
     * [sentry基本使用](backend/other/sentry.md)
     * [HTTP 报文](backend/other/http—packet.md)
