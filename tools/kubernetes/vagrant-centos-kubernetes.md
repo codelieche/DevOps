@@ -21,7 +21,17 @@ gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
 enable=1
 ```
 4. 查看仓库：`yum repolist`
+
 5. 安装服务：`yum install docker-ce kubeadm kubelet kubectl`
+
+6. 把普通用户加入docker组
+
+   ```
+   sudo groupadd docker
+   sudo gpasswd -a vagrant docker
+   sudo systemctl start docker
+   ```
+
 
 ### 安装基础服务
 1. 给Docker拉取镜像加入Proxy：`vim /usr/lib/systemd/system/docker.service`
