@@ -120,6 +120,8 @@
   * [云平台](tools/plantform/README.md)
     * [阿里云SDK的基本使用](tools/plantform/alicloud.md)
 * [Operating System](os/README.md)
+  * [基础](./os/base/READEME.md)
+    * [网络工具](./os/base/network-tools.md)
   * [shell编程之--$](os/shell/dollar.md)
   * [shell编程之--test表达式](os/shell/test_expression.md)
   * [shell编程之--流程控制](os/shell/control.md)
