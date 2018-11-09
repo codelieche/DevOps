@@ -147,15 +147,50 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 
 **2. iptalbes添加规则**
 
-> 更改所有来自IP地址`192.168.6.0/24`的数据包源地址为`192.168.6.106`
+> 可以先清空原有的规则：`iptables -F`
+
+- 2-1: 出口NAT：源地址转换（SNAT）
+
+  > 更改所有来自IP地址`192.168.6.0/24`的数据包源地址为`192.168.6.106` 然后从enp0s8出去
 
 ```
 iptables -t nat -A POSTROUTING -s 192.168.6.107/24 -o enp0s8 -j SNAT --to 192.168.6.106
 ```
 
-查看防火墙：
+- 2-2：包回来的时候NAT：目标地址转换（DNAT）
 
-`systemctl start firewalld.service`
+  > 回来的包，目标地址是`192.168.6.0/24`的数据包，把目标地址转换为`192.168.6.106`
+
+```bash
+iptables -t nat -A PREROUTING -d 192.168.6.0/24 -i enp0s8 -j DNAT --to 192.168.6.106
+```
+
+​	查看/停止防火墙：`systemctl status/stop firewalld.service`
+
+- 2-3: 自动保存于加载iptalbes配置
+
+  ```bash
+  # 也可以写入shell脚本中
+  iptables -F
+  iptables -t nat -A POSTROUTING -s 192.168.6.0/24 -o enp0s8 -j SNAT --to 192.168.6.106
+  iptables -t nat -A PREROUTING -d 192.168.6.0/24 -i enp0s8 -j DNAT --to 192.168.6.106
+  # 然后把脚本路径 加入/etc/rc.d/rc.loacl (注意需执行权限)
+  ```
+
+  使用`iptables-save`和`iptables-restore`
+
+  ```
+  # 保存规则
+  iptables-save > /etc/sysconfig/iptables
+  # 加载规则
+  iptables-restore < /etc/sysconfig/iptables
+  ```
+
+  如果加入rc.load，记得执行：`chmod +x /etc/rc.d/rc.local`
+
+  修改iptalbes的配置：
+
+  修改文件`vi /etc/sysconfig/iptables-config`修改 `IPTABLES_SAVE_ON_STOP="yes"`
 
 ### iptalbes参数
 
