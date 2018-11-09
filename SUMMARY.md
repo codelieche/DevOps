@@ -122,6 +122,8 @@
 * [Operating System](os/README.md)
   * [基础](./os/base/READEME.md)
     * [网络工具](./os/base/network-tools.md)
+  * 网络
+    * [virtualbox虚拟机路由器功能](./os/network/virtual-router.md)
   * [shell编程之--$](os/shell/dollar.md)
   * [shell编程之--test表达式](os/shell/test_expression.md)
   * [shell编程之--流程控制](os/shell/control.md)

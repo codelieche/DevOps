@@ -100,3 +100,4 @@ iptables -I INPUT -s 192.168.1.123 -p tcp -m tcp --dport 22 -j ACCEPT
 ```
 iptables -A INPUT -p tcp --dport 22 -j REJECT
 ```
+
