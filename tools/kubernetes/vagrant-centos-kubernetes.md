@@ -12,6 +12,7 @@
 3. 添加kubernetes.repo文件：`vim kubernetes.repo`
 
 **kubernetes.repo文件内容：**
+
 ```
 [kubernetes]
 name=kubernetes Repo
@@ -58,12 +59,10 @@ LimitNPROC=infinity
 5. 记得关闭iptables和firewall的服务，vagrant安装的centos没开启这两个服务
     1. `service iptables stop`
     2. `service firewalld stop`
-
 6. 确保这两个文件的值是`1`:
     1. `/proc/sys/net/bridge/bridge-nf-call-iptables`
     2. `/proc/sys/net/bridge/bridge-nf-call-ip6tables`
     3. 修改这两个文件的值为1: `echo 1 > /proc/sys/net/bridge/上面2个文件`
-
 7. 设置`Docker`和`kubelet`开机启动：`systemctl enable docker kubelet`
 
 ```
