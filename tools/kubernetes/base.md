@@ -80,6 +80,9 @@
 
 通过`kubectl get nodes`可以查看集群的Node信息。`kubectl get nodes -o wide`可以查看更多信息。
 
+ - 给Node添加Label：`kubectl label node centos-node01 IP="192.168.6.106"`
+ - 删除Node的标签：`kubectl label node centos-node01 IP-`
+
 ### Pod
 
 > Pod是kubernetes的最小工作单元。每个Pod包含一个或者多个容器。Pod中的容器会作为一个整体被Master调度到一个Node上运行。
@@ -180,4 +183,25 @@ Namespace可以将一个物理的Cluster逻辑上划分为多个虚拟的Cluster
 - `kube-system`:kubernetes自己创建的系统资源将放到这个namespace中。
 
 ----
+
+### 示例:命令执行过程
+
+```kubectl run nginx-deployment --image=1.14-alpine --replicas=3
+kubectl run nginx-deployment --image=1.14-alpine --replicas=3
+```
+
+在执行这个run命令，过程如下：
+
+ 	1. kubectl发送部署请求到API Server
+ 	2. API Server通知Controller Manger创建一个deployment资源
+ 	3. Scheduler执行调度任务，将3个副本Pod分发到centos-node01和centos-node02
+ 	4. Centos-node01和centos-node02上的kubelet在各自的节点上创建并运行Pod。
+
+```bash
+[root@centos-master ~]# kubectl get pods -o wide
+NAME                           READY   STATUS    RESTARTS   AGE     IP            NODE            NOMINATED NODE
+nginx-deploy-86bf78c77-5fxbk   1/1     Running   1          2d23h   10.244.1.13   centos-node02   <none>
+nginx-deploy-86bf78c77-kvwlb   1/1     Running   1          2d23h   10.244.2.6    centos-node01   <none>
+nginx-deploy-86bf78c77-slwnv   1/1     Running   1          2d23h   10.244.2.7    centos-node01   <none>
+```
 
