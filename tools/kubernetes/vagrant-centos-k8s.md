@@ -39,7 +39,9 @@ sudo systemctl start docker
 systemctl enable docker kubelet
 ```
 
-
+- kubelete运行在Cluster所有节点上，负责启动Pod和容器
+- kubeadm用于初始化Cluster
+- Kubectl是kubernetes命令行工具。通过kubectl可以部署和管理应用，查看各种资源，创建，删除和更新各种组件。
 
 #### kubeadm init
 
@@ -128,3 +130,19 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
   systemctl disable firewalld
   systemctl stop firewalld
   ```
+
+----
+
+### 安装细节说明
+
+**kubeadmin init输出内容说明：**
+
+1. kubeadm执行初始化前的检查工作
+2. 生成token和证书
+3. 生成kubeConfig文件，kubelet需要用这个文件与Master通信
+4. 安装Master组件，会从Google的Registry下载组件的Docker镜像，如果下载不了可以通过导入方式导入镜像
+5. 安装附加组件kube-proxy和kube-dns
+6. kubernetes Master初始化成功
+7. 提示如何配置kubectl
+8. 提示如何安装Pod网络
+9. 提示如何注册其它节点到Cluster。
