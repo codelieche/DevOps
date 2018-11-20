@@ -86,6 +86,26 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
+​	命令自动提示，可以输入：`kubectl completion -h`获取帮助文档。
+
+​	CentOS可以通过：
+
+```
+yum install bash-completion -y
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+```
+
+​	MacOS可以通过：
+
+```
+## If running Bash 3.2 included with macOS
+brew install bash-completion
+## or, if running Bash 4.1+
+brew install bash-completion@2
+```
+
+如果是使用zsh可以在plugins中加入kubectl。
+
 
 
 #### Kubeadm join
