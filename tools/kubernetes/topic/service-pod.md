@@ -116,5 +116,7 @@
 
   通过**iptables**把Pod的IP映射到ClusterIP.
 
+  ClusterIP是一个虚拟IP，是由Kubernetes节点上的iptables规则管理的。
+
 ----
 

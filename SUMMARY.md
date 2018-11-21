@@ -85,6 +85,9 @@
     * [kubernetes基础知识](tools/kubernetes/base.md)
     * [vagrant安装kubernetes之---准备机器](tools/kubernetes/vagrant-centos.md)
     * [VirtualBox centos install Kubernetes](tools/kubernetes/vagrant-centos-k8s.md)
+    * 文章/主题
+      * [kubernetes service pod](tools/kubernetes/topic/service-pod.md)
+      * [kubernetes监控检查](./tools/kubernetes/topic/health-check.md)
   * [Docker](tools/docker/README.md)
     * [Docker基本使用](tools/docker/base.md)
     * [DockerFile基本使用](tools/docker/dockerfile.md)
