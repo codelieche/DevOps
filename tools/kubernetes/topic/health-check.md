@@ -80,5 +80,30 @@ healthcheck   1/1     Running   2          45s
 
 **这个时候就可以使用：Liveness探测。**
 
+> Liveness探测让用户可以自定义判断容器是否健康的条件。如果探测失败，kubernetes就会重启容器。
+
+配置文件livenessProbe部分定义如何执行Liveness探测：
+
+- `command`: 探测执行的命令，也有其它方式：比如`httpGet`
+- `initialDelaySeconds`: 指定容器启动多久之后开始执行Liveness探测，一般会根据应用启动的准备时间来设置。
+- `periodSeconds`: 每多久执行一次Liveness探测。如果连续执行3次Liveness探测均失败，则会杀掉并重启容器。
+
+
+
+#### Readiness探测
+
+> 除了Liveness探测，Kubernetes Health Check机制还包括Readiness探测。
+
+- 用过通过Liveness探测可以告诉Kubernetes什么时候通过重启容器实现自愈
+- Readiness探测则是告诉Kubernetes什么时候可以将容器加入到Service负载均衡池中，对外提供服务。
+
+Readiness探测的配置语法和Liveness探测完全一样。
+
+**Liveness探测和Readiness探测做个比较：**
+
+1. Liveness探测和Readiness探测是两种Health Check机制，如果不特意配置，kubernetes将对两种探测采取相同的默认行为，即**通过判断容器启动进程的返回值是否为零来判断探测是否成功。**
+2. 两种探测的配置方法完全一样，支持的配置参数也一样。不同之处在于**探测失败后的行为：Liveness探测是重启容器；Readiness探测则是将容器设置为不可用，不接收Service转发的请求。**
+3. Liveness探测和Readiness探测是独立执行的，二者之间没有依赖，所以可以单独使用，也可以同时使用。**用Liveness探测判断容器是否需要重启以实现自愈；用Readiness探测判断容器是否已经准备好对外提供服务。**
+
 
 
