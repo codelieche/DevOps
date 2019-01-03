@@ -103,6 +103,7 @@
     * [获取基本历史记录](tools/zabbix/base.md)
   * [ELK](tools/elk/README.md)
     * [elasticsearch环境准备](tools/elk/elasticsearch/env.md)
+    * [filebeat-logstash-elasticsearch日志收集](tools/elk/logs-collection.md)
   * [ansible](tools/ansible/README.md)
     * [简单使用](tools/ansible/start.md)
     * [基本配置ansible.cfg](tools/ansible/config.md)
