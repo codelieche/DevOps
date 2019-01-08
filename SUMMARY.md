@@ -131,6 +131,7 @@
     * [virtualbox虚拟机路由器功能](./os/network/virtual-router.md)
     * [TCP连接状态](./os/network/tcp-status.md)
     * [TCP Flags 状态标记位](os/network/tcp-flags.md)
+    * [DHCP动态主机配置协议](os/network/dhcp-wireshark.md)
   * [shell编程之--$](os/shell/dollar.md)
   * [shell编程之--test表达式](os/shell/test_expression.md)
   * [shell编程之--流程控制](os/shell/control.md)
