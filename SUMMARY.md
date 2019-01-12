@@ -102,6 +102,7 @@
   * [zabbix](tools/zabbix/README.md)
     * [获取基本历史记录](tools/zabbix/base.md)
   * [ELK](tools/elk/README.md)
+    * [kubernetes中部署elasticsearch](tools/elk/deploy/k8s-es.md)
     * [elasticsearch环境准备](tools/elk/elasticsearch/env.md)
     * [filebeat-logstash-elasticsearch日志收集](tools/elk/logs-collection.md)
   * [ansible](tools/ansible/README.md)
