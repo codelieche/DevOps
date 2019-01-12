@@ -104,6 +104,7 @@
   * [ELK](tools/elk/README.md)
     * [kubernetes中部署elasticsearch](tools/elk/deploy/k8s-es.md)
     * [elasticsearch环境准备](tools/elk/elasticsearch/env.md)
+    * [logstash基本使用](tools/elk/logstash/base.md)
     * [filebeat-logstash-elasticsearch日志收集](tools/elk/logs-collection.md)
   * [ansible](tools/ansible/README.md)
     * [简单使用](tools/ansible/start.md)
@@ -128,6 +129,7 @@
 * [Operating System](os/README.md)
   * [基础](./os/base/READEME.md)
     * [网络工具](./os/base/network-tools.md)
+    * [tcdump基本使用](os/tools/tcpdump.md)
   * 网络
     * [virtualbox虚拟机路由器功能](./os/network/virtual-router.md)
     * [TCP连接状态](./os/network/tcp-status.md)
