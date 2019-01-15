@@ -60,6 +60,7 @@
     * [URLSearchParams](front/base/urlparams.md)
   * [Tools](front/tools/README.md)
     * [执行打包](front/tools/execute-build.md)
+    * [JavaScript前端导入excel文件数据](./front/tools/xlsx.md)
 * [app 模块](apps/README.md)
   * [account模块](apps/account/README.md)
     * [自定义用户和自定义校验](apps/account/user.md)
