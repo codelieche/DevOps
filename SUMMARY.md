@@ -8,8 +8,10 @@
     * [Django 数据库迁移](backend/django/models/migrate.md)
     * [Django 数据库查询](backend/django/models/filter.md)
     * [Django 模版过滤器](backend/templates/filter.md)
-    * [给views添加mixin](backend/django/views/mixin.md)
-    * [Django权限控制](backend/django/views/permission.md)
+    * 视图
+      * [给views添加mixin](backend/django/views/mixin.md)
+      * [Django权限控制](backend/django/views/permission.md)
+      * [导出excel文件](./backend/django/views/excel.md)
     * [Django取消CSRF和CORS中间件](backend/django/middleware/disabled_csrf_and_cors.md)
     * [Django跨域访问](backend/django/middleware/corsheaders.md)
     * [500服务器错误发送邮件](backend/django/logging/500_send_email.md)
