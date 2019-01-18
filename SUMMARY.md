@@ -92,6 +92,7 @@
       * [kubernetes service pod](tools/kubernetes/topic/service-pod.md)
       * [kubernetes监控检查](./tools/kubernetes/topic/health-check.md)
   * [Docker](tools/docker/README.md)
+    * [CentOS中安装Docker](./tools/docker/centos-docker.md)
     * [Docker基本使用](tools/docker/base.md)
     * [DockerFile基本使用](tools/docker/dockerfile.md)
     * [Python基础镜像](tools/docker/python-dockerfile.md)

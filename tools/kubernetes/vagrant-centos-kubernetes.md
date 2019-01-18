@@ -5,6 +5,42 @@
 ### 基础准备
 - `yum install wget vim`
 - 安装网络工具：`yum install -y net-tools telnet`
+- 网卡IP地址配置
+
+`192.168.6.106`机器配置了两个网卡
+
+- `en0sp3`: 仅主机(Host-Only)网络: `/etc/sysconfig/network-scripts/ifcfg-enp0s3`
+
+  ```bash
+  TYPE=Ethernet      # 设备类型，如：Ethernet、Bridge
+  PROXY_METHOD=none
+  BROWSER_ONLY=no
+  BOOTPROTO=none      # static(静态IP);dhcp(通过DHCP协议获取IP);bootip(通过bootp协议获取IP)
+  DEFROUTE=yes
+  IPV4_FAILURE_FATAL=no
+  IPV6INIT=yes
+  IPV6_AUTOCONF=yes
+  IPV6_DEFROUTE=yes
+  IPV6_FAILURE_FATAL=no
+  IPV6_ADDR_GEN_MODE=stable-privacy
+  NAME=enp0s3           # 网络设备名称
+  UUID=40ae7279-ef8a-4c93-a469-1234567 # 设备唯一标识
+  DEVICE=enp0s3         # 配置文件应用到的设备名
+  # ONBOOT=no
+  IPV6_PRIVACY=no
+  
+  ONBOOT=yes             # yes[默认]:系统启动时激活此设备，no为启动不激活
+  IPADDR=192.168.6.106   # 网络地址
+  NETMASK=255.255.255.0  # 网络掩码
+  # GATEWAY=192.168.6.1  # 设置默认网关
+  DNS1=8.8.8.8
+  ```
+
+- `en0sp8`: 网络地址转换: 配置文件：`/etc/sysconfig/network-scripts/ifcfg-enp0s8`
+
+  注意设置为：`ONBOOT=yes`
+
+- 重启网络：`/etc/init.d/network restart`
 
 ### 配置仓库
 1. 进入repos目录：`cd /etc/yum.repos.d`
