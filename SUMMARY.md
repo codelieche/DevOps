@@ -137,6 +137,7 @@
     * [tcdump基本使用](os/tools/tcpdump.md)
   * 网络
     * [virtualbox虚拟机路由器功能](./os/network/virtual-router.md)
+    * [网络命名空间Linux Network Namespace](./os/network/namespace.md)
     * [TCP连接状态](./os/network/tcp-status.md)
     * [TCP Flags 状态标记位](os/network/tcp-flags.md)
     * [DHCP动态主机配置协议](os/network/dhcp-wireshark.md)
