@@ -167,6 +167,33 @@ source /etc/profile
 - 重启Tomcat和Guacamole
 - 访问系统：`http://192.168.6.118:8080/guacamole/`
 
+#### Database Authentication
+
+- /etc/guacamole/guacamole.properties
+
+```
+# MySQL Connect
+mysql-hostname: 192.168.6.1
+mysql-port: 3307
+mysql-database: guacamole_develop
+mysql-username: guacamole
+mysql-password: guacamole_db_password
+```
+
+- 下载`guacamole-auth-jdbc-mysql-1.0.0.jar`到/etc/guacamole/extensions
+
+  `wget http://apache.mirrors.tds.net/guacamole/1.0.0/binary/guacamole-auth-jdbc-1.0.0.tar.gz`
+
+- 下载`mysql-connector-java-5.1.46.jar`到/etc/guacamole/lib
+
+  `wget https://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz`
+
+  解压把相关jar包移动到响应的目录。
+
+- 导入sql文件：`001-create-schema.sql`, `002-create-admin-user.sql`
+
+**默认的管理员账号和密码是**：`guacadmin`
+
 ### 遇到的问题
 
 - 中文乱码

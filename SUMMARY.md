@@ -126,6 +126,8 @@
     * [python操作etcd](tools/confd/python-etcd.md)
   * [fabric](tools/fabric/README.md)
   * [paramiko](tools/paramiko/README.md)
+  * guacamole
+    * [安装Apache Guacamole](tools/guacamole/install.md)
   * [Version Control](tools/versioncontrol/README.md)
     * [安装gitlab](tools/versioncontrol/gitlab/install.md)
     * [python-gitlab基本使用](tools/versioncontrol/gitlab/python-gitlab.md)
