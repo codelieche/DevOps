@@ -91,6 +91,9 @@
     * 文章/主题
       * [kubernetes service pod](tools/kubernetes/topic/service-pod.md)
       * [kubernetes监控检查](./tools/kubernetes/topic/health-check.md)
+    * 问题
+      * [kubernetes替换证书](./tools/kubernetes/question/change_certificate.md)
+      * [ETCD更新证书](./tools/kubernetes/question/etcd_certificate.md)
   * [Docker](tools/docker/README.md)
     * [CentOS中安装Docker](./tools/docker/centos-docker.md)
     * [Docker基本使用](tools/docker/base.md)
