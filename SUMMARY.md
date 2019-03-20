@@ -114,6 +114,8 @@
       * [kubernetes中部署elasticsearch](./tools/elk/deploy/k8s-es.md)
       * [安装kibana](./tools/elk/deploy/install-kibana.md)
     * [elasticsearch环境准备](./tools/elk/elasticsearch/env.md)
+    * Elasticsearch
+      * [xpack的基本使用](./tools/elk/elasticsearch/xpack.md)
     * [logstash基本使用](./tools/elk/logstash/base.md)
     * [filebeat-logstash-elasticsearch日志收集](./tools/elk/logs-collection.md)
   * [ansible](tools/ansible/README.md)

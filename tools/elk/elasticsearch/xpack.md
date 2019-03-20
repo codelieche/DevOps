@@ -9,57 +9,117 @@
 - [setup-xpack](https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-xpack.html)
 - [elasticsearch-certutil](https://www.elastic.co/guide/en/elasticsearch/reference/current/certutil.html)
 
-
-
-#### elasticsearch-certutil
-
-- elasticsearch-certutil ca
-
-  > 该`ca`模式生成新的证书颁发机构（CA）。默认情况下，它会生成一个PKCS＃12输出文件(`elastic-stack-ca.p12`)，该文件包含CA证书和CA的私钥。如果指定`--pem`参数，该命令将生成一个zip文件，其中包含PEM格式的证书和私钥。
-  >
-  > 随后可以将这些文件用作`cert`命令模式的输入。
-
-
+先开启试用，会有30天的试用期限。
 
 ```
-$ bin/elasticsearch-certutil ca --pem
-# 生成elastic-stack-ca.zip文件
-
-➜  elk tree
-.
-├── ca
-│   ├── ca.crt
-│   └── ca.key
-├── elastic-stack-ca.p12
-└── elastic-stack-ca.zip
-
-1 directory, 4 files
+curl -H "Content-Type:application/json" -XPOST  http://localhost:9200/_xpack/license/start_trial?acknowledge=true
 ```
 
-- Elasticsearch-certutil cert
+或者去kibana中点击试用：`Management >> Elasticsearch >> License Management >> 开启试用`
 
-  > 该`cert`模式生成X.509证书和私钥。默认情况下，它会生成单个证书和密钥，以便在单个实例上使用。
-  >
-  > 要为多个实例生成证书和密钥，请指定 `--multiple`参数，该参数会提示您输入有关每个实例的详细信息。或者，您可以使用该`--in`参数指定包含有关实例的详细信息的YAML文件
+#### 1: 生成证书文件
 
-此命令生成的所有证书都由CA签名。您可以为自己的CA提供`--ca`或`--ca-cert`参数。否则，该命令会自动为您生成新的CA.
+先进入elasticsarch的安装目录：比如：`/usr/share/elasticsearch`
 
-默认情况下，该`cert`模式生成一个PKCS＃12输出文件，该文件包含实例证书，实例私钥和CA证书。如果指定`--pem`参数，该命令将生成PEM格式的证书和密钥，并将它们打包为zip文件。如果指定了`--keep-ca-key`，`--multiple`或`--in`参数，所述命令生成包含所生成的证书和密钥的zip文件。
+**如果集群由多台机器，需要把证书复制到相应的位置**
 
+```bash
+# 先进入elasticsearch的目录
+cd /usr/share/elasticsearch
+./bin/elasticsearch-certutil ca --ca-dn "CN=ELastic Study" --out ./config/certs/elastic-stack-ca.p12
+# 回车，密码设置为空
+./bin/elasticsearch-certutil cert -ca ./config/certs/elastic-stack-ca.p12 --out ./config/certs/elastic-certificates.p12
+# 修改权限
+chmod 755 -R ./config/certs
+```
 
+#### 2：修改配置文件
+
+- **注意**：证书文件是需要放在配置目录中，比如：`/etc/elasticsearch`
+- **注意**：权限的控制，证书的权限，如果出错，注意看es的日志
 
 ```
-bin/elasticsearch-certutil cert --ca-cert /data/certs/elk/ca/ca.crt --ca-key /data/certs/elk/ca/ca.key --pem
-```
-
-Elasticsearch.yml: 注意需要读取ce文件的权限
-
-```
-xpack.ssl.key: /data/certs/elk/es/elasticsearch.key 
-xpack.ssl.certificate: /data/certs/elk/es/elasticsearch.crt 
-xpack.ssl.certificate_authorities: /data/certs/elk/ca/ca.crt
+#添加如下代码打开x-pack安全验证
+xpack.security.enabled: true
 xpack.security.transport.ssl.enabled: true
+
+xpack.security.transport.ssl.verification_mode: certificate 
+xpack.security.transport.ssl.keystore.path: certs/elastic-certificates.p12 
+xpack.security.transport.ssl.truststore.path: certs/elastic-certificates.p12
 ```
 
+出现权限问题会报：
 
+```bash
+java.security.AccessControlException: access denied ("java.io.FilePermission" "/etc/elasticsearch/certs/elastic-certificates.p12" "read")
+```
+
+### 3. 生成账号密码
+
+```
+$ ./bin/elasticsearch-setup-passwords auto
+Initiating the setup of passwords for reserved users elastic,apm_system,kibana,logstash_system,beats_system,remote_monitoring_user.
+The passwords will be randomly generated and printed to the console.
+Please confirm that you would like to continue [y/N]y
+
+
+Changed password for user apm_system
+PASSWORD apm_system = xxxxx
+
+Changed password for user kibana
+PASSWORD kibana = xxxxx
+
+Changed password for user logstash_system
+PASSWORD logstash_system = xxxxx
+
+Changed password for user beats_system
+PASSWORD beats_system = xxxxx
+
+Changed password for user remote_monitoring_user
+PASSWORD remote_monitoring_user = xxxxx
+
+Changed password for user elastic
+PASSWORD elastic = xxxxx
+```
+
+#### 4. 配置LDAP登录
+
+```yml
+xpack:
+  security:
+    authc:
+      realms:
+        active_directory:
+          type: active_directory
+          order: 1
+          domain_name: codelieche.com
+          url: "ldap://192.168.1.123:389"
+          # bind_dn: admin@codelieche.com
+          # bind_password: ThisIsPassword
+```
+
+#### 5. 在kibana中给ldap用户创建个readonly的组和映射关系
+
+```bash
+POST _xpack/security/role_mapping/ldap_user_readonly?pretty
+{
+  "roles": [ "readonly" ],
+ "enabled": true,
+   "rules": {
+     "any": [
+       {
+         "field": {
+           "username": "*"
+         }
+       }
+     ]
+   }
+}
+```
+
+- 查看角色映射关系：`GET _xpack/security/role_mapping`
+- 查看某个映射：`GET _xpack/security/role_mapping/ldap_user_admin?pretty`
+- 删除某个映射：`DELETE _xpack/security/role_mapping/ldap_user_admin`
+
+> 配置了readonly的角色，登录kibana就可以查看相关信息了。
 
