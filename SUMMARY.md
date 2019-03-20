@@ -109,8 +109,10 @@
   * [zabbix](tools/zabbix/README.md)
     * [获取基本历史记录](tools/zabbix/base.md)
   * [ELK](tools/elk/README.md)
-    * [CentOS中部署Elasticsearch](./tools/elk/deploy/centos-es.md)
-    * [kubernetes中部署elasticsearch](./tools/elk/deploy/k8s-es.md)
+    * 部署
+      * [CentOS中部署Elasticsearch](./tools/elk/deploy/centos-es.md)
+      * [kubernetes中部署elasticsearch](./tools/elk/deploy/k8s-es.md)
+      * [安装kibana](./tools/elk/deploy/install-kibana.md)
     * [elasticsearch环境准备](./tools/elk/elasticsearch/env.md)
     * [logstash基本使用](./tools/elk/logstash/base.md)
     * [filebeat-logstash-elasticsearch日志收集](./tools/elk/logs-collection.md)

@@ -214,3 +214,4 @@ discovery.zen.mininum_master_nodes: 2
 # index.number_of_shards: 5
 # index.number_of_replicas: 1
 ```
+
