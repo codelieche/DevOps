@@ -130,6 +130,7 @@
   * [salt基本使用](tools/salt/base.md)
   * [etcd+confd](tools/confd/README.md)
     * [etcd基本使用](tools/confd/etcd.md)
+    * [etcd配置参数说明](tools/etcd/configuration.md)
     * [confd基本使用](tools/confd/confd.md)
     * [confd模版编写](tools/confd/templates.md)
     * [python操作etcd](tools/confd/python-etcd.md)
