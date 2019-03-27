@@ -93,7 +93,7 @@ Filesystem                        Inodes IUsed     IFree IUse% Mounted on
    5
    ```
 
-4. 第五步加入`MAILTO=""`
+4. 第四步加入`MAILTO=""`
 
    ```bash
    [root@node01 mail]# ls /var/spool/postfix/maildrop/ | wc -l
@@ -104,7 +104,7 @@ Filesystem                        Inodes IUsed     IFree IUse% Mounted on
    [root@node01 mail]# systemctl restart crond
    ```
 
-5. 第六步再次监控小文件是否增加
+5. 第五步再次监控小文件是否增加
 
    过几分钟再次查看**无新文件产生**
 

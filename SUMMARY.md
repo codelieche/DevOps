@@ -118,6 +118,8 @@
       * [xpack的基本使用](./tools/elk/elasticsearch/xpack.md)
     * [logstash基本使用](./tools/elk/logstash/base.md)
     * [filebeat-logstash-elasticsearch日志收集](./tools/elk/logs-collection.md)
+    * Elasticsearch APIs
+      * [X-Pack APIs 用户、角色相关api](./tools/elk/apis/xpack-security.md)
   * [ansible](tools/ansible/README.md)
     * [简单使用](tools/ansible/start.md)
     * [基本配置ansible.cfg](tools/ansible/config.md)
