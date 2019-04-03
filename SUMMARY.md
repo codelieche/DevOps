@@ -166,4 +166,6 @@
   * tools
     * [linux crontab计划任务](os/tools/crontab.md)
     * [iptalbes基本使用](os/tools/iptables.md)
+    * [lsof基本使用](os/tools/lsof.md)
+
 
