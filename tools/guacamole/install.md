@@ -6,7 +6,7 @@
 
 - 安装jdk11：`yum install java-11-openjdk`
 
-- 安装Tomcat9：
+- 安装[Tomcat9](https://tomcat.apache.org/download-90.cgi)：
 
   - `wget http://apache.website-solution.net/tomcat/tomcat-9/v9.0.16/bin/apache-tomcat-9.0.16.tar.gz`
   - `tar zxvf apache-tomcat-9.0.16.tar.gz`
@@ -85,6 +85,10 @@ tar zxvf guacamole-server-1.0.0.tar.gz
 # 进入解压目录
 cd guacamole-server-1.0.0
 
+# 可能报错：就安装下libtool
+# autoreconf: failed to run libtoolize: No such file or directory
+# yum install libtool
+
 autoreconf -fi
 # 执行config: 将guacd的启动脚本放置在/etc/init.d
 ./configure --with-init-dir=/etc/init.d
@@ -127,7 +131,7 @@ mvn package
 
 ```bash
 # 创建路径
-mkdir /etc/gracamole
+mkdir /etc/guacamole
 touch /etc/guacamole/guacamole.properties
 touch /etc/guacamole/user-mapping.xml
 
@@ -184,13 +188,34 @@ mysql-password: guacamole_db_password
 
   `wget http://apache.mirrors.tds.net/guacamole/1.0.0/binary/guacamole-auth-jdbc-1.0.0.tar.gz`
 
-- 下载`mysql-connector-java-5.1.46.jar`到/etc/guacamole/lib
+- 下载`mysql-connector-java-5.1.46.jar`到**/etc/guacamole/lib**
 
   `wget https://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-5.1.46.tar.gz`
 
-  解压把相关jar包移动到响应的目录。
+  解压把相关jar包移动到相应的目录。
+
+  ```bash
+  [root@localhost guacamole]# tree /etc/guacamole/
+  /etc/guacamole/
+  ├── extensions
+  │   ├── guacamole-auth-jdbc-mysql-1.0.0.jar
+  │   └── mysql-connector-java-5.1.46.jar
+  ├── guacamole.properties
+  ├── lib
+  │   └── mysql-connector-java-5.1.46.jar
+  └── user-mapping.xml
+  ```
 
 - 导入sql文件：`001-create-schema.sql`, `002-create-admin-user.sql`
+
+```bash
+➜  tree guacamole-auth-jdbc-1.0.0/mysql/schema
+guacamole-auth-jdbc-1.0.0/mysql/schema
+├── 001-create-schema.sql
+├── 002-create-admin-user.sql
+```
+
+
 
 **默认的管理员账号和密码是**：`guacadmin`
 
@@ -200,7 +225,7 @@ mysql-password: guacamole_db_password
 
   - `fc-list`查看字体
   - `yum install -y fontconfig`
-  - 下载字体到：/usr/share/fonts/chinese
+  - 下载字体到：/usr/share/fonts/chinese (记得先创建目录)
   - 安装ttmkfdir: `yum install -y ttmkfdir`
   - 执行命令：`ttmkfdir -e /usr/share/X11/fonts/encodings/encodings.dir`
   - 编辑文件：`/etc/fonts/fonts.conf`加入`<dir>/usr/share/fonts/chinese</dir>`
@@ -213,3 +238,7 @@ mysql-password: guacamole_db_password
   ```
 
   - 再次连接web服务器，中文就不乱码了
+
+- 英文字符，有些上浮了
+  - 解决方式：` yum install dejavu-sans-mono-fonts.noarch`
+  - 退出，重新进入，就OK了。
