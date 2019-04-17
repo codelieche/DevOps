@@ -16,7 +16,7 @@ Unable to connect to the server: x509: certificate has expired or is not yet val
 ```bash
 root@master01:/etc/kubernetes/pki# openssl x509 -in apiserver.crt -dates
 notBefore=Mar  8 03:49:29 2018 GMT
-notAfter=Mar  7 05:44:27 2029 GMT
+notAfter=Mar  7 05:44:27 2019 GMT
 
 root@master01:/etc/kubernetes/pki# openssl x509 -in apiserver.crt -noout -text |grep 'Not '
             Not Before: Mar  8 03:49:29 2018 GMT
@@ -78,7 +78,7 @@ apiserver.key  apiserver-kubelet-client.key  ca.key  front-proxy-ca.key  front-p
 
 ```bash
 root@master01:/etc/kubernetes# openssl x509 -in /etc/kubernetes/pki/apiserver.crt -noout -text |grep ' Not '
-            Not Before: Mar  8 03:49:29 2018 GMT
+            Not Before: Mar  8 03:49:29 2019 GMT
             Not After : Mar  7 11:39:35 2020 GMT
 ```
 

@@ -33,7 +33,7 @@ root@yksv001238:~/etcd_tls# pwd
 
 ### 2. 编写配置文件
 
- - `etcd-root-ca-crs.json`
+ - `etcd-root-ca-csr.json`
 
    ```json
    {
@@ -86,7 +86,7 @@ root@yksv001238:~/etcd_tls# pwd
        "127.0.0.1",
        "192.168.1.123",
        "192.168.1.124",
-       "192.168.1.125",
+       "192.168.1.125"
      ],
      "key": {
        "algo": "rsa",
