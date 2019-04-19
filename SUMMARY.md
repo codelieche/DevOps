@@ -41,6 +41,7 @@
     * [Celery的基本使用](backend/async/celery_base.md)
   * [django channels 实现websocket](backend/django/channels/README.md)
     * [channels的基本使用](backend/django/channels/simple.md)
+    * [channels使用paramiko实现web ssh](backend/django/channels/paramiko.md)
   * [其它](backend/other/README.md)
     * [sentry基本使用](backend/other/sentry.md)
     * [HTTP 报文](backend/other/http—packet.md)
