@@ -42,6 +42,7 @@
   * [django channels 实现websocket](backend/django/channels/README.md)
     * [channels的基本使用](backend/django/channels/simple.md)
     * [channels使用paramiko实现web ssh](backend/django/channels/paramiko.md)
+    * [channels给kubernetes pod实现web ssh](backend/django/channels/pod-ssh.md)
     * [Django Channels Deploy](backend/django/channels/deploy.md)
   * [其它](backend/other/README.md)
     * [sentry基本使用](backend/other/sentry.md)
