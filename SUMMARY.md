@@ -63,6 +63,7 @@
     * [服务器监控数据组件](front/charts/monitor.md)
   * [前端知识点](front/base/README.md)
     * [URLSearchParams](front/base/urlparams.md)
+    * [通过剪切板粘贴图片上传](front/base/paste-image.md)
   * [Tools](front/tools/README.md)
     * [执行打包](front/tools/execute-build.md)
     * [JavaScript前端导入excel文件数据](./front/tools/xlsx.md)
