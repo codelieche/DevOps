@@ -3,7 +3,8 @@
 
 
 ### 基本命令
-- 启动celery：`celery - A opsmind workder -l info`
+- 启动celery：`celery - A devops workder -l info`
+- 如果要指定进程数：`celery - A devops workder -l info --concurrency=4`
 
 
 ### 重启celery脚本
@@ -58,4 +59,4 @@ if [ -n $1 ]; then
 	;;
   esac
  fi
- ```
+```
