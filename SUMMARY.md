@@ -90,6 +90,7 @@
 * [数据库相关](database/README.md)
   * [MySQL](database/mysql/README.md)
     * [MySQL二进制日志的基本使用](database/mysql/logs/binlog.md)
+    * [MySQL binlog 测试实验](database/mysql/logs/binlog-test.md)
 * [DevOps Tools](tools/README.md)
   * [kubernetes](tools/kubernetes/README.md)
     * [kubernetes基础知识](tools/kubernetes/base.md)

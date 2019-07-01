@@ -1,6 +1,6 @@
 # gitbook default gitignore content
 # Logs
-logs
+/logs
 *.log
 
 # Runtime data
