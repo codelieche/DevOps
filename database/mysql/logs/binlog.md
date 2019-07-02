@@ -41,7 +41,7 @@
 
 #### 查看二进制日志
 
-- `SHOW MASTER STATUS`: 显示主服务器中的二进制日志信息
+- `SHOW MASTER STATUS`: 显示主服务器中的二进制日志信息(查看正在使用的binlog日志文件)
 
   ```mysql
   mysql> SHOW MASTER STATUS;
