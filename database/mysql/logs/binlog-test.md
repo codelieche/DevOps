@@ -188,7 +188,34 @@
       root@1fb6aa5953f8:/var/lib/mysql#
       ```
 
-  - 查看codelieche数据库的表：
+  - **查看codelieche数据库的表：**
+
+    ```sql
+    mysql> SHOW TABLES;
+    Empty set (0.00 sec)
+    
+    mysql> SHOW TABLES;
+    +----------------------+
+    | Tables_in_codelieche |
+    +----------------------+
+    | users                |
+    +----------------------+
+    1 row in set (0.00 sec)
+    
+    mysql> DESC users;
+    +-------+------------------+------+-----+---------+----------------+
+    | Field | Type             | Null | Key | Default | Extra          |
+    +-------+------------------+------+-----+---------+----------------+
+    | id    | int(11)          | NO   | PRI | NULL    | auto_increment |
+    | name  | varchar(40)      | NO   |     | NULL    |                |
+    | age   | int(10) unsigned | NO   |     | NULL    |                |
+    | email | varchar(100)     | YES  |     | NULL    |                |
+    +-------+------------------+------+-----+---------+----------------+
+    4 rows in set (0.01 sec)
+    
+    mysql> SELECT * FROM users;
+    Empty set (0.00 sec)
+    ```
 
 - 恢复users表的数据
 
