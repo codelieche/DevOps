@@ -22,6 +22,8 @@
 
 - `—ignore-table=mysql.user`: 忽略`mysql`库的`user`表
 
+- `—result-fle=dump.sql`: 指定输出文件
+
 
 
 ### 备份codelieche的数据库

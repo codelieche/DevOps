@@ -94,7 +94,8 @@
       * [MySQL binlog 测试实验](database/mysql/logs/binlog-test.md)
       * [mysqlbinlog的基本使用](database/mysql/logs/mysqlbinlog.md)
     * 备份相关
-      * [mysqldump的基本使用](./mysql/backup/mysqldump.md)
+      * [mysqldump的基本使用](./database/mysql/backup/mysqldump.md)
+      * [xtrabackup的基本使用](./database/mysql/backup/xtrabackup.md)
 * [DevOps Tools](tools/README.md)
   * [kubernetes](tools/kubernetes/README.md)
     * [kubernetes基础知识](tools/kubernetes/base.md)
