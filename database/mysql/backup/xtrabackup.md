@@ -29,7 +29,13 @@ sudo apt-get install percona-xtrabackup-24
   /usr/bin/xtrabackup
   ```
 
+### 常用参数
 
+- `—user=name`: 数据库用户名
+- `—password=name`: 数据库账号密码
+- `—defaults-file=name`: 默认是`/etc/my.cnf`MySQL的配置【会从中读取datadir的数据拷贝至指定备份目录】
+- `—incremetal-basedir=name`: 全量备份的目录，增量备份的时候会用到
+- `—incremetal name`: 增量备份保存目录
 
 ### 基本使用
 
@@ -160,7 +166,7 @@ innobackupex --defaults-file=/etc/my.cnf --user=root --password=xxxx --copy-back
 
   数据恢复成功！
 
-  **注意**： 我这个测试修改了datadir目录的。
+  **注意**： 我这个测试实验我选择的是修改datadir的目录。
 
 
 
