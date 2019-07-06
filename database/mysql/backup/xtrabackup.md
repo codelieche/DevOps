@@ -33,8 +33,19 @@ sudo apt-get install percona-xtrabackup-24
 
 - `—user=name`: 数据库用户名
 - `—password=name`: 数据库账号密码
-- `—defaults-file=name`: 默认是`/etc/my.cnf`MySQL的配置【会从中读取datadir的数据拷贝至指定备份目录】
-- `—incremetal-basedir=name`: 全量备份的目录，增量备份的时候会用到
+- `—port=value`: 指定数据库端口
+- `—host=`: 指定备份主机
+- `—socket`: 指定socket文件路径
+- `—databases`: 备份指定数据库，多个空格隔开，eg：`—database="db1 db2"`，不加则备份所有库
+- `—databases-exclude`: 排除数据库
+- `—defaults-file=name`: 默认是`/etc/my.cnf`MySQL的配置文件【会从中读取datadir的数据拷贝至指定备份目录】
+- `—apply-log`:  日志回滚
+- `—redo-only`: 合并全备和增量备份数据文件
+- `—copy-back`: 将备份数据复制到数据库，**数据库目录要为空**
+- `—no-timestamp`: 生成备份文件不以时间戳为目录名
+- `—stream=`: 指定流的格式做备份，`--stream=tar`将备份文件归档
+- `—remote-host=user@ip DST_DIR`:备份到远程主机 
+- `—incremetal-basedir=name`: 全量/增量备份文件的目录，增量备份的时候会用到
 - `—incremetal name`: 增量备份保存目录
 
 ### 基本使用
@@ -45,7 +56,7 @@ sudo apt-get install percona-xtrabackup-24
 innobackupex --defaults-file=/etc/my.cnf --user=root --password="xxxxx" --backup /root/backup
 ```
 
-输出日志：
+- 输出日志：
 
 ```
 190704 11:39:03 Executing UNLOCK BINLOG
@@ -60,13 +71,12 @@ xtrabackup: Transaction log of lsn (1386979555) to (1386979555) was copied.
 190704 11:39:04 completed OK!
 ```
 
-查看目录：
+- 查看目录：
 
 ```
 root@546c948f8d-qqd5f:~/backup# tree /root/backup/ -L 2
 /root/backup/
 `-- 2019-07-04_11-38-33
-    |-- 004
     |-- backup-my.cnf
     |-- codelieche
     |-- ibdata1
@@ -78,7 +88,12 @@ root@546c948f8d-qqd5f:~/backup# tree /root/backup/ -L 2
     `-- xtrabackup_logfile
 ```
 
-
+- 文件说明
+  - `backup-my.cnf`: 备份命令用到的配置选项信息
+  - `ibdata1`: 备份的表空间文件
+  - `xtrabackup_checkpoints`: 备份类型【全备/增备】、备份状态、LSN【日志序列号】范围信息
+  - `xtrabackup_info`: 备份的信息，执行的命令、时间等
+  - `xtrabackup_logfile`: 备份的重做日志文件
 
 ### 删除数据表
 
