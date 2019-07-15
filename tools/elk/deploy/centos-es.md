@@ -96,7 +96,7 @@ root soft nofile 65535
 root hard nofile 65535
 # End of file
 ```
-**注意：**在ubuntu中`*`是包含root的所以，加了4行。CentOs中我也加了这四行。
+**注意：**  在ubuntu中`*`是包含root的所以，加了4行。CentOs中我也加了这四行。
 
 #### Sysconfig file
 - RPM路径：`/etc/sysconfig/elasticsearch`
@@ -215,3 +215,104 @@ discovery.zen.mininum_master_nodes: 2
 # index.number_of_replicas: 1
 ```
 
+- 加入xpack相关的配置：
+
+  ```yaml
+  cluster.name: codelieche
+  node.name: 192.168.1.101
+  
+  path.data: /data/elasticsearch/data
+  path.logs: /data/elasticsearch/logs
+  
+  network.host: 192.168.1.101
+  network.publish_host: "192.168.1.101"
+  
+  http.port: 9200
+  transport.tcp.port: 9300
+  
+  discovery.zen.ping.unicast.hosts: ["192.168.1.101", "192.168.1.102", "192.168.1.103"]
+  discovery.zen.minimum_master_nodes: 2
+  
+  
+  # 添加如下配置，打开xpack安全验证
+  xpack.security.enabled: true
+  xpack.security.transport.ssl.enabled: true
+  
+  xpack.security.transport.ssl.verification_mode: certificate
+  xpack.security.transport.ssl.keystore.path: certs/elastic-certificates.p12
+  xpack.security.transport.ssl.truststore.path: certs/elastic-certificates.p12
+  
+  
+  xpack:
+    security:
+      authc:
+        realms:
+          native1:
+            type: native
+            order: 0
+          active_directory:
+            type: active_directory
+            order: 1
+            domain_name: codelieche.com
+            url: "ldap://192.168.1.123:389"
+  ```
+
+
+
+### 启动elasticsearch服务
+
+- `service start/restart/stop/status elasticsearch`: 通过`yum`安装的ES
+
+- 编写个启动脚本：`/data/elasticsearch/run.server`
+
+  > 如果是直接下载的二进制包，而不是通过`yum install elasticsearch`的就可以考虑用这个脚本启动
+
+  ```bash
+  #!/bin/bash
+  # 定义版本号
+  VERSION="6.6.2"
+  # 进入目录
+  cd /data/elasticsearch/$VERSION
+  
+  function start()
+  {
+    # 判断是不是超级用户
+    if [ `whoami` = "root" ]; then
+       # echo "is root"
+       sudo -u esdata ./bin/elasticsearch -d
+    else
+       # echo "is not root"
+       ./bin/elasticsearch -d
+    fi
+  }
+  
+  function stop()
+  {
+    # 查看任务然后杀掉
+    ps aux | grep elasticsearch | grep $VERSION | awk '{print $2}' | xargs kill
+  }
+  
+  
+  
+  if [ -n $1 ]; then
+      case $1 in
+        "start")
+             start
+           ;;
+  
+         "stop")
+              stop
+          ;;
+  
+          "restart")
+              stop
+              start
+             ;;
+           *)
+               echo "请传入参数:start|restart|stop"
+             ;;
+       esac
+  fi
+  ```
+
+  
