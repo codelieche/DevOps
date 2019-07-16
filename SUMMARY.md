@@ -164,6 +164,7 @@
     * [tcdump基本使用](os/tools/tcpdump.md)
   * 文件系统
     * [btrfs文件系统](./os/filesystem/btrfs.md)
+    * [磁盘阵列RAID](./os/filesystem/raid.md)
   * 网络
     * [virtualbox虚拟机路由器功能](./os/network/virtual-router.md)
     * [网络命名空间Linux Network Namespace](./os/network/namespace.md)
