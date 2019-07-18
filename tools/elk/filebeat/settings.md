@@ -11,6 +11,7 @@
 
 #### Prospector配置
 - `type`: 输入的日志类型，默认log,其它还有`stdin`、`redis`、`udp`、`docker`等类型
+    - [config filebeat options](https://www.elastic.co/guide/en/beats/filebeat/master/configuration-filebeat-options.html)
 - `paths`: 需要收集的日志文件的绝对路径，支持通配符`*`
     - `recursive_glob`参数来递归查找指定目录下所有子目录中的日志文件
 - `exclude_lines`: 过滤所有正则表达式匹配的行。

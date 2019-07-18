@@ -192,7 +192,121 @@ RAID 1这种模式主要是：让同一份数据，完整地保存在两块磁�
 
   
 
+#### mdadm —manage
 
+选项和参数：
+
+- `—add`: 会将后面的设备加入到这个md中
+- `—remove`: 会将后面的设备由这个md中删除
+- `—fail`: 将设备设置为出错的状态
+
+```
+mdadm --manage /dev/md0 --add /dev/sde
+mdadm --manage /dev/md0 --remove /dev/sde
+mdadm --manage /dev/md0 --fail /dev/sdd
+```
+
+
+
+#### 开机自动启动RAID并自动挂载
+
+软件RAID也是有配置文件的，这个配置文件是`/etc/mdadm.conf`
+
+- 先获取到md0的uuid：`mdadm —detail /dev/md0 | grep UUID`
+
+  ```bash
+  root@localhost:~# blkid /dev/md0
+  /dev/md0: UUID="79f40cf6-234c-46eb-a0bf-2b195baf0942" TYPE="ext4"
+  root@localhost:~# mdadm --detail /dev/md0 | grep UUID
+             UUID : 4458bec4:56cbd513:b0e77990:47e98372
+  ```
+
+  **注意**：`blkid /dev/md0`获取到的UUID是不一样的哦
+
+- 配置：`/etc/mdadm.conf`
+
+  ```bash
+  root@localhost:~# cat /etc/mdadm.conf
+  ARRAY /dev/md0 UUID=4458bec4:56cbd513:b0e77990:47e98372
+  #     RAID设备 识别码内容
+  ```
+
+- 设置挂载目录：`/etc/fstab`
+
+  ```bash
+  root@localhost:~# cat /etc/fstab
+  # .....
+  UUID=4458bec4:56cbd513:b0e77990:47e98372 /data/rddata ext4 defaults 0 0
+  ```
+
+#### 关闭mdadm创建的RAID
+
+```bash
+root@localhost:~# umount /dev/md0
+root@localhost:~# df -h
+文件系统                      容量  已用  可用 已用% 挂载点
+udev                          4.3G     0  4.3G    0% /dev
+tmpfs                         877M   17M  860M    2% /run
+/dev/mapper/ykstest--vg-root   15G  6.7G  6.9G   50% /
+tmpfs                         4.3G     0  4.3G    0% /dev/shm
+tmpfs                         5.0M     0  5.0M    0% /run/lock
+tmpfs                         4.3G     0  4.3G    0% /sys/fs/cgroup
+/dev/sda1                     472M  105M  343M   24% /boot
+tmpfs                         877M     0  877M    0% /run/user/0
+root@localhost:~# mdadm --stop /dev/md0
+mdadm: stopped /dev/md0
+root@localhost:~# ls /dev/md0
+ls: 无法访问'/dev/md0': 没有那个文件或目录
+root@localhost:~# blkid /dev/sdb
+/dev/sdb: UUID="4458bec4-56cb-d513-b0e7-799047e98372" UUID_SUB="c78ab8ba-5a4e-9026-2d52-175ed67bec75" LABEL="localhost:0" TYPE="linux_raid_member"
+root@localhost:~# blkid /dev/sdc
+/dev/sdc: UUID="4458bec4-56cb-d513-b0e7-799047e98372" UUID_SUB="c0b5bf16-10da-ffb8-6d8c-368a56ae95fd" LABEL="localhost:0" TYPE="linux_raid_member"
+root@localhost:~# blkid /dev/sdd
+/dev/sdd: UUID="4458bec4-56cb-d513-b0e7-799047e98372" UUID_SUB="d101103c-bebb-7982-d51b-2c75348fef23" LABEL="localhost:0" TYPE="linux_raid_member"
+root@localhost:~# dd if=/dev/zero of=/dev/sdb bs=1M count=10
+记录了10+0 的读入
+记录了10+0 的写出
+10485760 bytes (10 MB, 10 MiB) copied, 0.0694904 s, 151 MB/s
+root@localhost:~# blkid /dev/sdb
+root@localhost:~# dd if=/dev/zero of=/dev/sdc bs=1M count=10
+记录了10+0 的读入
+记录了10+0 的写出
+10485760 bytes (10 MB, 10 MiB) copied, 0.0717 s, 146 MB/s
+root@localhost:~# dd if=/dev/zero of=/dev/sdd bs=1M count=10
+记录了10+0 的读入
+记录了10+0 的写出
+10485760 bytes (10 MB, 10 MiB) copied, 0.0603371 s, 174 MB/s
+root@localhost:~# blkid /dev/sdd
+root@localhost:~#
+```
+
+另外记得删除`/etc/mdadm.conf`和`/etc/fstab`中的相关配置。
+
+**注意**：dd命令别执行到错误的盘了。
+
+- dd命说明：
+
+  > dd命令用于读取、转换并输出数据。
+  >
+  > dd可从标准输入或文件中读取数据，根据指定的格式来转换数据，再输出到文件，设备或标准输出。
+
+  参数：
+
+  - `if=文件名`: 输入文件名，不填就是标准输入，即指定源文件
+  - `of=文件名`: 输出文件名，不填就是标准输出，即指定目的文件
+  - `bs=bytes`: 同时设置读取/输出的块大小为bytes个字节
+  - `count=blocks`: 从仅拷贝blocks个块，块大小等于bs指定的字节数
+
+  ```bash
+  root@localhost:~# dd if=/dev/zero of=/root/ddtest.log bs=1M count=100
+  记录了100+0 的读入
+  记录了100+0 的写出
+  104857600 bytes (105 MB, 100 MiB) copied, 0.0825224 s, 1.3 GB/s
+  root@localhost:~# ls -alh /root/ddtest.log
+  -rw-r--r-- 1 root root 100M Jul 18 16:50 /root/ddtest.log
+  ```
+
+  
 
 
 
