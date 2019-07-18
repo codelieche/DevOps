@@ -247,7 +247,7 @@ root@localhost:~# df -h
 文件系统                      容量  已用  可用 已用% 挂载点
 udev                          4.3G     0  4.3G    0% /dev
 tmpfs                         877M   17M  860M    2% /run
-/dev/mapper/ykstest--vg-root   15G  6.7G  6.9G   50% /
+/dev/mapper/testtest--vg-root   15G  6.7G  6.9G   50% /
 tmpfs                         4.3G     0  4.3G    0% /dev/shm
 tmpfs                         5.0M     0  5.0M    0% /run/lock
 tmpfs                         4.3G     0  4.3G    0% /sys/fs/cgroup

@@ -331,14 +331,14 @@
   - 修改原来的文件
 
     ```bash
-    root@ykstest3:~# cat /data/btrdata/logs_snapshot/test.log
+    root@localhost:~# cat /data/btrdata/logs_snapshot/test.log
     Fri Jul 12 11:53:32 CST 2019
     Fri Jul 12 11:53:45 CST 2019
-    root@ykstest3:~# echo "This Is Test" >> /data/btrdata/logs/test.log
-    root@ykstest3:~# cat /data/btrdata/logs_snapshot/test.log
+    root@localhost:~# echo "This Is Test" >> /data/btrdata/logs/test.log
+    root@localhost:~# cat /data/btrdata/logs_snapshot/test.log
     Fri Jul 12 11:53:32 CST 2019
     Fri Jul 12 11:53:45 CST 2019
-    root@ykstest3:~# cat /data/btrdata/logs/test.log
+    root@localhost:~# cat /data/btrdata/logs/test.log
     Fri Jul 12 11:53:32 CST 2019
     Fri Jul 12 11:53:45 CST 2019
     This Is Test

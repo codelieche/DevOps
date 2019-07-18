@@ -165,6 +165,7 @@
   * 文件系统
     * [btrfs文件系统](./os/filesystem/btrfs.md)
     * [磁盘阵列RAID](./os/filesystem/raid.md)
+    * [LVM逻辑卷管理器](./os/filesystem/lvm.md)
   * 网络
     * [virtualbox虚拟机路由器功能](./os/network/virtual-router.md)
     * [网络命名空间Linux Network Namespace](./os/network/namespace.md)

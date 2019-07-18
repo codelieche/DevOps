@@ -15,8 +15,8 @@ ETCD节点：
 - 创建目录
 
 ```bash
-root@yksv001238:~# mkdir etcd_tls
-root@yksv001238:~/etcd_tls# pwd
+root@test00123:~# mkdir etcd_tls
+root@testv0123:~/etcd_tls# pwd
 /root/etcd_tls
 ```
 
