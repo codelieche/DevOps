@@ -175,6 +175,7 @@
   * [性能优化](./os/performance/README.md)
     * [性能工具](./os/performance/tools/README.md)
       * [stress基本使用](./os/performance/tools/stress.md)
+      * [fio I/O基准测试](./os/performance/tools/fio.md)
   * shell编程
     * [shell编程之--$](os/shell/dollar.md)
     * [shell编程之--test表达式](os/shell/test_expression.md)
