@@ -100,25 +100,31 @@ RAID 1这种模式主要是：让同一份数据，完整地保存在两块磁�
 - `—level=[015]`: 设置这组磁盘阵列的级别，支持很多，不过建议用0、1、5即可
 - `—detail`: 后面所接的那个磁盘阵列设备的详细信息
 
-### 以三块磁盘创建RAID5
+### 以4块磁盘创建RAID5
+
+> 三块为磁盘阵列的设备(—raid-devices=N)，一块为备用设备（—spare-devices=N)
+>
+> 测试机器：IP: 192.168.6.106
+>
+> 总共有五块磁盘，sda, sdb, sdc, sdd, sde，系统安装在sda中
 
 - 查看磁盘
 
   ```bash
-  root@localhost:~# fdisk -l | grep sd
-  Disk /dev/sdb: 16 GiB, 17179869184 bytes, 33554432 sectors
-  Disk /dev/sda: 16 GiB, 17179869184 bytes, 33554432 sectors
-  /dev/sda1  *       2048   999423   997376  487M 83 Linux
-  /dev/sda2       1001470 33552383 32550914 15.5G  5 扩展
-  /dev/sda5       1001472 33552383 32550912 15.5G 8e Linux LVM
-  Disk /dev/sdc: 16 GiB, 17179869184 bytes, 33554432 sectors
-  Disk /dev/sdd: 16 GiB, 17179869184 bytes, 33554432 sectors
+  [root@centos106 ~]# fdisk -l | grep sd
+  Disk /dev/sda: 10.7 GB, 10737418240 bytes, 20971520 sectors
+  /dev/sda1   *        2048      411647      204800   83  Linux
+  /dev/sda2          411648    15108095     7348224   8e  Linux LVM
+  Disk /dev/sdb: 2147 MB, 2147483648 bytes, 4194304 sectors
+  Disk /dev/sdc: 2147 MB, 2147483648 bytes, 4194304 sectors
+  Disk /dev/sdd: 2147 MB, 2147483648 bytes, 4194304 sectors
+  Disk /dev/sde: 2147 MB, 2147483648 bytes, 4194304 sectors
   ```
 
 - mdadm创建磁盘阵列
 
   ```bash
-  root@localhost:~# mdadm --create /dev/md0 --auto=yes --level=5 --chunk=256K --raid-devices=3 /dev/sdb /dev/sdc /dev/sdd
+  root@localhost:~# mdadm --create /dev/md0 --auto=yes --level=5 --chunk=256K --raid-devices=3 --spare-devices=1 /dev/sdb /dev/sdc /dev/sdd /dev/sde
   mdadm: Defaulting to version 1.2 metadata
   mdadm: array /dev/md0 started.
   ```
@@ -131,18 +137,18 @@ RAID 1这种模式主要是：让同一份数据，完整地保存在两块磁�
           Version : 1.2
     Creation Time : Tue Jul 16 15:56:59 2019        # 创建RAID的世界
        Raid Level : raid5                           # RAID的级别，这里是5
-       Array Size : 33521664 (31.97 GiB 34.33 GB)   # 整组RAID的可用容量
-    Used Dev Size : 16760832 (15.98 GiB 17.16 GB)   # 每块磁盘设备的容量
+       Array Size : 4188160 (3.99 GiB 4.29 GB)      # 整组RAID的可用容量
+    Used Dev Size : 2094080 (2045.00 MiB 2144.34 MB)# 每块磁盘设备的容量
      Raid Devices : 3                               # 组成RAID的磁盘数量
-    Total Devices : 3                               # 包括spare的总磁盘数量
+    Total Devices : 4                               # 包括spare的总磁盘数量
       Persistence : Superblock is persistent
   
       Update Time : Tue Jul 16 15:59:11 2019
             State : clean                           # 目前这个磁盘阵列的使用状态
    Active Devices : 3                               # 启动(active)的设备数量
-  Working Devices : 3                               # 目前使用与此阵列的设备数量
+  Working Devices : 4                               # 目前使用与此阵列的设备数量
    Failed Devices : 0                               # 损坏的设备数
-    Spare Devices : 0                               # 热备分磁盘的数量
+    Spare Devices : 1                               # 热备分磁盘的数量
   
            Layout : left-symmetric
        Chunk Size : 256K                            # chunk的小数据块容量
@@ -154,10 +160,12 @@ RAID 1这种模式主要是：让同一份数据，完整地保存在两块磁�
       Number   Major   Minor   RaidDevice State
          0       8       16        0      active sync   /dev/sdb
          1       8       32        1      active sync   /dev/sdc
-         3       8       48        2      spare rebuilding   /dev/sdd
+         4       8       48        2      active sync   /dev/sdd
+  
+         3       8       64        -      spare   /dev/sde
   ```
 
-  总容量是 = (3 - 1) * 16G  = 32G
+  总容量是 = (3 - 1) * 2G  = 4G
 
   注意：磁盘阵列创建需要些时间，所以等几分钟再查看状态才是`clean`要不会有差异。
 
@@ -166,27 +174,36 @@ RAID 1这种模式主要是：让同一份数据，完整地保存在两块磁�
   ```bash
   root@localhost:~# blkid /dev/md0
   root@localhost:~# mkfs.ext4 /dev/md0
-  mke2fs 1.42.13 (17-May-2015)
-  Creating filesystem with 8380416 4k blocks and 2097152 inodes
-  Filesystem UUID: 79f40cf6-234c-46eb-a0bf-2b195baf0942
+  mke2fs 1.42.9 (28-Dec-2013)
+  Filesystem label=
+  OS type: Linux
+  Block size=4096 (log=2)
+  Fragment size=4096 (log=2)
+  Stride=64 blocks, Stripe width=128 blocks
+  262144 inodes, 1047040 blocks
+  52352 blocks (5.00%) reserved for the super user
+  First data block=0
+  Maximum filesystem blocks=1073741824
+  32 block groups
+  32768 blocks per group, 32768 fragments per group
+  8192 inodes per group
   Superblock backups stored on blocks:
-  	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
-  	4096000, 7962624
+  	32768, 98304, 163840, 229376, 294912, 819200, 884736
   
-  Allocating group tables: 完成
-  正在写入inode表: 完成
-  Creating journal (32768 blocks): 完成
-  Writing superblocks and filesystem accounting information: 完成
+  Allocating group tables: done
+  Writing inode tables: done
+  Creating journal (16384 blocks): done
+  Writing superblocks and filesystem accounting information: done
   
-  root@localhost:~# blkid /dev/md0
-  /dev/md0: UUID="79f40cf6-234c-46eb-a0bf-2b195baf0942" TYPE="ext4"
+  root@centos106:~# blkid /dev/md0
+  /dev/md0: UUID="4c8ba88d-ba69-4c4c-a166-896d8ee4cc72" TYPE="ext4"
   ```
 
 - 挂载
 
   ```bash
-  root@localhost:~# mount /dev/md0 /data/rddata/
-  root@localhost:~# mount | grep md0
+  root@centos106:~# mount /dev/md0 /data/rddata/
+  root@centos106:~# mount | grep md0
   /dev/md0 on /data/rddata type ext4 (rw,relatime,stripe=128,data=ordered)
   ```
 
@@ -215,10 +232,10 @@ mdadm --manage /dev/md0 --fail /dev/sdd
 - 先获取到md0的uuid：`mdadm —detail /dev/md0 | grep UUID`
 
   ```bash
-  root@localhost:~# blkid /dev/md0
-  /dev/md0: UUID="79f40cf6-234c-46eb-a0bf-2b195baf0942" TYPE="ext4"
-  root@localhost:~# mdadm --detail /dev/md0 | grep UUID
-             UUID : 4458bec4:56cbd513:b0e77990:47e98372
+  [root@centos106 rddata]# blkid /dev/md0
+  /dev/md0: UUID="4c8ba88d-ba69-4c4c-a166-896d8ee4cc72" TYPE="ext4"
+  [root@centos106 rddata]# mdadm --detail /dev/md0 | grep UUID
+                UUID : c3ef61fa:1f0965e1:b452262e:f90477f1
   ```
 
   **注意**：`blkid /dev/md0`获取到的UUID是不一样的哦
@@ -226,59 +243,99 @@ mdadm --manage /dev/md0 --fail /dev/sdd
 - 配置：`/etc/mdadm.conf`
 
   ```bash
-  root@localhost:~# cat /etc/mdadm.conf
-  ARRAY /dev/md0 UUID=4458bec4:56cbd513:b0e77990:47e98372
+  root@centos106:~# cat /etc/mdadm.conf
+  ARRAY /dev/md0 UUID=c3ef61fa:1f0965e1:b452262e:f90477f1
   #     RAID设备 识别码内容
   ```
 
 - 设置挂载目录：`/etc/fstab`
 
   ```bash
-  root@localhost:~# cat /etc/fstab
+  root@centos106:~# cat /etc/fstab
   # .....
-  UUID=4458bec4:56cbd513:b0e77990:47e98372 /data/rddata ext4 defaults 0 0
+  UUID=4c8ba88d-ba69-4c4c-a166-896d8ee4cc72 /data/rddata ext4 defaults 0 0
   ```
+  
+  **注意**： /etc/fstab中的UUID是`blkid /dev/md0`的UUID哦，而不是`mdadm —detail`中的UUID。
 
 #### 关闭mdadm创建的RAID
 
-```bash
-root@localhost:~# umount /dev/md0
-root@localhost:~# df -h
-文件系统                      容量  已用  可用 已用% 挂载点
-udev                          4.3G     0  4.3G    0% /dev
-tmpfs                         877M   17M  860M    2% /run
-/dev/mapper/testtest--vg-root   15G  6.7G  6.9G   50% /
-tmpfs                         4.3G     0  4.3G    0% /dev/shm
-tmpfs                         5.0M     0  5.0M    0% /run/lock
-tmpfs                         4.3G     0  4.3G    0% /sys/fs/cgroup
-/dev/sda1                     472M  105M  343M   24% /boot
-tmpfs                         877M     0  877M    0% /run/user/0
-root@localhost:~# mdadm --stop /dev/md0
-mdadm: stopped /dev/md0
-root@localhost:~# ls /dev/md0
-ls: 无法访问'/dev/md0': 没有那个文件或目录
-root@localhost:~# blkid /dev/sdb
-/dev/sdb: UUID="4458bec4-56cb-d513-b0e7-799047e98372" UUID_SUB="c78ab8ba-5a4e-9026-2d52-175ed67bec75" LABEL="localhost:0" TYPE="linux_raid_member"
-root@localhost:~# blkid /dev/sdc
-/dev/sdc: UUID="4458bec4-56cb-d513-b0e7-799047e98372" UUID_SUB="c0b5bf16-10da-ffb8-6d8c-368a56ae95fd" LABEL="localhost:0" TYPE="linux_raid_member"
-root@localhost:~# blkid /dev/sdd
-/dev/sdd: UUID="4458bec4-56cb-d513-b0e7-799047e98372" UUID_SUB="d101103c-bebb-7982-d51b-2c75348fef23" LABEL="localhost:0" TYPE="linux_raid_member"
-root@localhost:~# dd if=/dev/zero of=/dev/sdb bs=1M count=10
-记录了10+0 的读入
-记录了10+0 的写出
-10485760 bytes (10 MB, 10 MiB) copied, 0.0694904 s, 151 MB/s
-root@localhost:~# blkid /dev/sdb
-root@localhost:~# dd if=/dev/zero of=/dev/sdc bs=1M count=10
-记录了10+0 的读入
-记录了10+0 的写出
-10485760 bytes (10 MB, 10 MiB) copied, 0.0717 s, 146 MB/s
-root@localhost:~# dd if=/dev/zero of=/dev/sdd bs=1M count=10
-记录了10+0 的读入
-记录了10+0 的写出
-10485760 bytes (10 MB, 10 MiB) copied, 0.0603371 s, 174 MB/s
-root@localhost:~# blkid /dev/sdd
-root@localhost:~#
-```
+- `umount /dev/md0`
+
+  ```bash
+  [root@centos106 ~]# df -h
+  Filesystem               Size  Used Avail Use% Mounted on
+  /dev/mapper/centos-root  5.0G  1.6G  3.5G  32% /
+  devtmpfs                 1.9G     0  1.9G   0% /dev
+  tmpfs                    1.9G     0  1.9G   0% /dev/shm
+  tmpfs                    1.9G  8.6M  1.9G   1% /run
+  tmpfs                    1.9G     0  1.9G   0% /sys/fs/cgroup
+  /dev/sda1                197M  120M   78M  61% /boot
+  tmpfs                    380M     0  380M   0% /run/user/0
+  /dev/md0                 3.9G   16M  3.7G   1% /data/rddata
+  [root@centos106 ~]# umount /dev/md0
+  [root@centos106 ~]# df -h
+  Filesystem               Size  Used Avail Use% Mounted on
+  /dev/mapper/centos-root  5.0G  1.6G  3.5G  32% /
+  devtmpfs                 1.9G     0  1.9G   0% /dev
+  tmpfs                    1.9G     0  1.9G   0% /dev/shm
+  tmpfs                    1.9G  8.6M  1.9G   1% /run
+  tmpfs                    1.9G     0  1.9G   0% /sys/fs/cgroup
+  /dev/sda1                197M  120M   78M  61% /boot
+  tmpfs                    380M     0  380M   0% /run/user/0
+  ```
+
+- 执行`mdadm --stop /dev/md0`
+
+  ```bash
+  [root@centos106 ~]# mdadm --stop /dev/md0
+  mdadm: stopped /dev/md0
+  
+  [root@centos106 ~]# ls /dev/md0
+  ls: cannot access /dev/md0: No such file or directory
+  ```
+
+- 查看磁盘: `blkid /dev/sdb`
+
+  ```bash
+  [root@centos106 ~]# blkid /dev/sdb
+  /dev/sdb: UUID="c3ef61fa-1f09-65e1-b452-262ef90477f1" UUID_SUB="4dbe1b2a-84ae-9e71-d2ee-0a303f428001" LABEL="centos106:0" TYPE="linux_raid_member"
+  [root@centos106 ~]# blkid /dev/sdc
+  /dev/sdc: UUID="c3ef61fa-1f09-65e1-b452-262ef90477f1" UUID_SUB="3fea2e08-5ec0-5be5-52dd-6fc4e15b0f5f" LABEL="centos106:0" TYPE="linux_raid_member"
+  [root@centos106 ~]# blkid /dev/sdd
+  /dev/sdd: UUID="c3ef61fa-1f09-65e1-b452-262ef90477f1" UUID_SUB="d59ab675-6a4b-5538-7b36-5263b501cc77" LABEL="centos106:0" TYPE="linux_raid_member"
+  [root@centos106 ~]# blkid /dev/sde
+  /dev/sde: UUID="c3ef61fa-1f09-65e1-b452-262ef90477f1" UUID_SUB="5fabc775-5d79-fd17-c42d-f66ac903d62f" LABEL="centos106:0" TYPE="linux_raid_member"
+  ```
+
+- 执行dd命令
+
+  ```bash
+  [root@centos106 ~]# dd if=/dev/zero of=/dev/sdb bs=1M count=2048
+  2048+0 records in
+  2048+0 records out
+  2147483648 bytes (2.1 GB) copied, 6.18637 s, 347 MB/s
+  [root@centos106 ~]# dd if=/dev/zero of=/dev/sdc bs=1M count=2048
+  2048+0 records in
+  2048+0 records out
+  2147483648 bytes (2.1 GB) copied, 4.93777 s, 435 MB/s
+  [root@centos106 ~]# dd if=/dev/zero of=/dev/sdd bs=1M count=2048
+  2048+0 records in
+  2048+0 records out
+  2147483648 bytes (2.1 GB) copied, 4.78733 s, 449 MB/s
+  [root@centos106 ~]# dd if=/dev/zero of=/dev/sde bs=1M count=2048
+  2048+0 records in
+  2048+0 records out
+  2147483648 bytes (2.1 GB) copied, 1.36211 s, 1.6 GB/s
+  ```
+
+- 再次查看磁盘
+
+  ```bash
+  [root@centos106 ~]# blkid /dev/sdb
+  [root@centos106 ~]# blkid /dev/sdc
+  [root@centos106 ~]# blkid /dev/sde
+  ```
 
 另外记得删除`/etc/mdadm.conf`和`/etc/fstab`中的相关配置。
 

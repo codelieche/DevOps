@@ -4,8 +4,10 @@
 
 ### 安装软件
 
+- yum install -y epel-release
+
 - stress： yum install stress
-- sysstat: yum install systat
+- sysstat: yum install sysstat
 
 
 
@@ -118,7 +120,7 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 - `Intel VTune Amplifier XE`: Linux和Windows的剖析，拥有包含源代码浏览在内的图形界面
 - `Oracle Solaris Studio`: 用自带的性能分析器对`Solaris`和`Linux`做剖析，拥有包括源代码浏览在内的图形界面
 
-#### 
+
 
 ### 观测来源
 
