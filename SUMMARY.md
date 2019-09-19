@@ -68,7 +68,6 @@
     * [执行打包](front/tools/execute-build.md)
     * [JavaScript前端导入excel文件数据](./front/tools/xlsx.md)
   
-  
 * [数据库相关](database/README.md)
   * [MySQL](database/mysql/README.md)
     * 日志相关
@@ -144,6 +143,7 @@
   * [基础](./os/base/READEME.md)
     * [网络工具](./os/base/network-tools.md)
     * [tcdump基本使用](os/tools/tcpdump.md)
+    * [ubuntu升级系统内核](./os/base/ubuntu-update-kernel.md)
   * 文件系统
     * [btrfs文件系统](./os/filesystem/btrfs.md)
     * [磁盘阵列RAID](./os/filesystem/raid.md)
