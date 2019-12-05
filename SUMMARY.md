@@ -79,6 +79,8 @@
       * [xtrabackup的基本使用](./database/mysql/backup/xtrabackup.md)
       * [xtrabackup增量备份](./database/mysql/backup/xtrabackup-incremental.md)
       * [xtrabackup增量备份恢复](./database/mysql/backup/incremental-rollback.md)
+    * [percona相关]
+      * [在线修改表结构pt-online-schema-change基本使用](./database/mysql/percona/pt-online-schema-change.md)
 * [DevOps Tools](tools/README.md)
   * [kubernetes](tools/kubernetes/README.md)
     * [kubernetes基础知识](tools/kubernetes/base.md)
